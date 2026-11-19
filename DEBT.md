@@ -203,9 +203,10 @@ npm run build
 | ID | Localisation | Problème | Impact | Risque | Effort | Priorité | Statut | Issue |
 |---|---|---|---|---|---|---|---|---|
 | D-23 | tout le dépôt | 0 test, aucune couverture | 🔴 | 🔴 | L | P0 | wip — 61 tests, couverture lignes 50,09 % (M3) | P3-1, P3-2 |
-| D-24 | `.github/workflows/build-exe.yml` | CI uniquement sur push `main`, ne fait que builder l'exe ; pas de lint, test, couverture, gates, analyse statique | 🔴 | 🟠 | M | P0 | todo | P3-3, P3-4, P3-5 |
-| D-25 | racine | Pas de formateur (Prettier) | 🟢 | 🟢 | S | P2 | todo | P0-4 |
-| D-33 | PR #3, PR #4 ; absence de gate PR | Des PR « vides » (fichiers de 0 octet) ont été mergées sans CI : le process n'a pas détecté l'absence de contenu | 🟠 | 🟠 | S | P0 | wip — gates à ajouter en M3 | P3-3, P3-4 |
+| D-24 | `.github/workflows/` (racine) | CI incomplète à l'origine : uniquement build de l'exe sur push `main` ; pas de lint, test, couverture, gates, analyse statique | 🔴 | 🟠 | M | P0 | wip — `ci/quality-gates` | P3-3, P3-4, P3-5 |
+| D-25 | racine | Pas de formateur (Prettier) | 🟢 | 🟢 | S | P2 | wip — `ci/quality-gates` | P0-4 |
+| D-33 | PR #3, PR #4 ; absence de gate PR | Des PR « vides » (fichiers de 0 octet) ont été mergées sans CI : le process n'a pas détecté l'absence de contenu | 🟠 | 🟠 | S | P0 | wip — `ci/quality-gates` | P3-3, P3-4 |
+| D-35 | `CodeWashGame/.github/workflows/build-exe.yml` (état reçu) | Workflow placé dans un sous-dossier : GitHub ne lit que `.github/workflows` **à la racine**, donc la CI ne s'exécutait jamais | 🔴 | 🟠 | S | P0 | wip — déplacé à la racine (`ci/quality-gates`) | P3-3 |
 
 ### 3.6 Dette introduite volontairement (à remplir)
 
@@ -245,7 +246,7 @@ Mesures prises sur l'état reçu (`25b3629` / tag `v0.0-as-received`), **avant t
 
 | Impact ↓ / Vraisemblance → | Faible | Moyenne | Élevée |
 |---|---|---|---|
-| **Élevé** | — | D-01, D-03, D-04, D-05, D-06, D-09, D-13, D-18, D-24, D-29 | D-10, D-23 |
+| **Élevé** | — | D-01, D-03, D-04, D-05, D-06, D-09, D-13, D-18, D-24, D-29, D-35 | D-10, D-23 |
 | **Moyen** | D-02, D-07, D-14, D-15, D-16, D-22, D-26 | D-08, D-12, D-17, D-27, D-28, D-30, D-33 | D-11 |
 | **Faible** | D-19, D-20, D-21, D-25, D-31, D-32 | — | — |
 
@@ -255,7 +256,7 @@ Mesures prises sur l'état reçu (`25b3629` / tag `v0.0-as-received`), **avant t
 
 | Phase | Items | Pourquoi dans cet ordre |
 |---|---|---|
-| **0. Hygiène** | D-01, D-02, D-03, D-17, D-33 | Sans dépôt propre, lancement documenté ni gate PR, rien d'autre n'est lisible ni reproductible. |
+| **0. Hygiène** | D-01, D-02, D-03, D-17, D-33, D-35 | Sans dépôt propre, lancement documenté ni gate PR, rien d'autre n'est lisible ni reproductible. |
 | **1. Filet de sécurité** | D-23, D-24, D-25 | Règle du sujet : aucun refactor mergé sans tests ni CI. |
 | **2. Rendre testable** | D-04, D-05, D-06, D-09, D-07, D-08, D-26, D-30, D-31 | Horloge, RNG, stockage, voix et timers injectables = prérequis de tests fiables. |
 | **3. Découper** | D-10, D-12, D-14, D-11, D-15, D-32 | Une fois testé et injecté, le découpage devient sûr. |
@@ -278,13 +279,13 @@ Mesures prises sur l'état reçu (`25b3629` / tag `v0.0-as-received`), **avant t
 
 | Métrique | Avant (reçu) | Après M3 | Après M4 | Final |
 |---|---|---|---|---|
-| Couverture | 0 % | | | |
-| App.jsx (lignes) | 1492 | | | |
-| GlobalStyles.jsx (lignes) | 1302 | | | |
-| SkillCard.jsx (lignes) | 778 | | | |
-| Duplication (%) | 2,53 % | | | |
-| Complexité max | 107 | | | |
-| Erreurs lint (sources réelles) | 0 | | | |
-| Vulnérabilités npm | 31 | | | |
-| Bundle JS (gzip) | 102,62 kB | | | |
+| Couverture (lignes) | 0 % | 47,98 % (61 tests) | | |
+| App.jsx (lignes) | 1492 | 1753 (Prettier) | | |
+| GlobalStyles.jsx (lignes) | 1302 | 1302 | | |
+| SkillCard.jsx (lignes) | 778 | 1190 (Prettier) | | |
+| Duplication (%) | 2,53 % | à remesurer | | |
+| Complexité max | 107 | 107 | | |
+| Erreurs lint (sources réelles) | 0 | 0 (14 warnings complexité) | | |
+| Vulnérabilités npm | 31 | 31 | | |
+| Bundle JS (gzip) | 102,62 kB | à remesurer | | |
 | Taille `dist` | 244 Mo | | | |

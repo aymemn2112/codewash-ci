@@ -9,10 +9,13 @@ on:
 jobs:
   build:
     runs-on: windows-latest
-    
+    defaults:
+      run:
+        working-directory: CodeWashGame
+
     permissions:
-      contents: write  # Required for creating releases and uploading assets
-      actions: read    # Required for workflow runs
+      contents: write # Required for creating releases and uploading assets
+      actions: read # Required for workflow runs
 
     steps:
       - name: Checkout code
@@ -23,6 +26,7 @@ jobs:
         with:
           node-version: '20'
           cache: 'npm'
+          cache-dependency-path: CodeWashGame/package-lock.json
 
       - name: Install dependencies
         run: npm ci
@@ -37,7 +41,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: LevelUpRPG-Windows-Portable
-          path: release/LevelUpRPG-Portable.exe
+          path: CodeWashGame/release/LevelUpRPG-Portable.exe
           if-no-files-found: error
 
       - name: Create Release (on main branch push)
@@ -48,21 +52,21 @@ jobs:
           name: Level Up RPG v${{ github.run_number }}
           body: |
             ## Level Up RPG - Windows Portable Version
-            
+
             Download the portable `.exe` file below and double-click to play!
-            
+
             No installation required - perfect for sharing via flash drive.
-            
+
             ### What's included:
             - All game assets and themes
             - Sound effects and music
             - Complete game experience in a single executable
-            
+
             ### How to run:
             1. Download `LevelUpRPG-Portable.exe`
             2. Double-click to launch
             3. Have fun!
-          files: release/LevelUpRPG-Portable.exe
+          files: CodeWashGame/release/LevelUpRPG-Portable.exe
           draft: false
           prerelease: false
         env:
