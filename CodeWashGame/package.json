@@ -11,8 +11,9 @@
         "test": "vitest run",
         "test:watch": "vitest",
         "coverage": "vitest run --coverage",
-        "format": "prettier --write \"src/**/*.{js,jsx,css}\" \"electron/**/*.{js,cjs}\" \"*.{js,json}\"",
-        "format:check": "prettier --check \"src/**/*.{js,jsx,css}\" \"electron/**/*.{js,cjs}\" \"*.{js,json}\"",
+        "coverage:patch": "node scripts/check-patch-coverage.mjs",
+        "format": "prettier --write \"src/**/*.{js,jsx,css}\" \"electron/**/*.{js,cjs}\" \"scripts/**/*.mjs\" \"*.{js,json}\"",
+        "format:check": "prettier --check \"src/**/*.{js,jsx,css}\" \"electron/**/*.{js,cjs}\" \"scripts/**/*.mjs\" \"*.{js,json}\"",
         "preview": "vite preview",
         "electron:dev": "npm run build && electron .",
         "electron:build": "npm run build && electron-builder"

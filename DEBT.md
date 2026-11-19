@@ -203,10 +203,10 @@ npm run build
 | ID | Localisation | Problème | Impact | Risque | Effort | Priorité | Statut | Issue |
 |---|---|---|---|---|---|---|---|---|
 | D-23 | tout le dépôt | 0 test, aucune couverture | 🔴 | 🔴 | L | P0 | wip — 61 tests, couverture lignes 50,09 % (M3) | P3-1, P3-2 |
-| D-24 | `.github/workflows/` (racine) | CI incomplète à l'origine : uniquement build de l'exe sur push `main` ; pas de lint, test, couverture, gates, analyse statique | 🔴 | 🟠 | M | P0 | wip — `ci/quality-gates` | P3-3, P3-4, P3-5 |
-| D-25 | racine | Pas de formateur (Prettier) | 🟢 | 🟢 | S | P2 | wip — `ci/quality-gates` | P0-4 |
-| D-33 | PR #3, PR #4 ; absence de gate PR | Des PR « vides » (fichiers de 0 octet) ont été mergées sans CI : le process n'a pas détecté l'absence de contenu | 🟠 | 🟠 | S | P0 | wip — `ci/quality-gates` | P3-3, P3-4 |
-| D-35 | `CodeWashGame/.github/workflows/build-exe.yml` (état reçu) | Workflow placé dans un sous-dossier : GitHub ne lit que `.github/workflows` **à la racine**, donc la CI ne s'exécutait jamais | 🔴 | 🟠 | S | P0 | wip — déplacé à la racine (`ci/quality-gates`) | P3-3 |
+| D-24 | `.github/workflows/` (racine) | CI incomplète à l'origine : uniquement build de l'exe sur push `main` ; pas de lint, test, couverture, gates, analyse statique | 🔴 | 🟠 | M | P0 | done (local, en attente de merge) | P3-3, P3-4, P3-5 |
+| D-25 | racine | Pas de formateur (Prettier) | 🟢 | 🟢 | S | P2 | done (local, en attente de merge) | P0-4 |
+| D-33 | PR #3, PR #4 ; absence de gate PR | Des PR « vides » (fichiers de 0 octet) ont été mergées sans CI : le process n'a pas détecté l'absence de contenu | 🟠 | 🟠 | S | P0 | done (local, en attente de merge) | P3-3, P3-4 |
+| D-35 | `CodeWashGame/.github/workflows/build-exe.yml` (état reçu) | Workflow placé dans un sous-dossier : GitHub ne lit que `.github/workflows` **à la racine**, donc la CI ne s'exécutait jamais | 🔴 | 🟠 | S | P0 | done (local, en attente de merge) | P3-3 |
 
 ### 3.6 Dette introduite volontairement (à remplir)
 
@@ -214,7 +214,7 @@ npm run build
 
 | ID | Quoi | Pourquoi | Date | Plan de remboursement |
 |---|---|---|---|---|
-| D-34 | Seuil de couverture initial à 45 % lignes / 37 % fonctions / 38 % branches / 45 % statements, au lieu de 80 % | Le code reçu n'a aucun test : le seuil de 80 % ne peut pas être atteint sans des semaines de tests. Un seuil proche du mesuré évite un gate rouge permanent tout en bloquant les régressions. | 2026-11-19 | Remonter de +5 % par PR ; atteindre 80 % des lignes modifiées en M4 (voir `docs/TESTING.md`). |
+| D-34 | Seuils globaux à 45 % lignes / 37 % fonctions / 38 % branches / 45 % statements, au lieu de 80 % | Le code reçu n'a aucun test : un seuil global de 80 % immédiat serait rouge en permanence. Le gate porte désormais sur les **lignes modifiées** (80 %, `npm run coverage:patch`), les seuils globaux servant de plancher. | 2026-11-19 | Remonter les seuils globaux de +5 % par PR ; conserver 80 % sur les lignes modifiées (voir `docs/CI.md`). |
 
 ---
 

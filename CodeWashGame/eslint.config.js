@@ -28,4 +28,11 @@ export default defineConfig([
             complexity: ['warn', 10],
         },
     },
+    {
+        // Node-side tooling: coverage script and build configuration files.
+        files: ['scripts/**/*.{js,mjs}', '*.config.js'],
+        languageOptions: {
+            globals: { ...globals.node },
+        },
+    },
 ]);

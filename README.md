@@ -84,6 +84,7 @@ Run from `CodeWashGame/`:
 | `npm test` | Run the test suite once |
 | `npm run test:watch` | Run tests in watch mode |
 | `npm run coverage` | Tests + coverage report (`coverage/`) |
+| `npm run coverage:patch` | Require 80% coverage on lines changed vs `BASE_REF` |
 | `npm run format` | Format source with Prettier |
 | `npm run format:check` | Verify formatting (CI gate) |
 | `npm run electron:dev` | Build then run the Electron app |

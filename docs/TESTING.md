@@ -116,9 +116,19 @@ The coverage gate is configured in `vitest.config.js`. It starts at the **measur
 | Milestone | Threshold |
 |---|---|
 | M3 (received baseline) | 0% (no tests) |
-| M3 after characterization suite | lines 45% · functions 37% · branches 38% · statements 45% (measured: 50.09 / 39.25 / 40.52 / 47.71) |
-| M3+ | raise to the measured value, then +5% per PR |
-| M4 target | 80% of modified lines, 100% of new code |
+| M3 after characterization suite | lines 45% · functions 37% · branches 38% · statements 45% (measured: 47.98 / 39.25 / 40.52 / 47.71) |
+| M3+ | raise the global values to the measured value, then +5% per PR |
+| Every PR (patch) | **80% of modified executable lines** (`npm run coverage:patch`) |
+| M4 target | 100% on new code |
+
+The **patch gate** (`scripts/check-patch-coverage.mjs`, run in CI after `npm run coverage`)
+compares `coverage/lcov.info` with the lines changed against `BASE_REF` (default
+`origin/develop`) and fails below 80%. Run it locally with:
+
+```bash
+npm run coverage
+BASE_REF=origin/develop npm run coverage:patch
+```
 
 Lowering a threshold is allowed only with an entry in `DEBT.md` §3.6 ("dette introduite
 volontairement") explaining why.
