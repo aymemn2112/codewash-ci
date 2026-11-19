@@ -1,0 +1,5 @@
+- Finding files
+Processed 49 files (390ms) (1 warning)
+
+✔ Image created at /home/bynayre/Epitech/Second_Year/Projects/Project-06/CodeWash/docs/metrics/deps.svg
+
