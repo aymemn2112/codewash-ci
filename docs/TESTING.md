@@ -115,7 +115,8 @@ The coverage gate is configured in `vitest.config.js`. It starts at the **measur
 
 | Milestone | Threshold |
 |---|---|
-| M3 (baseline) | 10% lines / functions / branches / statements |
+| M3 (received baseline) | 0% (no tests) |
+| M3 after characterization suite | lines 45% · functions 37% · branches 38% · statements 45% (measured: 50.09 / 39.25 / 40.52 / 47.71) |
 | M3+ | raise to the measured value, then +5% per PR |
 | M4 target | 80% of modified lines, 100% of new code |
 
