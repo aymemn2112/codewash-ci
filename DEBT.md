@@ -153,9 +153,9 @@ npm run build
 
 | ID | Localisation | Smell / problème | Impact | Risque | Effort | Priorité | Statut | Issue |
 |---|---|---|---|---|---|---|---|---|
-| D-01 | racine du dépôt — `.gitignore` | Aucun `.gitignore` utile ; `node_modules/`, `dist/`, `release/` non ignorés | 🔴 | 🟠 | S | P0 | wip — `chore/repo-hygiene` (2b9a0d4) | P1-3 |
-| D-02 | tout l'arbre | 374 fichiers AppleDouble `._*` commités : arbre illisible, diffs bruités, 28 faux erreurs de lint | 🟠 | 🟢 | S | P0 | wip — `chore/repo-hygiene` (2b9a0d4) | P1-4 |
-| D-03 | racine — `README.md` | Pas de README ; lancement hors Windows non documenté | 🔴 | 🟠 | M | P0 | wip — `docs/launch-readme` (12cea5f) | P1-1, P1-2, P1-7 |
+| D-01 | racine du dépôt — `.gitignore` | Aucun `.gitignore` utile ; `node_modules/`, `dist/`, `release/` non ignorés | 🔴 | 🟠 | S | P0 | done — merge `4caa03e` | P1-3 |
+| D-02 | tout l'arbre | 374 fichiers AppleDouble `._*` commités : arbre illisible, diffs bruités, 28 faux erreurs de lint | 🟠 | 🟢 | S | P0 | done — merge `4caa03e` | P1-4 |
+| D-03 | racine — `README.md` | Pas de README ; lancement hors Windows non documenté | 🔴 | 🟠 | M | P0 | done — merge `d0ce4c1` | P1-1, P1-2, P1-7 |
 
 ### 3.2 Testabilité (I/O non isolées)
 
@@ -185,7 +185,7 @@ npm run build
 
 | ID | Localisation | Smell / problème | Impact | Risque | Effort | Priorité | Statut | Issue |
 |---|---|---|---|---|---|---|---|---|
-| D-17 | `package.json` (`overrides.vite`) ; builds navigateur vs Electron | Override `vite → rolldown-vite@7.2.5` non documenté ; deux cibles au comportement différent (micro) | 🟠 | 🟠 | S | P1 | wip — README (`docs/launch-readme`) | P1-5, P1-6 |
+| D-17 | `package.json` (`overrides.vite`) ; builds navigateur vs Electron | Override `vite → rolldown-vite@7.2.5` non documenté ; deux cibles au comportement différent (micro) | 🟠 | 🟠 | S | P1 | done — README (`12cea5f`) | P1-5, P1-6 |
 | D-18 | `App.jsx` : `loadSkills` (92–170), `loadTheme` (178), `loadStats` (191), `getProfileStats` (224) | `catch { console.warn(...) }` : erreurs silencieuses, aucun retour utilisateur | 🔴 | 🟠 | S | P1 | todo | P4-11 |
 | D-19 | `App.jsx` : `startVoiceListener`, `stopVoiceRecognition`, `toggleMicListener`, `endBattle` | `console.log` à chaque événement, pas de logger à niveaux | 🟢 | 🟢 | S | P3 | todo | P4-12 |
 | D-20 | `App.jsx:50` | `parseInt` sans radix | 🟢 | 🟢 | S | P3 | todo | P4-14 |
