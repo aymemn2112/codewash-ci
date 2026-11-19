@@ -202,7 +202,7 @@ npm run build
 
 | ID | Localisation | Problème | Impact | Risque | Effort | Priorité | Statut | Issue |
 |---|---|---|---|---|---|---|---|---|
-| D-23 | tout le dépôt | 0 test, aucune couverture | 🔴 | 🔴 | L | P0 | todo | P3-1, P3-2 |
+| D-23 | tout le dépôt | 0 test, aucune couverture | 🔴 | 🔴 | L | P0 | wip — 61 tests, couverture lignes 50,09 % (M3) | P3-1, P3-2 |
 | D-24 | `.github/workflows/build-exe.yml` | CI uniquement sur push `main`, ne fait que builder l'exe ; pas de lint, test, couverture, gates, analyse statique | 🔴 | 🟠 | M | P0 | todo | P3-3, P3-4, P3-5 |
 | D-25 | racine | Pas de formateur (Prettier) | 🟢 | 🟢 | S | P2 | todo | P0-4 |
 | D-33 | PR #3, PR #4 ; absence de gate PR | Des PR « vides » (fichiers de 0 octet) ont été mergées sans CI : le process n'a pas détecté l'absence de contenu | 🟠 | 🟠 | S | P0 | wip — gates à ajouter en M3 | P3-3, P3-4 |
@@ -213,7 +213,7 @@ npm run build
 
 | ID | Quoi | Pourquoi | Date | Plan de remboursement |
 |---|---|---|---|---|
-| — | — | — | — | — |
+| D-34 | Seuil de couverture initial à 45 % lignes / 37 % fonctions / 38 % branches / 45 % statements, au lieu de 80 % | Le code reçu n'a aucun test : le seuil de 80 % ne peut pas être atteint sans des semaines de tests. Un seuil proche du mesuré évite un gate rouge permanent tout en bloquant les régressions. | 2026-11-19 | Remonter de +5 % par PR ; atteindre 80 % des lignes modifiées en M4 (voir `docs/TESTING.md`). |
 
 ---
 

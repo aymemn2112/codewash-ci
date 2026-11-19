@@ -22,8 +22,16 @@ export default defineConfig({
         'src/**/*.{test,spec}.{js,jsx}',
         'src/constants/**',
       ],
-      // Thresholds are set in test/characterization once the baseline
-      // coverage is measured. See docs/TESTING.md.
+      // Measured baseline after the characterization suite:
+      // statements 47.71%, branches 40.52%, functions 39.25%, lines 50.09%.
+      // Set just below the measurement to leave a small margin; ratchet upward
+      // as new tests land (see docs/TESTING.md).
+      thresholds: {
+        statements: 45,
+        branches: 38,
+        functions: 37,
+        lines: 45,
+      },
     },
   },
 })
