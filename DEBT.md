@@ -207,6 +207,7 @@ npm run build
 | D-25 | racine | Pas de formateur (Prettier) | 🟢 | 🟢 | S | P2 | done | P0-4 |
 | D-33 | PR #3, PR #4 ; absence de gate PR | Des PR « vides » (fichiers de 0 octet) ont été mergées sans CI : le process n'a pas détecté l'absence de contenu | 🟠 | 🟠 | S | P0 | done | P3-3, P3-4 |
 | D-35 | `CodeWashGame/.github/workflows/build-exe.yml` (état reçu) | Workflow placé dans un sous-dossier : GitHub ne lit que `.github/workflows` **à la racine**, donc la CI ne s'exécutait jamais | 🔴 | 🟠 | S | P0 | done | P3-3 |
+| D-36 | Paramètres GitHub du dépôt (`develop`, `main`) | Protection de branche impossible à activer : le compte a le rôle `WRITE`, pas `ADMIN`, et aucun administrateur n'est disponible. Les gates CI sont donc **consultatifs**, pas bloquants. Mitigation : discipline de PR + hook local `pre-push`. | 🟠 | 🟠 | S | P0 | wontfix (bloqué : pas d'admin) | P3-4 |
 
 ### 3.6 Dette introduite volontairement (à remplir)
 
@@ -215,6 +216,7 @@ npm run build
 | ID | Quoi | Pourquoi | Date | Plan de remboursement |
 |---|---|---|---|---|
 | D-34 | Seuils globaux à 45 % lignes / 37 % fonctions / 38 % branches / 45 % statements, au lieu de 80 % | Le code reçu n'a aucun test : un seuil global de 80 % immédiat serait rouge en permanence. Le gate porte désormais sur les **lignes modifiées** (80 %, `npm run coverage:patch`), les seuils globaux servant de plancher. | 2026-11-19 | Remonter les seuils globaux de +5 % par PR ; conserver 80 % sur les lignes modifiées (voir `docs/CI.md`). |
+| D-36 | Pas de protection de branche GitHub : les checks CI ne bloquent pas le merge | Le compte de l'équipe a le rôle `WRITE` sur le dépôt, pas `ADMIN`, et aucun administrateur n'est joignable. Ce n'est pas un choix mais une contrainte externe. | 2026-11-19 | Mitigation immédiate : hook local `pre-push` + règle d'équipe « jamais de merge sur rouge ». À activer par un admin si les droits changent. |
 
 ---
 
@@ -247,7 +249,7 @@ Mesures prises sur l'état reçu (`25b3629` / tag `v0.0-as-received`), **avant t
 | Impact ↓ / Vraisemblance → | Faible | Moyenne | Élevée |
 |---|---|---|---|
 | **Élevé** | — | D-01, D-03, D-04, D-05, D-06, D-09, D-13, D-18, D-24, D-29, D-35 | D-10, D-23 |
-| **Moyen** | D-02, D-07, D-14, D-15, D-16, D-22, D-26 | D-08, D-12, D-17, D-27, D-28, D-30, D-33 | D-11 |
+| **Moyen** | D-02, D-07, D-14, D-15, D-16, D-22, D-26 | D-08, D-12, D-17, D-27, D-28, D-30, D-33, D-36 | D-11 |
 | **Faible** | D-19, D-20, D-21, D-25, D-31, D-32 | — | — |
 
 > Chaque dette est placée selon ses colonnes Impact (ligne) et Risque (colonne) du §3 : si l'une change, l'autre doit changer.
@@ -257,7 +259,7 @@ Mesures prises sur l'état reçu (`25b3629` / tag `v0.0-as-received`), **avant t
 | Phase | Items | Pourquoi dans cet ordre |
 |---|---|---|
 | **0. Hygiène** | D-01, D-02, D-03, D-17, D-33, D-35 | Sans dépôt propre, lancement documenté ni gate PR, rien d'autre n'est lisible ni reproductible. |
-| **1. Filet de sécurité** | D-23, D-24, D-25 | Règle du sujet : aucun refactor mergé sans tests ni CI. |
+| **1. Filet de sécurité** | D-23, D-24, D-25, D-36 | Règle du sujet : aucun refactor mergé sans tests ni CI. D-36 est bloqué par les droits GitHub ; mitigation par hook local + discipline de PR. |
 | **2. Rendre testable** | D-04, D-05, D-06, D-09, D-07, D-08, D-26, D-30, D-31 | Horloge, RNG, stockage, voix et timers injectables = prérequis de tests fiables. |
 | **3. Découper** | D-10, D-12, D-14, D-11, D-15, D-32 | Une fois testé et injecté, le découpage devient sûr. |
 | **4. Points chauds** | D-13, D-18, D-16 | Bugs de fiabilité ; D-16 débloque Thèmes et Traduction. |
