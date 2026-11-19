@@ -30,15 +30,31 @@ which is why the first pipeline never ran).
 
 A red check blocks the merge once branch protection requires it.
 
-## Branch protection (to configure on GitHub)
+## Branch protection (blocked by repository rights)
 
-For `develop` and `main`:
+The intended settings for `develop` and `main` are:
 
 - Require a pull request before merging.
 - Require status checks: `Lint, format, tests and build`.
 - Require branches to be up to date before merging.
 - Disallow force pushes and deletions.
 - Optional: require one approving review.
+
+**Status: not enabled.** The team account has `WRITE` access, not `ADMIN`, and no
+administrator is available (GitHub returns `404` on the protection endpoint). This is tracked
+as **D-36** in `DEBT.md`. Until an admin enables it, CI results are advisory: never merge a
+red PR.
+
+## Local safety net (no admin needed)
+
+A `pre-push` hook runs the CI checks before every push:
+
+```bash
+git config core.hooksPath .githooks   # enable once per clone
+```
+
+The hook (`.githooks/pre-push`) runs `lint`, `format:check`, `coverage` and `build`. Use
+`git push --no-verify` only in an emergency, and record why if it happens.
 
 ## Local equivalents
 

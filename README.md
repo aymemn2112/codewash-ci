@@ -157,6 +157,8 @@ Rules used by this project:
 2. One commit = one intent; keep the pipeline green.
 3. Every PR references a `DEBT.md` item (`Refs D-xx`).
 4. Leave the codebase better than you found it (Boy Scout rule).
+5. Enable the local gate once per clone: `git config core.hooksPath .githooks`
+   (runs lint, format, tests and build on `git push`; see [`docs/CI.md`](./docs/CI.md)).
 
 ## Documentation
 
