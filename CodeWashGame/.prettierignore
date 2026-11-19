@@ -1,0 +1,20 @@
+node_modules/
+dist/
+dist-electron/
+release/
+build/
+out/
+coverage/
+
+# Raw measurement outputs must stay byte-for-byte reproducible
+docs/metrics/
+
+# Third-party assets are not source code
+public/assets/
+screenshots/
+
+# npm owns the lockfile
+package-lock.json
+
+# Markdown is reviewed by humans, not reformatted automatically
+*.md
