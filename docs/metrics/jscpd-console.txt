@@ -1,0 +1,32 @@
+[1mClone found (jsx)[22m
+ - [1m[32mApp.jsx[39m[22m [210:37 - 216:55] (7 lines, 51 tokens)
+   App.jsx [229:37 - 235:55]
+[1mClone found (jsx)[22m
+ - [1m[32mcomponents/drawers/CosmeticsDrawer.jsx[39m[22m [152:53 - 176:47] (25 lines, 141 tokens)
+   components/drawers/CosmeticsDrawer.jsx [259:152 - 283:47]
+[1mClone found (jsx)[22m
+ - [1m[32mcomponents/drawers/MenuDrawer.jsx[39m[22m [20:5 - 30:11] (11 lines, 108 tokens)
+   components/drawers/MenuDrawer_old.jsx [40:5 - 50:11]
+[1mClone found (jsx)[22m
+ - [1m[32mcomponents/drawers/MenuDrawer.jsx[39m[22m [36:63 - 49:104] (14 lines, 110 tokens)
+   components/drawers/MenuDrawer_old.jsx [50:10 - 63:104]
+[1mClone found (jsx)[22m
+ - [1m[32mcomponents/drawers/MenuDrawer.jsx[39m[22m [57:64 - 134:31] (78 lines, 530 tokens)
+   components/drawers/MenuDrawer_old.jsx [95:51 - 172:31]
+[1mClone found (jsx)[22m
+ - [1m[32mcomponents/skills/SkillCard.jsx[39m[22m [167:42 - 175:6] (9 lines, 52 tokens)
+   components/skills/SkillCard.jsx [175:12 - 184:6]
+[90m┌────────────┬────────────────┬─────────────┬──────────────┬──────────────┬──────────────────┬───────────────────┐[39m
+[90m│[39m[31m Format     [39m[90m│[39m[31m Files analyzed [39m[90m│[39m[31m Total lines [39m[90m│[39m[31m Total tokens [39m[90m│[39m[31m Clones found [39m[90m│[39m[31m Duplicated lines [39m[90m│[39m[31m Duplicated tokens [39m[90m│[39m
+[90m├────────────┼────────────────┼─────────────┼──────────────┼──────────────┼──────────────────┼───────────────────┤[39m
+[90m│[39m css        [90m│[39m 1              [90m│[39m 54          [90m│[39m 300          [90m│[39m 0            [90m│[39m 0 (0.00%)        [90m│[39m 0 (0.00%)         [90m│[39m
+[90m├────────────┼────────────────┼─────────────┼──────────────┼──────────────┼──────────────────┼───────────────────┤[39m
+[90m│[39m javascript [90m│[39m 6              [90m│[39m 1267        [90m│[39m 6146         [90m│[39m 0            [90m│[39m 0 (0.00%)        [90m│[39m 0 (0.00%)         [90m│[39m
+[90m├────────────┼────────────────┼─────────────┼──────────────┼──────────────┼──────────────────┼───────────────────┤[39m
+[90m│[39m jsx        [90m│[39m 16             [90m│[39m 4365        [90m│[39m 29400        [90m│[39m 6            [90m│[39m 144 (3.30%)      [90m│[39m 992 (3.37%)       [90m│[39m
+[90m├────────────┼────────────────┼─────────────┼──────────────┼──────────────┼──────────────────┼───────────────────┤[39m
+[90m│[39m [1mTotal:[22m     [90m│[39m 23             [90m│[39m 5686        [90m│[39m 35846        [90m│[39m 6            [90m│[39m 144 (2.53%)      [90m│[39m 992 (2.77%)       [90m│[39m
+[90m└────────────┴────────────────┴─────────────┴──────────────┴──────────────┴──────────────────┴───────────────────┘[39m
+[90mFound 6 clones.[39m
+[32mJSON report saved to ../docs/metrics/jscpd-report.json[39m
+[90mtime: 9.696ms[39m

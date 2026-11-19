@@ -1,0 +1,285 @@
+{
+  "duplicates": [
+    {
+      "firstFile": {
+        "end": 216,
+        "endLoc": {
+          "column": 54,
+          "line": 216,
+          "position": 11388
+        },
+        "name": "App.jsx",
+        "start": 210,
+        "startLoc": {
+          "column": 36,
+          "line": 210,
+          "position": 11112
+        }
+      },
+      "format": "jsx",
+      "fragment": "            Object.values(liveSkills).forEach(s => {\n                if (s && typeof s.level === 'number') {\n                    totalLevel += s.level;\n                    if (s.level > highestLevel) highestLevel = s.level;\n                }\n            });\n            return { totalLevel, highestLevel, skills: liveSkills, theme: activeTheme };",
+      "isNew": false,
+      "kind": "exact",
+      "lines": 7,
+      "secondFile": {
+        "end": 235,
+        "endLoc": {
+          "column": 54,
+          "line": 235,
+          "position": 12182
+        },
+        "name": "App.jsx",
+        "start": 229,
+        "startLoc": {
+          "column": 36,
+          "line": 229,
+          "position": 11906
+        }
+      },
+      "tokens": 51
+    },
+    {
+      "firstFile": {
+        "end": 176,
+        "endLoc": {
+          "column": 46,
+          "line": 176,
+          "position": 11717
+        },
+        "name": "components/drawers/CosmeticsDrawer.jsx",
+        "start": 152,
+        "startLoc": {
+          "column": 52,
+          "line": 152,
+          "position": 9928
+        }
+      },
+      "format": "jsx",
+      "fragment": "                                                    }\n                                                >\n                                                    <IconComponent \n                                                        size={32} \n                                                        className={`${!unlocked ? 'text-slate-600' : 'text-slate-300'}`}\n                                                    />\n                                                </div>\n                                                {!unlocked && (\n                                                    <Info size={16} className=\"text-slate-500\" />\n                                                )}\n                                            </div>\n                                            {/* Name and Description - Center Aligned */}\n                                            <div className=\"text-center\">\n                                                <div className={`text-sm font-bold ${!unlocked ? 'text-slate-500' : 'text-yellow-400'}`}>\n                                                    {effect.name}\n                                                </div>\n                                                <div className={`text-xs ${!unlocked ? 'text-slate-600' : 'text-slate-400'}`}>\n                                                    {effect.description}\n                                                </div>\n                                            </div>\n                                            {isSelected && (\n                                                <div className=\"absolute top-1 right-1 bg-yellow-400 text-black text-[9px] font-bold px-1.5 py-0.5 rounded\">\n                                                    ACTIVE\n                                                </div>\n                                            )}",
+      "isNew": false,
+      "kind": "exact",
+      "lines": 25,
+      "secondFile": {
+        "end": 283,
+        "endLoc": {
+          "column": 46,
+          "line": 283,
+          "position": 19957
+        },
+        "name": "components/drawers/CosmeticsDrawer.jsx",
+        "start": 259,
+        "startLoc": {
+          "column": 151,
+          "line": 259,
+          "position": 18168
+        }
+      },
+      "tokens": 141
+    },
+    {
+      "firstFile": {
+        "end": 30,
+        "endLoc": {
+          "column": 10,
+          "line": 30,
+          "position": 1169
+        },
+        "name": "components/drawers/MenuDrawer.jsx",
+        "start": 20,
+        "startLoc": {
+          "column": 4,
+          "line": 20,
+          "position": 702
+        }
+      },
+      "format": "jsx",
+      "fragment": "    const totalLevels = Object.values(skills).reduce((acc, s) => acc + s.level, 0);\n    \n    // Calculate total badges earned\n    const totalBadges = Object.values(skills).reduce((acc, skill) => {\n        let count = BADGE_TIERS.filter(tier => skill.level >= tier.level).length;\n        if (skill.level >= 180) {\n            const legendaryCount = Math.floor((skill.level - 160) / 20);\n            count += legendaryCount;\n        }\n        return acc + count;\n    }, 0);",
+      "isNew": false,
+      "kind": "exact",
+      "lines": 11,
+      "secondFile": {
+        "end": 50,
+        "endLoc": {
+          "column": 10,
+          "line": 50,
+          "position": 1552
+        },
+        "name": "components/drawers/MenuDrawer_old.jsx",
+        "start": 40,
+        "startLoc": {
+          "column": 4,
+          "line": 40,
+          "position": 1085
+        }
+      },
+      "tokens": 108
+    },
+    {
+      "firstFile": {
+        "end": 49,
+        "endLoc": {
+          "column": 103,
+          "line": 49,
+          "position": 2305
+        },
+        "name": "components/drawers/MenuDrawer.jsx",
+        "start": 36,
+        "startLoc": {
+          "column": 62,
+          "line": 36,
+          "position": 1408
+        }
+      },
+      "format": "jsx",
+      "fragment": "    const totalAchievements = Object.keys(ACHIEVEMENTS).length;\n    \n    return (\n        <div \n            className={`fixed h-full w-[75%] md:w-[60%] bg-[#1a1a1a]/95 backdrop-blur-md z-50 border-l-4 border-stone-600 shadow-2xl transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}\n            style={{ top: 0, right: 0 }}\n        >\n            <div className=\"p-6 h-full flex flex-col\">\n                {/* Header */}\n                <div className=\"shrink-0 border-b-4 border-stone-600 pb-4 mb-4\">\n                    <h2 className=\"text-5xl text-yellow-400 font-bold uppercase tracking-widest mb-2 drop-shadow-md\">Achievements</h2>\n                    <div className=\"flex gap-6 text-stone-400 text-2xl\">\n                        <p>Total Level: <span className=\"text-white font-bold\">{totalLevels}</span></p>\n                        <p>Badges: <span className=\"text-yellow-400 font-bold\">{totalBadges}</span></p>",
+      "isNew": false,
+      "kind": "exact",
+      "lines": 14,
+      "secondFile": {
+        "end": 63,
+        "endLoc": {
+          "column": 103,
+          "line": 63,
+          "position": 2448
+        },
+        "name": "components/drawers/MenuDrawer_old.jsx",
+        "start": 50,
+        "startLoc": {
+          "column": 9,
+          "line": 50,
+          "position": 1551
+        }
+      },
+      "tokens": 110
+    },
+    {
+      "firstFile": {
+        "end": 134,
+        "endLoc": {
+          "column": 30,
+          "line": 134,
+          "position": 9571
+        },
+        "name": "components/drawers/MenuDrawer.jsx",
+        "start": 57,
+        "startLoc": {
+          "column": 63,
+          "line": 57,
+          "position": 2762
+        }
+      },
+      "format": "jsx",
+      "fragment": "                        <div className=\"grid grid-cols-2 gap-4\">\n                            {Object.keys(skills).map(key => {\n                                const userSkill = skills[key];\n                                const skillDifficulty = userSkill.difficulty || 1;\n                                const xpToLevel = calculateXPToLevel(skillDifficulty, userSkill.level);\n                                const xpPercent = Math.min(100, (userSkill.xp / xpToLevel) * 100);\n                                const skillConfig = SKILL_DATA.find(s => s.id === key);\n                                const legendaryCount = userSkill.level >= 180 ? Math.floor((userSkill.level - 160) / 20) : 0;\n                                \n                                return (\n                                    <div key={key} className=\"bg-black/40 p-4 rounded-xl border-2 border-stone-700\">\n                                        {/* Compact Skill Header */}\n                                        <div className=\"flex items-center gap-3 mb-3\">\n                                            {skillConfig && <SafeImage src={skillConfig.img} alt={key} className=\"w-12 h-12 object-contain shrink-0\" />}\n                                            <div className=\"flex-1 min-w-0\">\n                                                <div className=\"flex justify-between items-center mb-1\">\n                                                    <h3 className=\"text-2xl font-bold text-white tracking-wide truncate\">{key.toUpperCase()}</h3>\n                                                    <span className=\"text-stone-400 text-xl font-bold ml-2 shrink-0\">Lvl {userSkill.level}</span>\n                                                </div>\n                                                <div className=\"w-full h-3 bg-stone-900 rounded-full border border-stone-600 relative overflow-hidden\">\n                                                    <div className=\"h-full bg-gradient-to-r from-green-600 to-green-400 transition-all duration-500\" style={{ width: `${xpPercent}%` }}></div>\n                                                </div>\n                                            </div>\n                                        </div>\n                                        \n                                        {/* Compact Badge Row */}\n                                        <div className=\"flex flex-wrap gap-2 items-center\">\n                                            {BADGE_TIERS.map((tier) => {\n                                                const isUnlocked = userSkill.level >= tier.level;\n                                                return (\n                                                    <div \n                                                        key={tier.level}\n                                                        className=\"group relative\"\n                                                        title={`${tier.title} - Level ${tier.level}`}\n                                                    >\n                                                        <div className={`w-11 h-11 border-2 rounded-lg flex items-center justify-center transition-all duration-300 ${\n                                                            isUnlocked \n                                                                ? 'border-yellow-500 bg-stone-800 shadow-md hover:scale-110' \n                                                                : 'border-stone-600 bg-stone-900/50 opacity-50 grayscale'\n                                                        }`}>\n                                                            {isUnlocked ? (\n                                                                <SafeImage src={BASE_ASSETS.badges[tier.title]} className=\"w-8 h-8 object-contain\" />\n                                                            ) : (\n                                                                <Lock size={16} className=\"text-stone-500\" />\n                                                            )}\n                                                        </div>\n                                                        {/* Tooltip */}\n                                                        <div className=\"absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-black/90 text-white text-xs rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10\">\n                                                            {tier.title} (Lvl {tier.level})\n                                                        </div>\n                                                    </div>\n                                                );\n                                            })}\n                                            \n                                            {/* LEGENDARY Badge(s) */}\n                                            {legendaryCount > 0 && (\n                                                <div \n                                                    className=\"group relative\"\n                                                    title=\"LEGENDARY!\"\n                                                >\n                                                    <div className=\"w-11 h-11 border-2 rounded-lg flex items-center justify-center border-yellow-500 bg-gradient-to-br from-yellow-900 to-stone-800 shadow-lg relative hover:scale-110 transition-all duration-300\">\n                                                        <SafeImage src={BASE_ASSETS.badges.Legendary} className=\"w-8 h-8 object-contain\" />\n                                                        {legendaryCount >= 2 && (\n                                                            <div className=\"absolute -top-1 -right-1 w-5 h-5 bg-red-600 border border-yellow-400 rounded-full flex items-center justify-center\">\n                                                                <span className=\"text-white font-bold text-xs\">{legendaryCount}</span>\n                                                            </div>\n                                                        )}\n                                                    </div>\n                                                    <div className=\"absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-black/90 text-white text-xs rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10\">\n                                                        LEGENDARY! (Lvl 180+)\n                                                    </div>\n                                                </div>\n                                            )}\n                                        </div>\n                                    </div>\n                                );\n                            })}\n                        </div>",
+      "isNew": false,
+      "kind": "exact",
+      "lines": 78,
+      "secondFile": {
+        "end": 172,
+        "endLoc": {
+          "column": 30,
+          "line": 172,
+          "position": 10857
+        },
+        "name": "components/drawers/MenuDrawer_old.jsx",
+        "start": 95,
+        "startLoc": {
+          "column": 50,
+          "line": 95,
+          "position": 4048
+        }
+      },
+      "tokens": 530
+    },
+    {
+      "firstFile": {
+        "end": 175,
+        "endLoc": {
+          "column": 5,
+          "line": 175,
+          "position": 8444
+        },
+        "name": "components/skills/SkillCard.jsx",
+        "start": 167,
+        "startLoc": {
+          "column": 41,
+          "line": 167,
+          "position": 7979
+        }
+      },
+      "format": "jsx",
+      "fragment": "    } else if (config.id === 'patterns') {\n        // Patterns skill uses hostile mobs like other combat skills\n        mobSrc = HOSTILE_MOBS[mobName] || BOSS_MOBS[mobName] || MINIBOSS_MOBS[mobName] || themeData.assets.mobs[mobName];\n        if (!mobSrc) {\n            // Fallback to Zombie if the provided name is invalid (should not happen with proper state management)\n            displayMobName = 'Zombie';\n            mobSrc = HOSTILE_MOBS[displayMobName] || BASE_ASSETS.axolotls.Pink;\n        }\n    } else {",
+      "isNew": false,
+      "kind": "exact",
+      "lines": 9,
+      "secondFile": {
+        "end": 184,
+        "endLoc": {
+          "column": 5,
+          "line": 184,
+          "position": 8978
+        },
+        "name": "components/skills/SkillCard.jsx",
+        "start": 175,
+        "startLoc": {
+          "column": 11,
+          "line": 175,
+          "position": 8450
+        }
+      },
+      "tokens": 52
+    }
+  ],
+  "statistics": {
+    "detectionDate": "2026-11-19T15:11:08.264Z",
+    "formats": {
+      "css": {
+        "clones": 0,
+        "duplicatedLines": 0,
+        "duplicatedTokens": 0,
+        "lines": 54,
+        "newClones": 0,
+        "newDuplicatedLines": 0,
+        "percentage": 0.0,
+        "percentageTokens": 0.0,
+        "sources": 1,
+        "tokens": 300
+      },
+      "javascript": {
+        "clones": 0,
+        "duplicatedLines": 0,
+        "duplicatedTokens": 0,
+        "lines": 1267,
+        "newClones": 0,
+        "newDuplicatedLines": 0,
+        "percentage": 0.0,
+        "percentageTokens": 0.0,
+        "sources": 6,
+        "tokens": 6146
+      },
+      "jsx": {
+        "clones": 6,
+        "duplicatedLines": 144,
+        "duplicatedTokens": 992,
+        "lines": 4365,
+        "newClones": 0,
+        "newDuplicatedLines": 0,
+        "percentage": 3.2989690721649487,
+        "percentageTokens": 3.3741496598639453,
+        "sources": 16,
+        "tokens": 29400
+      }
+    },
+    "total": {
+      "clones": 6,
+      "duplicatedLines": 144,
+      "duplicatedTokens": 992,
+      "lines": 5686,
+      "newClones": 0,
+      "newDuplicatedLines": 0,
+      "percentage": 2.53253605346465,
+      "percentageTokens": 2.7673938514757577,
+      "sources": 23,
+      "tokens": 35846
+    }
+  }
+}
