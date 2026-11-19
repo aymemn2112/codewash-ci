@@ -67,18 +67,29 @@ const ParentalVerificationModal = ({ isOpen, onClose, onVerified }) => {
 
     return ReactDOM.createPortal(
         <div className="fixed inset-0 z-[60] flex items-center justify-center">
-            <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={handleClose}></div>
+            <div
+                className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+                onClick={handleClose}
+            ></div>
             <div className="relative bg-stone-900 border-4 border-blue-600 rounded-2xl p-8 max-w-md mx-4 shadow-2xl">
-                <button onClick={handleClose} className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors">
+                <button
+                    onClick={handleClose}
+                    className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
+                >
                     <X size={24} />
                 </button>
                 <div className="flex flex-col items-center text-center">
                     <div className="bg-blue-600/20 p-6 rounded-full mb-4 border-2 border-blue-600">
                         <Save size={64} className="text-blue-400" />
                     </div>
-                    <h2 className="text-2xl font-bold text-blue-400 uppercase tracking-wider mb-4">What is this?</h2>
+                    <h2 className="text-2xl font-bold text-blue-400 uppercase tracking-wider mb-4">
+                        What is this?
+                    </h2>
                     <form onSubmit={handleSubmit} className="w-full">
-                        <div className="relative w-full flex justify-center mb-4" onClick={handleSlotClick}>
+                        <div
+                            className="relative w-full flex justify-center mb-4"
+                            onClick={handleSlotClick}
+                        >
                             <input
                                 ref={inputRef}
                                 type="text"
@@ -88,26 +99,34 @@ const ParentalVerificationModal = ({ isOpen, onClose, onVerified }) => {
                                 autoFocus
                                 maxLength={correctAnswerNoSpaces.length}
                             />
-                            <div className={`flex gap-1 flex-wrap justify-center cursor-pointer ${error ? 'animate-shake' : ''}`}>
-                                {correctAnswer.split('').map((char, i) => (
+                            <div
+                                className={`flex gap-1 flex-wrap justify-center cursor-pointer ${error ? 'animate-shake' : ''}`}
+                            >
+                                {correctAnswer.split('').map((char, i) =>
                                     char === ' ' ? (
                                         <div key={i} className="w-4"></div>
                                     ) : (
                                         <div
                                             key={i}
                                             className={`w-7 h-9 border-b-4 flex items-center justify-center text-lg font-mono font-bold text-white bg-black/20 rounded-t ${
-                                                error ? 'border-red-500 bg-red-900/30' : (
-                                                    isSlotFilled(i) ? 'border-green-500' : 'border-gray-600'
-                                                )
+                                                error
+                                                    ? 'border-red-500 bg-red-900/30'
+                                                    : isSlotFilled(i)
+                                                      ? 'border-green-500'
+                                                      : 'border-gray-600'
                                             }`}
                                         >
                                             {getDisplayChar(i)}
                                         </div>
-                                    )
-                                ))}
+                                    ),
+                                )}
                             </div>
                         </div>
-                        {error && <p className="text-red-400 text-sm mb-4">Incorrect answer. Try again!</p>}
+                        {error && (
+                            <p className="text-red-400 text-sm mb-4">
+                                Incorrect answer. Try again!
+                            </p>
+                        )}
                         <button
                             type="submit"
                             className="w-full bg-blue-600 hover:bg-blue-500 text-white py-3 px-6 rounded-lg font-bold uppercase tracking-wider transition-all border-2 border-blue-400"
@@ -118,7 +137,7 @@ const ParentalVerificationModal = ({ isOpen, onClose, onVerified }) => {
                 </div>
             </div>
         </div>,
-        document.body
+        document.body,
     );
 };
 
