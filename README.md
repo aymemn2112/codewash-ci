@@ -18,8 +18,9 @@ vibe-coded codebase: it works, but it carries significant technical debt. See
 | Bundler | Vite (forced to `rolldown-vite@7.2.5` through `overrides`) |
 | Styling | Tailwind CSS 4 + generated global styles |
 | Desktop shell | Electron 39 + electron-builder (portable Windows `.exe`) |
-| Lint | ESLint 9 (flat config); no formatter configured yet |
-| Tests | None yet |
+| Lint | ESLint 9 (flat config) + Prettier |
+| Tests | Vitest + Testing Library (jsdom) |
+| CI | GitHub Actions: lint, format, tests + coverage, build, Windows `.exe` |
 
 ## Prerequisites
 
@@ -80,10 +81,18 @@ Run from `CodeWashGame/`:
 | `npm run build` | Production bundle into `dist/` |
 | `npm run preview` | Serve the production bundle |
 | `npm run lint` | ESLint over the project |
+| `npm test` | Run the test suite once |
+| `npm run test:watch` | Run tests in watch mode |
+| `npm run coverage` | Tests + coverage report (`coverage/`) |
+| `npm run coverage:patch` | Require 80% coverage on lines changed vs `BASE_REF` |
+| `npm run format` | Format source with Prettier |
+| `npm run format:check` | Verify formatting (CI gate) |
 | `npm run electron:dev` | Build then run the Electron app |
 | `npm run electron:build` | Build the portable Windows executable |
 
-There is **no test command yet**; one is added in milestone M3.
+Run `npm test` and `npm run coverage` before opening a PR. See
+[`docs/TESTING.md`](./docs/TESTING.md) for the testing strategy and
+[`docs/CI.md`](./docs/CI.md) for the pipeline and quality gates.
 
 ## Repository layout
 
@@ -122,8 +131,10 @@ There is **no test command yet**; one is added in milestone M3.
 
 Captured during the initial launch and tracked in [`DEBT.md`](./DEBT.md):
 
-- No tests, no test runner, no coverage (D-23).
-- CI only builds the Windows executable on pushes to `main`; no lint, tests or coverage (D-24).
+- The received project had no tests; a characterization suite and coverage gate now exist
+  (D-23). Coverage is still being ratcheted up.
+- CI runs on every PR/push; the received Windows build workflow was in a subdirectory and
+  never executed — it now lives at the repository root (D-24, D-35).
 - `App.jsx` is a ~1500-line god component mixing state, game rules, speech and layout (D-10).
 - Clock (`Date.now()`), randomness (`Math.random()`) and audio are not injectable, which
   makes deterministic testing impossible without refactoring (D-04, D-05, D-09).
@@ -150,6 +161,8 @@ Rules used by this project:
 ## Documentation
 
 - [`DEBT.md`](./DEBT.md) — debt register, codebase map, I/O map, metrics, risk matrix.
+- [`docs/TESTING.md`](./docs/TESTING.md) — test strategy (clock, randomness, audio, speech).
+- [`docs/CI.md`](./docs/CI.md) — pipeline, quality gates and branch protection.
 - [`CodeWashGame/docs/MICROPHONE_FEATURE.md`](./CodeWashGame/docs/MICROPHONE_FEATURE.md) —
   how the voice-controlled Reading skill works.
 - Architecture Decision Records and the runbook are added in later milestones.
