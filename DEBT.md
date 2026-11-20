@@ -153,61 +153,61 @@ npm run build
 
 | ID | Localisation | Smell / problème | Impact | Risque | Effort | Priorité | Statut | Issue |
 |---|---|---|---|---|---|---|---|---|
-| D-01 | racine du dépôt — `.gitignore` | Aucun `.gitignore` utile ; `node_modules/`, `dist/`, `release/` non ignorés | 🔴 | 🟠 | S | P0 | done — merge `4caa03e` | P1-3 |
-| D-02 | tout l'arbre | 374 fichiers AppleDouble `._*` commités : arbre illisible, diffs bruités, 28 faux erreurs de lint | 🟠 | 🟢 | S | P0 | done — merge `4caa03e` | P1-4 |
-| D-03 | racine — `README.md` | Pas de README ; lancement hors Windows non documenté | 🔴 | 🟠 | M | P0 | done — merge `d0ce4c1` | P1-1, P1-2, P1-7 |
+| D-01 | racine du dépôt — `.gitignore` | Aucun `.gitignore` utile ; `node_modules/`, `dist/`, `release/` non ignorés | 🔴 | 🟠 | S | P0 | done — merge `4caa03e` | #61 |
+| D-02 | tout l'arbre | 374 fichiers AppleDouble `._*` commités : arbre illisible, diffs bruités, 28 faux erreurs de lint | 🟠 | 🟢 | S | P0 | done — merge `4caa03e` | #62 |
+| D-03 | racine — `README.md` | Pas de README ; lancement hors Windows non documenté | 🔴 | 🟠 | M | P0 | done — merge `d0ce4c1` | #63 |
 
 ### 3.2 Testabilité (I/O non isolées)
 
 | ID | Localisation | Smell / problème | Impact | Risque | Effort | Priorité | Statut | Issue |
 |---|---|---|---|---|---|---|---|---|
-| D-04 | `App.jsx › useEffect` login (1117), `achievementUtils.js:190`, `PhantomEvent.jsx:22,55` | `Date.now()` / `new Date()` en dur | 🔴 | 🟠 | M | P1 | todo | P4-4 |
-| D-05 | `gameUtils.js`, `mobDisplayUtils.js`, `SkillCard.jsx`, `soundManager.js:111` | `Math.random()` en dur, tests non déterministes | 🔴 | 🟠 | M | P1 | todo | P4-5 |
-| D-06 | `App.jsx` : `loadSkills`, `loadTheme`, `loadStats`, `getProfileStats`, sauvegarde (284), `handleReset` | `localStorage` appelé directement, partout | 🔴 | 🟠 | M | P1 | todo | P4-6 |
-| D-07 | `SkillCard.jsx` (102, 228, 338, 374, 409), `soundManager.js` (183, 253, 267, 281) | `new Audio(...)` contourne `soundManager` | 🟠 | 🟢 | S | P2 | todo | P4-7 |
-| D-08 | `soundManager.js › getBGMManager()` (157, 166) | Singleton global mutable (`bgmManagerInstance`, `sfxVolume`) | 🟠 | 🟠 | M | P2 | todo | P4-8 |
-| D-09 | `App.jsx › startVoiceListener` (999), `stopVoiceRecognition` (985), `toggleMicListener` (1083) | Web Speech API utilisée directement, impossible à simuler | 🔴 | 🟠 | M | P1 | todo | P4-9 |
-| D-26 | `App.jsx › toggleFullscreen` (370–380), `handleFullscreenChange` (351) | Fullscreen API appelée directement, non isolée derrière une interface | 🟠 | 🟢 | S | P2 | todo | à créer |
+| D-04 | `App.jsx › useEffect` login (1117), `achievementUtils.js:190`, `PhantomEvent.jsx:22,55` | `Date.now()` / `new Date()` en dur | 🔴 | 🟠 | M | P1 | todo | #64 |
+| D-05 | `gameUtils.js`, `mobDisplayUtils.js`, `SkillCard.jsx`, `soundManager.js:111` | `Math.random()` en dur, tests non déterministes | 🔴 | 🟠 | M | P1 | todo | #65 |
+| D-06 | `App.jsx` : `loadSkills`, `loadTheme`, `loadStats`, `getProfileStats`, sauvegarde (284), `handleReset` | `localStorage` appelé directement, partout | 🔴 | 🟠 | M | P1 | todo | #66 |
+| D-07 | `SkillCard.jsx` (102, 228, 338, 374, 409), `soundManager.js` (183, 253, 267, 281) | `new Audio(...)` contourne `soundManager` | 🟠 | 🟢 | S | P2 | todo | #67 |
+| D-08 | `soundManager.js › getBGMManager()` (157, 166) | Singleton global mutable (`bgmManagerInstance`, `sfxVolume`) | 🟠 | 🟠 | M | P2 | todo | #68 |
+| D-09 | `App.jsx › startVoiceListener` (999), `stopVoiceRecognition` (985), `toggleMicListener` (1083) | Web Speech API utilisée directement, impossible à simuler | 🔴 | 🟠 | M | P1 | todo | #69 |
+| D-26 | `App.jsx › toggleFullscreen` (370–380), `handleFullscreenChange` (351) | Fullscreen API appelée directement, non isolée derrière une interface | 🟠 | 🟢 | S | P2 | todo | #70 |
 
 ### 3.3 Structure et couplage
 
 | ID | Localisation | Smell / problème | Impact | Risque | Effort | Priorité | Statut | Issue |
 |---|---|---|---|---|---|---|---|---|
-| D-10 | `App.jsx` (1492 l., `const App`) | God component : état, combat, voix, layout ; complexité max 31 | 🔴 | 🔴 | L | P1 | todo | P4-1 |
-| D-11 | `App.jsx` : `getStorageKey` (55), `loadSkills` (56), `loadTheme` (172), `loadStats` (185), `getProfileStats` (202) | Clés `heroSkills_v23`, `_v1` et fallback legacy dupliqués, pas de migrations | 🟠 | 🔴 | M | P2 | todo | P4-15 |
-| D-12 | `SkillCard.jsx` (778 l.) | Règles de jeu dans le rendu ; JSX sur une ligne l. 581–582 ; complexité 107 | 🟠 | 🟠 | M | P2 | todo | P4-3 |
-| D-13 | `App.jsx › startVoiceListener`, handler `onend` (~1030) | `onend` relance `setTimeout` sans backoff ni annulation : boucle potentielle | 🔴 | 🟠 | S | P1 | todo | P4-13 |
-| D-14 | `GlobalStyles.jsx` (1302 l.) | Styles en JS monolithique, fuite dans le code | 🟠 | 🟢 | L | P3 | todo | P4-2 |
-| D-15 | `gameUtils.js` (`getRandomMob`, `getRandomFriendlyMob`, `getRandomMiniboss`, `getRandomBoss`, `getMobForSkill`) ; `MenuDrawer.jsx` ↔ `MenuDrawer_old.jsx` | Duplication : 2,53 % de lignes, 6 clones, 144 lignes dupliquées | 🟠 | 🟢 | S | P2 | todo | P4-16 |
-| D-16 | `gameData.jsx` (`THEME_CONFIG`, `SKILL_DATA`), `App.jsx` (`THEME_CONFIG.minecraft`, 1140), `PixelHeart.jsx` | Branding Minecraft en dur ; bloque Thèmes et Traduction | 🟠 | 🟢 | M | P2 | todo | P4-17 |
+| D-10 | `App.jsx` (1492 l., `const App`) | God component : état, combat, voix, layout ; complexité max 31 | 🔴 | 🔴 | L | P1 | todo | #71 |
+| D-11 | `App.jsx` : `getStorageKey` (55), `loadSkills` (56), `loadTheme` (172), `loadStats` (185), `getProfileStats` (202) | Clés `heroSkills_v23`, `_v1` et fallback legacy dupliqués, pas de migrations | 🟠 | 🔴 | M | P2 | todo | #72 |
+| D-12 | `SkillCard.jsx` (778 l.) | Règles de jeu dans le rendu ; JSX sur une ligne l. 581–582 ; complexité 107 | 🟠 | 🟠 | M | P2 | todo | #73 |
+| D-13 | `App.jsx › startVoiceListener`, handler `onend` (~1030) | `onend` relance `setTimeout` sans backoff ni annulation : boucle potentielle | 🔴 | 🟠 | S | P1 | todo | #74 |
+| D-14 | `GlobalStyles.jsx` (1302 l.) | Styles en JS monolithique, fuite dans le code | 🟠 | 🟢 | L | P3 | todo | #75 |
+| D-15 | `gameUtils.js` (`getRandomMob`, `getRandomFriendlyMob`, `getRandomMiniboss`, `getRandomBoss`, `getMobForSkill`) ; `MenuDrawer.jsx` ↔ `MenuDrawer_old.jsx` | Duplication : 2,53 % de lignes, 6 clones, 144 lignes dupliquées | 🟠 | 🟢 | S | P2 | todo | #76 |
+| D-16 | `gameData.jsx` (`THEME_CONFIG`, `SKILL_DATA`), `App.jsx` (`THEME_CONFIG.minecraft`, 1140), `PixelHeart.jsx` | Branding Minecraft en dur ; bloque Thèmes et Traduction | 🟠 | 🟢 | M | P2 | todo | #77 |
 
 ### 3.4 Fiabilité et propreté
 
 | ID | Localisation | Smell / problème | Impact | Risque | Effort | Priorité | Statut | Issue |
 |---|---|---|---|---|---|---|---|---|
-| D-17 | `package.json` (`overrides.vite`) ; builds navigateur vs Electron | Override `vite → rolldown-vite@7.2.5` non documenté ; deux cibles au comportement différent (micro) | 🟠 | 🟠 | S | P1 | done — README (`12cea5f`) | P1-5, P1-6 |
-| D-18 | `App.jsx` : `loadSkills` (92–170), `loadTheme` (178), `loadStats` (191), `getProfileStats` (224) | `catch { console.warn(...) }` : erreurs silencieuses, aucun retour utilisateur | 🔴 | 🟠 | S | P1 | todo | P4-11 |
-| D-19 | `App.jsx` : `startVoiceListener`, `stopVoiceRecognition`, `toggleMicListener`, `endBattle` | `console.log` à chaque événement, pas de logger à niveaux | 🟢 | 🟢 | S | P3 | todo | P4-12 |
-| D-20 | `App.jsx:50` | `parseInt` sans radix | 🟢 | 🟢 | S | P3 | todo | P4-14 |
-| D-21 | `MenuDrawer_old.jsx` (231 l.) | Code mort | 🟢 | 🟢 | S | P3 | todo | P4-10 |
-| D-22 | `BugReportModal.jsx` (19 l.) | Stub non fonctionnel | 🟠 | 🟢 | M | P4 | todo | P5-2 |
-| D-27 | `src/**` (ex. `App.jsx`, `MenuDrawer.jsx`, `ResetModal.jsx`, `BugReportModal.jsx`) | Chaînes d'interface codées en dur en anglais ; aucune couche i18n ; bloque la mission Traduction | 🟠 | 🟠 | M | P4 | todo | P5-3 |
-| D-28 | `gameData.jsx` (`THEME_CONFIG`), `App.jsx › loadTheme`/`handleThemeChange` (172, 824), assets par thème | Système de thèmes incomplet : toutes les images ne changent pas, tailles incohérentes, jeux et audio non thémés, pas de barre de défilement | 🟠 | 🟠 | L | P4 | todo | P5-4 |
-| D-29 | `App.jsx` rendu initial ; `dist/assets` | Démarrage/menu lents ; aucun découpage de code ; `dist` = 244 Mo dont 4 WAV de 34–48 Mo ; aucune mesure de démarrage | 🔴 | 🟠 | L | P4 | todo | P5-1 |
-| D-30 | `App.jsx` : `handleSuccessHit`, `checkAchievements`, effets de toasts/level-up | Nombreux `setTimeout` non nettoyés au démontage (mises à jour d'état après unmount) | 🟠 | 🟠 | M | P2 | todo | à créer |
-| D-31 | `PhantomEvent.jsx:5,21,55` | Clé `localStorage` propre (`phantomEvent_lastSpawn_v1`) hors schéma central | 🟢 | 🟢 | S | P2 | todo | P4-6 |
-| D-32 | `SafeImage.jsx:6–17` | Erreur de chargement d'image avalée silencieusement (fallback sans log) | 🟢 | 🟢 | S | P3 | todo | P4-11 |
+| D-17 | `package.json` (`overrides.vite`) ; builds navigateur vs Electron | Override `vite → rolldown-vite@7.2.5` non documenté ; deux cibles au comportement différent (micro) | 🟠 | 🟠 | S | P1 | done — README (`12cea5f`) | #78 |
+| D-18 | `App.jsx` : `loadSkills` (92–170), `loadTheme` (178), `loadStats` (191), `getProfileStats` (224) | `catch { console.warn(...) }` : erreurs silencieuses, aucun retour utilisateur | 🔴 | 🟠 | S | P1 | todo | #79 |
+| D-19 | `App.jsx` : `startVoiceListener`, `stopVoiceRecognition`, `toggleMicListener`, `endBattle` | `console.log` à chaque événement, pas de logger à niveaux | 🟢 | 🟢 | S | P3 | todo | #80 |
+| D-20 | `App.jsx:50` | `parseInt` sans radix | 🟢 | 🟢 | S | P3 | todo | #81 |
+| D-21 | `MenuDrawer_old.jsx` (231 l.) | Code mort | 🟢 | 🟢 | S | P3 | todo | #82 |
+| D-22 | `BugReportModal.jsx` (19 l.) | Stub non fonctionnel | 🟠 | 🟢 | M | P4 | todo | #83 |
+| D-27 | `src/**` (ex. `App.jsx`, `MenuDrawer.jsx`, `ResetModal.jsx`, `BugReportModal.jsx`) | Chaînes d'interface codées en dur en anglais ; aucune couche i18n ; bloque la mission Traduction | 🟠 | 🟠 | M | P4 | todo | #84 |
+| D-28 | `gameData.jsx` (`THEME_CONFIG`), `App.jsx › loadTheme`/`handleThemeChange` (172, 824), assets par thème | Système de thèmes incomplet : toutes les images ne changent pas, tailles incohérentes, jeux et audio non thémés, pas de barre de défilement | 🟠 | 🟠 | L | P4 | todo | #85 |
+| D-29 | `App.jsx` rendu initial ; `dist/assets` | Démarrage/menu lents ; aucun découpage de code ; `dist` = 244 Mo dont 4 WAV de 34–48 Mo ; aucune mesure de démarrage | 🔴 | 🟠 | L | P4 | todo | #86 |
+| D-30 | `App.jsx` : `handleSuccessHit`, `checkAchievements`, effets de toasts/level-up | Nombreux `setTimeout` non nettoyés au démontage (mises à jour d'état après unmount) | 🟠 | 🟠 | M | P2 | todo | #87 |
+| D-31 | `PhantomEvent.jsx:5,21,55` | Clé `localStorage` propre (`phantomEvent_lastSpawn_v1`) hors schéma central | 🟢 | 🟢 | S | P2 | todo | #88 |
+| D-32 | `SafeImage.jsx:6–17` | Erreur de chargement d'image avalée silencieusement (fallback sans log) | 🟢 | 🟢 | S | P3 | todo | #89 |
 
 ### 3.5 Dette process
 
 | ID | Localisation | Problème | Impact | Risque | Effort | Priorité | Statut | Issue |
 |---|---|---|---|---|---|---|---|---|
-| D-23 | tout le dépôt | 0 test, aucune couverture | 🔴 | 🔴 | L | P0 | wip — 61 tests, couverture lignes 50,09 % (M3) | P3-1, P3-2 |
-| D-24 | `.github/workflows/` (racine) | CI incomplète à l'origine : uniquement build de l'exe sur push `main` ; pas de lint, test, couverture, gates, analyse statique | 🔴 | 🟠 | M | P0 | done | P3-3, P3-4, P3-5 |
-| D-25 | racine | Pas de formateur (Prettier) | 🟢 | 🟢 | S | P2 | done | P0-4 |
-| D-33 | PR #3, PR #4 ; absence de gate PR | Des PR « vides » (fichiers de 0 octet) ont été mergées sans CI : le process n'a pas détecté l'absence de contenu | 🟠 | 🟠 | S | P0 | done | P3-3, P3-4 |
-| D-35 | `CodeWashGame/.github/workflows/build-exe.yml` (état reçu) | Workflow placé dans un sous-dossier : GitHub ne lit que `.github/workflows` **à la racine**, donc la CI ne s'exécutait jamais | 🔴 | 🟠 | S | P0 | done | P3-3 |
-| D-36 | Paramètres GitHub du dépôt (`develop`, `main`) | Protection de branche impossible à activer : le compte a le rôle `WRITE`, pas `ADMIN`, et aucun administrateur n'est disponible. Les gates CI sont donc **consultatifs**, pas bloquants. Mitigation : discipline de PR + hook local `pre-push`. | 🟠 | 🟠 | S | P0 | wontfix (bloqué : pas d'admin) | P3-4 |
+| D-23 | tout le dépôt | 0 test, aucune couverture | 🔴 | 🔴 | L | P0 | wip — 61 tests, couverture lignes 50,09 % (M3) | #90 |
+| D-24 | `.github/workflows/` (racine) | CI incomplète à l'origine : uniquement build de l'exe sur push `main` ; pas de lint, test, couverture, gates, analyse statique | 🔴 | 🟠 | M | P0 | done | #91 |
+| D-25 | racine | Pas de formateur (Prettier) | 🟢 | 🟢 | S | P2 | done | #92 |
+| D-33 | PR #3, PR #4 ; absence de gate PR | Des PR « vides » (fichiers de 0 octet) ont été mergées sans CI : le process n'a pas détecté l'absence de contenu | 🟠 | 🟠 | S | P0 | done | #93 |
+| D-35 | `CodeWashGame/.github/workflows/build-exe.yml` (état reçu) | Workflow placé dans un sous-dossier : GitHub ne lit que `.github/workflows` **à la racine**, donc la CI ne s'exécutait jamais | 🔴 | 🟠 | S | P0 | done | #94 |
+| D-36 | Paramètres GitHub du dépôt (`develop`, `main`) | Protection de branche impossible à activer : le compte a le rôle `WRITE`, pas `ADMIN`, et aucun administrateur n'est disponible. Les gates CI sont donc **consultatifs**, pas bloquants. Mitigation : discipline de PR + hook local `pre-push`. | 🟠 | 🟠 | S | P0 | wontfix (bloqué : pas d'admin) | #95 |
 
 ### 3.6 Dette introduite volontairement (à remplir)
 
@@ -272,8 +272,9 @@ Mesures prises sur l'état reçu (`25b3629` / tag `v0.0-as-received`), **avant t
 
 - Chaque ligne du registre devient une issue avec les labels `debt`, `type:<refactor|bug|docs|chore|test|ci>`, `prio:P0..P4`, `effort:S|M|L`.
 - Chaque PR contient `Refs D-xx` / `Closes #n` et met à jour le statut ici.
-- La colonne **Issue** du §3 contient les identifiants du backlog interne (`P*-*`, plan de travail). Elle sera remplacée par les numéros GitHub `#n` à la création des issues.
-- **État au 2026-11-19 :** la CLI `gh` n'est pas disponible dans l'environnement de travail courant ; création des issues à faire depuis un poste authentifié (voir le plan de travail). Les identifiants `P*-*` restent la référence tant que ce n'est pas fait.
+- La colonne **Issue** du §3 contient désormais le numéro GitHub `#n` de chaque dette (issues **#61–#95**). Le backlog de travail (`P*-*`) est publié séparément en issues **#5–#60**, avec les milestones M0–M6.
+- Correspondances : `docs/metrics/debt-issues.json` (D-xx → #n) et `docs/metrics/roadmap-issues.json` (P-xx → #n).
+- **État au 2026-11-20 :** issues créées depuis un poste authentifié (`gh`). Chaque PR référence `Refs D-xx` / `Closes #n`.
 
 ---
 
