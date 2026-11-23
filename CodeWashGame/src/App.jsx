@@ -17,6 +17,7 @@ import AchievementToast from './components/ui/AchievementToast';
 // Utils & Constants
 import { logger } from './lib/logger';
 import { recordLoadError, consumeLoadErrors } from './lib/loadErrors';
+import { useSpeechRecognition } from './hooks/useSpeechRecognition';
 import {
     getRandomMob,
     getRandomFriendlyMob,
@@ -303,8 +304,6 @@ const App = () => {
     const [isCosmeticsOpen, setIsCosmeticsOpen] = useState(false);
     const [isResetOpen, setIsResetOpen] = useState(false);
     const [isBugReportOpen, setIsBugReportOpen] = useState(false);
-    const [isListening, setIsListening] = useState(false);
-    const [spokenText, setSpokenText] = useState('');
     const [damageNumbers, setDamageNumbers] = useState([]);
     const [selectedIndex, setSelectedIndex] = useState(0);
     const [isDragging, setIsDragging] = useState(false);
@@ -313,7 +312,7 @@ const App = () => {
     const [showLevelRestored, setShowLevelRestored] = useState(false);
     const [isFullscreen, setIsFullscreen] = useState(false);
     const [bossHealing, setBossHealing] = useState(null); // skillId of boss being healed
-    const recognitionRef = useRef(null);
+    const speech = useSpeechRecognition();
     const challengeDataRef = useRef(null);
     const damageIdRef = useRef(0); // Counter for generating unique damage number IDs
     const loginTrackedRef = useRef(false); // Track if we've already recorded today's login
@@ -885,10 +884,6 @@ const App = () => {
             // This ensures bosses don't change difficulty mid-fight and miniboss difficulty+1 is maintained
             const challengeDiff = battleDifficulty || skillDifficulty;
             setChallengeData(generateChallenge(skillConfig.challengeType, challengeDiff));
-            // Clear spokenText for reading challenges to prevent stale text from triggering false damage
-            if (skillConfig.challengeType === 'reading') {
-                setSpokenText('');
-            }
         } else if (skillConfig.id === 'memory') {
             setBattlingSkillId(null);
             setBattleDifficulty(null);
@@ -1007,16 +1002,15 @@ const App = () => {
         setChallengeData(generateChallenge(skill.challengeType, challengeDiff));
         playClick();
         startBGM(); // Start BGM on first battle (user interaction)
-        if (skill.challengeType === 'reading' && window.webkitSpeechRecognition)
-            startVoiceListener(id);
+        if (skill.challengeType === 'reading' && speech.isSupported)
+            speech.start(id, handleSpeechResult);
     };
 
     const endBattle = () => {
-        console.log('[Battle] Ending battle, cleaning up speech recognition');
         setBattlingSkillId(null);
         setBattleDifficulty(null);
         setChallengeData(null);
-        stopVoiceRecognition();
+        speech.stop();
         playClick();
     };
 
@@ -1089,129 +1083,27 @@ const App = () => {
         window.location.reload();
     };
 
-    // Helper function to stop and cleanup speech recognition
-    const stopVoiceRecognition = () => {
-        if (recognitionRef.current) {
-            try {
-                recognitionRef.current.stop();
-                console.log('[Speech Recognition] Stopped');
-            } catch (error) {
-                console.warn('[Speech Recognition] Error stopping:', error);
-            }
-            recognitionRef.current = null;
-        }
-        setIsListening(false);
-        setSpokenText(MIC_OFF_TEXT);
-    };
+    // Handle a recognised transcript for the current reading challenge.
+    const handleSpeechResult = (text, targetId) => {
+        const currentChallenge = challengeDataRef.current;
+        if (!currentChallenge || currentChallenge.type !== 'reading') return;
 
-    const startVoiceListener = (targetId) => {
-        if (!window.webkitSpeechRecognition) {
-            console.warn('[Speech Recognition] Web Speech API not available');
-            return;
-        }
+        const expected = currentChallenge.answer;
+        const isCorrect = text === expected || HOMOPHONES[expected]?.includes(text);
 
-        // If recognition already exists and is active, don't reinitialize
-        if (recognitionRef.current) {
-            console.log('[Speech Recognition] Already initialized, skipping');
-            return;
-        }
-
-        console.log('[Speech Recognition] Initializing for skill:', targetId);
-        recognitionRef.current = new window.webkitSpeechRecognition();
-        recognitionRef.current.lang = 'en-US';
-        recognitionRef.current.continuous = true;
-
-        recognitionRef.current.onstart = () => {
-            console.log('[Speech Recognition] Started listening');
-            setIsListening(true);
-            setSpokenText('Listening...');
-        };
-
-        recognitionRef.current.onend = () => {
-            console.log('[Speech Recognition] Ended');
-            setIsListening(false);
-            // Auto-restart if still in Reading challenge
-            // Note: battlingSkillId is intentionally checked from closure - if battle has ended
-            // by the time this timeout fires, we don't want to restart (which is the desired behavior)
-            if (battlingSkillId === 'reading' || targetId === 'reading') {
-                // Small delay before restarting to avoid rapid restarts
-                setTimeout(() => {
-                    // Double-check that we're still in reading challenge
-                    if (battlingSkillId === 'reading') {
-                        console.log('[Speech Recognition] Auto-restarting');
-                        recognitionRef.current = null; // Clear ref to allow restart
-                        startVoiceListener(targetId);
-                    }
-                }, 100);
-            } else {
-                setSpokenText(MIC_OFF_TEXT);
-            }
-        };
-
-        recognitionRef.current.onerror = (event) => {
-            console.error('[Speech Recognition] Error:', event.error);
-            if (event.error === 'no-speech') {
-                console.log('[Speech Recognition] No speech detected, continuing...');
-            } else if (event.error === 'not-allowed') {
-                console.error('[Speech Recognition] Microphone permission denied');
-                setSpokenText('Mic permission denied');
-                setIsListening(false);
-            } else {
-                console.error('[Speech Recognition] Error type:', event.error);
-            }
-        };
-
-        recognitionRef.current.onresult = (e) => {
-            const t = e.results[e.results.length - 1][0].transcript
-                .toUpperCase()
-                .replace(/[.,/#!$%^&*;:{}=\-_`~()]/g, '');
-            console.log('[Speech Recognition] Recognized text:', t);
-            setSpokenText(t);
-            // Use the ref to get the CURRENT challenge data
-            const currentChallenge = challengeDataRef.current;
-            if (currentChallenge && currentChallenge.type === 'reading') {
-                if (
-                    t === currentChallenge.answer ||
-                    HOMOPHONES[currentChallenge.answer]?.includes(t)
-                ) {
-                    console.log('[Speech Recognition] Correct answer!');
-                    handleSuccessHit(targetId || battlingSkillId);
-                } else if (t && t.length >= MIN_SPOKEN_TEXT_LENGTH) {
-                    // Wrong answer - trigger error feedback
-                    console.log('[Speech Recognition] Wrong answer');
-                    handleSuccessHit(targetId || battlingSkillId, 'WRONG');
-                }
-            }
-        };
-
-        try {
-            recognitionRef.current.start();
-            console.log('[Speech Recognition] Start command issued');
-        } catch (error) {
-            console.error('[Speech Recognition] Failed to start:', error);
+        if (isCorrect) {
+            handleSuccessHit(targetId || battlingSkillId);
+        } else if (text && text.length >= MIN_SPOKEN_TEXT_LENGTH) {
+            handleSuccessHit(targetId || battlingSkillId, 'WRONG');
         }
     };
 
-    // Toggle mic on/off when mic button is clicked
-    const toggleMicListener = (targetId) => {
-        console.log('[Mic Toggle] isListening:', isListening);
-
-        if (!window.webkitSpeechRecognition) {
-            console.warn('[Mic Toggle] Web Speech API not available');
-            setSpokenText('Mic not available');
-            return;
-        }
-
-        // If currently listening, stop it
-        if (recognitionRef.current && isListening) {
-            console.log('[Mic Toggle] Stopping recognition');
-            stopVoiceRecognition();
-        } else {
-            // If not listening, start it
-            console.log('[Mic Toggle] Starting recognition');
-            startVoiceListener(targetId);
-        }
-    };
+    const spokenText =
+        speech.error === 'not-allowed'
+            ? 'Mic permission denied'
+            : !speech.isSupported
+              ? 'Mic not available'
+              : speech.transcript || (speech.isListening ? 'Listening...' : MIC_OFF_TEXT);
 
     useEffect(() => {
         if (lootBox) setTimeout(() => setLootBox(null), 4000);
@@ -1653,7 +1545,7 @@ const App = () => {
                                     mobName={getMobForSkill(item, skills[item.id])}
                                     mobAura={getAuraForSkill(item, skills[item.id])}
                                     challenge={challengeData}
-                                    isListening={isListening}
+                                    isListening={speech.isListening}
                                     spokenText={spokenText}
                                     damageNumbers={damageNumbers.filter(
                                         (d) => d.skillId === item.id,
@@ -1661,7 +1553,7 @@ const App = () => {
                                     onStartBattle={() => startBattle(item.id)}
                                     onEndBattle={endBattle}
                                     onMathSubmit={(val) => handleSuccessHit(item.id, val)}
-                                    onMicClick={() => toggleMicListener(item.id)}
+                                    onMicClick={() => speech.toggle(item.id, handleSpeechResult)}
                                     difficulty={skills[item.id].difficulty || 1}
                                     setDifficulty={(newDiff) =>
                                         setSkillDifficulty(item.id, newDiff)
