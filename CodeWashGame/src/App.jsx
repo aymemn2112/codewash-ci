@@ -18,6 +18,10 @@ import AchievementToast from './components/ui/AchievementToast';
 import { logger } from './lib/logger';
 import { recordLoadError, consumeLoadErrors } from './lib/loadErrors';
 import { useSpeechRecognition } from './hooks/useSpeechRecognition';
+import { useFullscreen } from './hooks/useFullscreen';
+import { generateChallenge } from './domain/challenges';
+import { getVisibleItems } from './domain/carousel';
+import { getAuraForSkill } from './domain/auras';
 import {
     getRandomMob,
     getRandomFriendlyMob,
@@ -25,9 +29,6 @@ import {
     getRandomBoss,
     getMobForSkill,
     getEncounterType,
-    generateMathProblem,
-    getReadingWord,
-    getWordForDifficulty,
     calculateDamage,
     calculateMobHealth,
     calculateXPReward,
@@ -312,7 +313,7 @@ const App = () => {
     const [dragStartX, setDragStartX] = useState(0);
     const [showDeathOverlay, setShowDeathOverlay] = useState(false);
     const [showLevelRestored, setShowLevelRestored] = useState(false);
-    const [isFullscreen, setIsFullscreen] = useState(false);
+    const { isFullscreen, toggle: toggleFullscreen } = useFullscreen();
     const [bossHealing, setBossHealing] = useState(null); // skillId of boss being healed
     const speech = useSpeechRecognition();
     const challengeDataRef = useRef(null);
@@ -413,72 +414,12 @@ const App = () => {
         challengeDataRef.current = challengeData;
     }, [challengeData]);
 
-    // Listen for fullscreen changes
-    useEffect(() => {
-        const handleFullscreenChange = () => {
-            setIsFullscreen(!!document.fullscreenElement);
-        };
-
-        document.addEventListener('fullscreenchange', handleFullscreenChange);
-
-        return () => {
-            document.removeEventListener('fullscreenchange', handleFullscreenChange);
-        };
-    }, []);
-
     // Start BGM on first user interaction
     const startBGM = useCallback(() => {
         if (!bgmManager.current.isPlaying) {
             bgmManager.current.play();
         }
     }, []);
-
-    // Toggle fullscreen mode
-    const toggleFullscreen = () => {
-        if (!document.fullscreenElement) {
-            document.documentElement.requestFullscreen().catch((err) => {
-                console.warn('Failed to enter fullscreen:', err);
-            });
-        } else {
-            document.exitFullscreen().catch((err) => {
-                console.warn('Failed to exit fullscreen:', err);
-            });
-        }
-        playClick();
-    };
-
-    const generateChallenge = (type, diff) => {
-        // Math: Use difficulty-based problem generation
-        if (type === 'math') {
-            return generateMathProblem(diff);
-        }
-        // Patterns: Simon Says - no challenge data needed, handled in SkillCard
-        if (type === 'patterns') {
-            return { type: 'patterns', question: 'Simon Says!', answer: 'WIN' };
-        }
-        // Reading: Use difficulty-based word selection
-        if (type === 'reading') {
-            const word = getReadingWord(diff);
-            return { type, question: word, answer: word };
-        }
-        // Writing: Use difficulty-based word selection from comprehensive index
-        if (type === 'writing') {
-            const wordData = getWordForDifficulty(diff);
-            // Use displayName in uppercase for the answer (handles multi-word items with spaces)
-            const answer = wordData.displayName.toUpperCase();
-            return {
-                type,
-                question: 'Spell it!',
-                answer,
-                images: [wordData.image],
-                displayName: wordData.displayName,
-            };
-        }
-        // Memory: No specific challenge data, handled in SkillCard
-        if (type === 'memory') return { type: 'memory', question: 'Find Pairs!', answer: 'WIN' };
-        // Cleaning: Manual task
-        return { type: 'manual', question: 'Task Complete?', answer: 'yes' };
-    };
 
     // Regenerate challenge when difficulty or level changes during active battle
     // This fixes the issue where challenges use stale difficulty after leveling up
@@ -1135,17 +1076,6 @@ const App = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []); // Run once on mount, guarded by loginTrackedRef
 
-    const getVisibleItems = () => {
-        const items = [];
-        // Generate 7 items: 5 visible cards (offsets -2 to +2) + 2 hidden positions (±3) for smooth entry/exit animation
-        for (let i = -3; i <= 3; i++) {
-            let idx = selectedIndex + i;
-            let dataIndex = idx % SKILL_DATA.length;
-            if (dataIndex < 0) dataIndex += SKILL_DATA.length;
-            items.push({ ...SKILL_DATA[dataIndex], offset: i, key: idx });
-        }
-        return items;
-    };
     const currentThemeData = THEME_CONFIG[activeTheme] || THEME_CONFIG[DEFAULT_THEME_ID];
     const containerStyle = { ...currentThemeData.style, fontFamily: '"VT323", monospace' };
 
@@ -1180,34 +1110,6 @@ const App = () => {
         } else {
             playActionCardLeft();
         }
-    };
-
-    // Helper to get the aura for the current mob encounter
-    const getAuraForSkill = (skillConfig, userSkill) => {
-        // Memory and Cleaning don't use auras
-        if (skillConfig.id === 'memory' || skillConfig.id === 'cleaning') {
-            return null;
-        }
-
-        const encounterType = getEncounterType(userSkill.level);
-
-        if (encounterType === 'boss') {
-            return userSkill.currentBossAura;
-        }
-
-        if (encounterType === 'miniboss') {
-            return userSkill.currentMinibossAura;
-        }
-
-        // Combat skills have their own auras
-        const combatSkillAuras = {
-            reading: userSkill.readingMobAura,
-            math: userSkill.mathMobAura,
-            writing: userSkill.writingMobAura,
-            patterns: userSkill.patternMobAura,
-        };
-
-        return combatSkillAuras[skillConfig.id] || null;
     };
 
     return (
@@ -1488,7 +1390,7 @@ const App = () => {
                     }}
                     onTouchEnd={handleDragEnd}
                 >
-                    {getVisibleItems().map((item) => {
+                    {getVisibleItems(selectedIndex).map((item) => {
                         const isItemBattling = item.offset === 0 && battlingSkillId === item.id;
                         // Calculate curved positioning based on offset
                         const getVerticalOffset = (offset) => {
