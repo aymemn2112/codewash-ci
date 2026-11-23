@@ -223,16 +223,21 @@ export const DIFFICULTY_IMAGES = {
     7: 'assets/difficulty/Difficulty_7.png',
 };
 
+export const DEFAULT_THEME_ID = 'classic';
+
+/** Legacy saves used the "minecraft" theme id; migrate them on read. */
+export const normalizeThemeId = (id) => (id === 'minecraft' ? DEFAULT_THEME_ID : id);
+
 export const THEME_CONFIG = {
-    minecraft: {
-        name: 'Minecraft',
+    classic: {
+        name: 'Classic',
         style: {
-            backgroundImage: `url('assets/themes/minecraft.png')`,
+            backgroundImage: `url('assets/themes/classic.png')`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
         },
         assets: {
-            logo: 'assets/themes/minecraft_logo.png',
+            logo: 'assets/themes/classic_logo.png',
             cardBack: 'assets/themes/memorycard.jpg',
             mobs: {
                 Zombie: 'assets/mobs/hostile/zombie.png',
@@ -306,7 +311,7 @@ export const THEME_CONFIG = {
     spy: {
         name: 'Spy',
         style: {
-            backgroundImage: `url('assets/themes/minecraft.png')`,
+            backgroundImage: `url('assets/themes/classic.png')`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
         },
@@ -327,7 +332,7 @@ export const THEME_CONFIG = {
 };
 
 export const THEMES_LIST = [
-    { id: 'minecraft', name: 'Minecraft', img: 'assets/themes/minecraft.png' },
+    { id: 'classic', name: 'Classic', img: 'assets/themes/classic.png' },
     { id: 'kpop', name: 'K-Pop Demon Hunters', img: 'assets/themes/kpop.jpg' },
     { id: 'pokemon', name: 'Pokemon', img: 'assets/themes/pokemon.jpg' },
     { id: 'spy', name: 'Spy', img: 'assets/themes/spy.png' },

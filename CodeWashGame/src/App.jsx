@@ -43,6 +43,8 @@ import {
     HOSTILE_MOBS,
     BOSS_MOBS,
     MINIBOSS_MOBS,
+    DEFAULT_THEME_ID,
+    normalizeThemeId,
 } from './constants/gameData';
 import {
     getBGMManager,
@@ -221,12 +223,12 @@ const App = () => {
             saved = localStorage.getItem('heroSkills_v23');
         }
         try {
-            return JSON.parse(saved).theme || 'minecraft';
+            return normalizeThemeId(JSON.parse(saved).theme || DEFAULT_THEME_ID);
         } catch (e) {
             recordLoadError('theme');
             logger.warn('Failed to parse theme:', e);
         }
-        return 'minecraft';
+        return DEFAULT_THEME_ID;
     };
 
     const loadStats = (profileId) => {
@@ -273,7 +275,7 @@ const App = () => {
         try {
             const data = JSON.parse(saved);
             const skillsData = data.skills || data;
-            const theme = data.theme || 'minecraft';
+            const theme = normalizeThemeId(data.theme || DEFAULT_THEME_ID);
             let totalLevel = 0;
             let highestLevel = 0;
             Object.values(skillsData).forEach((s) => {
@@ -1144,7 +1146,7 @@ const App = () => {
         }
         return items;
     };
-    const currentThemeData = THEME_CONFIG[activeTheme] || THEME_CONFIG.minecraft;
+    const currentThemeData = THEME_CONFIG[activeTheme] || THEME_CONFIG[DEFAULT_THEME_ID];
     const containerStyle = { ...currentThemeData.style, fontFamily: '"VT323", monospace' };
 
     // Drag handlers for carousel navigation
@@ -1610,7 +1612,7 @@ const App = () => {
                 />
             )}
 
-            {/* Death Overlay - Minecraft-style YOU DIED screen */}
+            {/* Death Overlay - pixel-art YOU DIED screen */}
             {showDeathOverlay && (
                 <div className="fixed inset-0 z-[100] flex items-center justify-center bg-red-900/60 animate-pulse pointer-events-none">
                     <div className="text-center">
