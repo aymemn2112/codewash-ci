@@ -16,6 +16,7 @@ import AchievementToast from './components/ui/AchievementToast';
 
 // Utils & Constants
 import { logger } from './lib/logger';
+import { recordLoadError, consumeLoadErrors } from './lib/loadErrors';
 import {
     getRandomMob,
     getRandomFriendlyMob,
@@ -208,6 +209,7 @@ const App = () => {
                 return initial;
             }
         } catch (e) {
+            recordLoadError('skills');
             logger.warn('Failed to parse saved skills:', e);
         }
         return initial;
@@ -220,6 +222,7 @@ const App = () => {
         try {
             return JSON.parse(saved).theme || 'minecraft';
         } catch (e) {
+            recordLoadError('theme');
             logger.warn('Failed to parse theme:', e);
         }
         return 'minecraft';
@@ -237,6 +240,7 @@ const App = () => {
                 return { ...getDefaultStats(), ...data.stats };
             }
         } catch (e) {
+            recordLoadError('stats');
             logger.warn('Failed to parse stats:', e);
         }
         return getDefaultStats();
@@ -279,6 +283,7 @@ const App = () => {
             });
             return { totalLevel, highestLevel, skills: skillsData, theme };
         } catch (e) {
+            recordLoadError('profile stats');
             logger.warn('Failed to parse profile stats:', e);
             return null;
         }
@@ -287,6 +292,7 @@ const App = () => {
     const [skills, setSkills] = useState(() => loadSkills(currentProfile));
     const [activeTheme, setActiveTheme] = useState(() => loadTheme(currentProfile));
     const [stats, setStats] = useState(() => loadStats(currentProfile));
+    const [loadWarning, setLoadWarning] = useState(() => consumeLoadErrors().length > 0);
     const [achievementToast, setAchievementToast] = useState(null);
     const [battlingSkillId, setBattlingSkillId] = useState(null);
     const [battleDifficulty, setBattleDifficulty] = useState(null); // Track battle's starting difficulty for consistent challenge generation
@@ -1317,6 +1323,22 @@ const App = () => {
         >
             <GlobalStyles />
             <div className="absolute inset-0 bg-black/30 pointer-events-none z-0"></div>
+
+            {loadWarning && (
+                <div
+                    role="alert"
+                    className="absolute top-4 left-1/2 -translate-x-1/2 z-50 bg-red-900/90 border-2 border-red-500 text-red-50 px-4 py-2 rounded-lg shadow-lg flex items-center gap-3"
+                >
+                    <span>Some saved data could not be read and was reset to defaults.</span>
+                    <button
+                        onClick={() => setLoadWarning(false)}
+                        className="font-bold text-red-200 hover:text-white"
+                        aria-label="Dismiss warning"
+                    >
+                        ×
+                    </button>
+                </div>
+            )}
 
             {/* Top Left Buttons */}
             {/* Button dimensions: p-3 (12px) + icon(48px) + p-3 (12px) + border-2*2 (4px) = 76px + 8px gap = 84px spacing */}

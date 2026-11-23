@@ -1,6 +1,7 @@
 import '@testing-library/jest-dom/vitest';
 import { cleanup } from '@testing-library/react';
 import { afterEach, beforeEach, vi } from 'vitest';
+import { resetLoadErrors } from '../lib/loadErrors';
 
 // jsdom does not implement media playback. Stub it before every test so
 // components that create Audio elements do not throw or print
@@ -13,5 +14,6 @@ beforeEach(() => {
 afterEach(() => {
     cleanup();
     localStorage.clear();
+    resetLoadErrors();
     vi.restoreAllMocks();
 });
