@@ -436,11 +436,11 @@ const App = () => {
     const toggleFullscreen = () => {
         if (!document.fullscreenElement) {
             document.documentElement.requestFullscreen().catch((err) => {
-                logger.warn('Failed to enter fullscreen:', err);
+                console.warn('Failed to enter fullscreen:', err);
             });
         } else {
             document.exitFullscreen().catch((err) => {
-                logger.warn('Failed to exit fullscreen:', err);
+                console.warn('Failed to exit fullscreen:', err);
             });
         }
         playClick();
@@ -1012,7 +1012,7 @@ const App = () => {
     };
 
     const endBattle = () => {
-        logger.log('[Battle] Ending battle, cleaning up speech recognition');
+        console.log('[Battle] Ending battle, cleaning up speech recognition');
         setBattlingSkillId(null);
         setBattleDifficulty(null);
         setChallengeData(null);
@@ -1094,9 +1094,9 @@ const App = () => {
         if (recognitionRef.current) {
             try {
                 recognitionRef.current.stop();
-                logger.log('[Speech Recognition] Stopped');
+                console.log('[Speech Recognition] Stopped');
             } catch (error) {
-                logger.warn('[Speech Recognition] Error stopping:', error);
+                console.warn('[Speech Recognition] Error stopping:', error);
             }
             recognitionRef.current = null;
         }
@@ -1106,29 +1106,29 @@ const App = () => {
 
     const startVoiceListener = (targetId) => {
         if (!window.webkitSpeechRecognition) {
-            logger.warn('[Speech Recognition] Web Speech API not available');
+            console.warn('[Speech Recognition] Web Speech API not available');
             return;
         }
 
         // If recognition already exists and is active, don't reinitialize
         if (recognitionRef.current) {
-            logger.log('[Speech Recognition] Already initialized, skipping');
+            console.log('[Speech Recognition] Already initialized, skipping');
             return;
         }
 
-        logger.log('[Speech Recognition] Initializing for skill:', targetId);
+        console.log('[Speech Recognition] Initializing for skill:', targetId);
         recognitionRef.current = new window.webkitSpeechRecognition();
         recognitionRef.current.lang = 'en-US';
         recognitionRef.current.continuous = true;
 
         recognitionRef.current.onstart = () => {
-            logger.log('[Speech Recognition] Started listening');
+            console.log('[Speech Recognition] Started listening');
             setIsListening(true);
             setSpokenText('Listening...');
         };
 
         recognitionRef.current.onend = () => {
-            logger.log('[Speech Recognition] Ended');
+            console.log('[Speech Recognition] Ended');
             setIsListening(false);
             // Auto-restart if still in Reading challenge
             // Note: battlingSkillId is intentionally checked from closure - if battle has ended
@@ -1138,7 +1138,7 @@ const App = () => {
                 setTimeout(() => {
                     // Double-check that we're still in reading challenge
                     if (battlingSkillId === 'reading') {
-                        logger.log('[Speech Recognition] Auto-restarting');
+                        console.log('[Speech Recognition] Auto-restarting');
                         recognitionRef.current = null; // Clear ref to allow restart
                         startVoiceListener(targetId);
                     }
@@ -1149,15 +1149,15 @@ const App = () => {
         };
 
         recognitionRef.current.onerror = (event) => {
-            logger.error('[Speech Recognition] Error:', event.error);
+            console.error('[Speech Recognition] Error:', event.error);
             if (event.error === 'no-speech') {
-                logger.log('[Speech Recognition] No speech detected, continuing...');
+                console.log('[Speech Recognition] No speech detected, continuing...');
             } else if (event.error === 'not-allowed') {
-                logger.error('[Speech Recognition] Microphone permission denied');
+                console.error('[Speech Recognition] Microphone permission denied');
                 setSpokenText('Mic permission denied');
                 setIsListening(false);
             } else {
-                logger.error('[Speech Recognition] Error type:', event.error);
+                console.error('[Speech Recognition] Error type:', event.error);
             }
         };
 
@@ -1165,7 +1165,7 @@ const App = () => {
             const t = e.results[e.results.length - 1][0].transcript
                 .toUpperCase()
                 .replace(/[.,/#!$%^&*;:{}=\-_`~()]/g, '');
-            logger.log('[Speech Recognition] Recognized text:', t);
+            console.log('[Speech Recognition] Recognized text:', t);
             setSpokenText(t);
             // Use the ref to get the CURRENT challenge data
             const currentChallenge = challengeDataRef.current;
@@ -1174,11 +1174,11 @@ const App = () => {
                     t === currentChallenge.answer ||
                     HOMOPHONES[currentChallenge.answer]?.includes(t)
                 ) {
-                    logger.log('[Speech Recognition] Correct answer!');
+                    console.log('[Speech Recognition] Correct answer!');
                     handleSuccessHit(targetId || battlingSkillId);
                 } else if (t && t.length >= MIN_SPOKEN_TEXT_LENGTH) {
                     // Wrong answer - trigger error feedback
-                    logger.log('[Speech Recognition] Wrong answer');
+                    console.log('[Speech Recognition] Wrong answer');
                     handleSuccessHit(targetId || battlingSkillId, 'WRONG');
                 }
             }
@@ -1186,29 +1186,29 @@ const App = () => {
 
         try {
             recognitionRef.current.start();
-            logger.log('[Speech Recognition] Start command issued');
+            console.log('[Speech Recognition] Start command issued');
         } catch (error) {
-            logger.error('[Speech Recognition] Failed to start:', error);
+            console.error('[Speech Recognition] Failed to start:', error);
         }
     };
 
     // Toggle mic on/off when mic button is clicked
     const toggleMicListener = (targetId) => {
-        logger.log('[Mic Toggle] isListening:', isListening);
+        console.log('[Mic Toggle] isListening:', isListening);
 
         if (!window.webkitSpeechRecognition) {
-            logger.warn('[Mic Toggle] Web Speech API not available');
+            console.warn('[Mic Toggle] Web Speech API not available');
             setSpokenText('Mic not available');
             return;
         }
 
         // If currently listening, stop it
         if (recognitionRef.current && isListening) {
-            logger.log('[Mic Toggle] Stopping recognition');
+            console.log('[Mic Toggle] Stopping recognition');
             stopVoiceRecognition();
         } else {
             // If not listening, start it
-            logger.log('[Mic Toggle] Starting recognition');
+            console.log('[Mic Toggle] Starting recognition');
             startVoiceListener(targetId);
         }
     };
