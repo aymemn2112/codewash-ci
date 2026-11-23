@@ -20,7 +20,7 @@ import { recordLoadError, consumeLoadErrors } from './lib/loadErrors';
 import { useSpeechRecognition } from './hooks/useSpeechRecognition';
 import { useFullscreen } from './hooks/useFullscreen';
 import { generateChallenge } from './domain/challenges';
-import { getVisibleItems } from './domain/carousel';
+import { useCarousel } from './hooks/useCarousel';
 import { getAuraForSkill } from './domain/auras';
 import {
     getRandomMob,
@@ -308,9 +308,11 @@ const App = () => {
     const [isResetOpen, setIsResetOpen] = useState(false);
     const [isBugReportOpen, setIsBugReportOpen] = useState(false);
     const [damageNumbers, setDamageNumbers] = useState([]);
-    const [selectedIndex, setSelectedIndex] = useState(0);
-    const [isDragging, setIsDragging] = useState(false);
-    const [dragStartX, setDragStartX] = useState(0);
+    const carousel = useCarousel({
+        battling: Boolean(battlingSkillId),
+        onLeft: playActionCardLeft,
+        onRight: playActionCardRight,
+    });
     const [showDeathOverlay, setShowDeathOverlay] = useState(false);
     const [showLevelRestored, setShowLevelRestored] = useState(false);
     const { isFullscreen, toggle: toggleFullscreen } = useFullscreen();
@@ -1079,39 +1081,6 @@ const App = () => {
     const currentThemeData = THEME_CONFIG[activeTheme] || THEME_CONFIG[DEFAULT_THEME_ID];
     const containerStyle = { ...currentThemeData.style, fontFamily: '"VT323", monospace' };
 
-    // Drag handlers for carousel navigation
-    const handleDragStart = (clientX) => {
-        if (battlingSkillId) return;
-        setIsDragging(true);
-        setDragStartX(clientX);
-    };
-    const handleDragMove = (clientX) => {
-        if (!isDragging || battlingSkillId) return;
-        const diff = dragStartX - clientX;
-        if (Math.abs(diff) >= 100) {
-            if (diff > 0) {
-                setSelectedIndex((p) => p + 1);
-                playActionCardRight();
-            } else {
-                setSelectedIndex((p) => p - 1);
-                playActionCardLeft();
-            }
-            setIsDragging(false);
-        }
-    };
-    const handleDragEnd = () => {
-        setIsDragging(false);
-    };
-    const handleCardClick = (offset) => {
-        if (battlingSkillId || offset === 0) return;
-        setSelectedIndex((p) => p + offset);
-        if (offset > 0) {
-            playActionCardRight();
-        } else {
-            playActionCardLeft();
-        }
-    };
-
     return (
         <div
             className="min-h-screen overflow-hidden relative flex flex-col bg-cover bg-center bg-no-repeat font-sans text-stone-100"
@@ -1316,7 +1285,7 @@ const App = () => {
                 {/* Left Chevron - Parenthesis style with gradient fade */}
                 <button
                     onClick={() => {
-                        setSelectedIndex((p) => p - 1);
+                        carousel.setSelectedIndex((p) => p - 1);
                         playActionCardLeft();
                     }}
                     className="flex absolute left-0 z-30 items-center justify-center h-full"
@@ -1347,7 +1316,7 @@ const App = () => {
                 {/* Right Chevron - Parenthesis style with gradient fade */}
                 <button
                     onClick={() => {
-                        setSelectedIndex((p) => p + 1);
+                        carousel.setSelectedIndex((p) => p + 1);
                         playActionCardRight();
                     }}
                     className="flex absolute right-0 z-30 items-center justify-center h-full"
@@ -1377,20 +1346,24 @@ const App = () => {
                 <div
                     className={`relative w-full flex items-center justify-center perspective-1000 h-[650px] mb-12 ${battlingSkillId ? 'z-50' : ''}`}
                     style={{
-                        cursor: battlingSkillId ? 'default' : isDragging ? 'grabbing' : 'grab',
+                        cursor: battlingSkillId
+                            ? 'default'
+                            : carousel.isDragging
+                              ? 'grabbing'
+                              : 'grab',
                     }}
-                    onMouseDown={(e) => handleDragStart(e.clientX)}
-                    onMouseMove={(e) => handleDragMove(e.clientX)}
-                    onMouseUp={handleDragEnd}
-                    onMouseLeave={handleDragEnd}
-                    onTouchStart={(e) => handleDragStart(e.touches[0].clientX)}
+                    onMouseDown={(e) => carousel.dragStart(e.clientX)}
+                    onMouseMove={(e) => carousel.dragMove(e.clientX)}
+                    onMouseUp={carousel.dragEnd}
+                    onMouseLeave={carousel.dragEnd}
+                    onTouchStart={(e) => carousel.dragStart(e.touches[0].clientX)}
                     onTouchMove={(e) => {
                         e.preventDefault();
-                        handleDragMove(e.touches[0].clientX);
+                        carousel.dragMove(e.touches[0].clientX);
                     }}
-                    onTouchEnd={handleDragEnd}
+                    onTouchEnd={carousel.dragEnd}
                 >
-                    {getVisibleItems(selectedIndex).map((item) => {
+                    {carousel.items.map((item) => {
                         const isItemBattling = item.offset === 0 && battlingSkillId === item.id;
                         // Calculate curved positioning based on offset
                         const getVerticalOffset = (offset) => {
@@ -1438,7 +1411,7 @@ const App = () => {
                                     // Smooth entry/exit transitions along the parabola
                                     transitionTimingFunction: 'cubic-bezier(0.4, 0.0, 0.2, 1)',
                                 }}
-                                onClick={() => handleCardClick(item.offset)}
+                                onClick={() => carousel.clickCard(item.offset)}
                             >
                                 <SkillCard
                                     config={item}
