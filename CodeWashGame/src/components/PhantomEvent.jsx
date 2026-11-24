@@ -3,6 +3,7 @@ import { HOSTILE_MOBS } from '../constants/gameData';
 import { playSuccessfulHit } from '../utils/soundManager';
 import { defaultRng } from '../services/rng';
 import { defaultClock } from '../services/clock';
+import { browserStorage } from '../services/storage';
 
 const PHANTOM_COOLDOWN_KEY = 'phantomEvent_lastSpawn_v1';
 const MIN_COOLDOWN_MS = 5 * 60 * 1000; // 5 minutes
@@ -16,6 +17,7 @@ const PhantomEvent = ({
     onPhantomCaught,
     rng = defaultRng,
     clock = defaultClock,
+    storage = browserStorage,
 }) => {
     const [isActive, setIsActive] = useState(false);
     const [fromLeft, setFromLeft] = useState(true);
@@ -26,7 +28,7 @@ const PhantomEvent = ({
 
     // Schedule the next phantom spawn
     const scheduleNextSpawn = useCallback(() => {
-        const lastSpawn = parseInt(localStorage.getItem(PHANTOM_COOLDOWN_KEY) || '0', 10);
+        const lastSpawn = parseInt(storage.getItem(PHANTOM_COOLDOWN_KEY) || '0', 10);
         const now = clock().getTime();
         const timeSinceLastSpawn = now - lastSpawn;
 
@@ -50,7 +52,7 @@ const PhantomEvent = ({
                 spawnPhantomRef.current();
             }
         }, delay);
-    }, [rng, clock]);
+    }, [rng, clock, storage]);
 
     // Spawn the phantom
     const spawnPhantom = useCallback(() => {
@@ -61,7 +63,7 @@ const PhantomEvent = ({
         setIsActive(true);
 
         // Record spawn time
-        localStorage.setItem(PHANTOM_COOLDOWN_KEY, clock().getTime().toString());
+        storage.setItem(PHANTOM_COOLDOWN_KEY, clock().getTime().toString());
 
         // Set timeout for when phantom reaches the other side
         if (flightTimeoutRef.current) {
@@ -71,7 +73,7 @@ const PhantomEvent = ({
             setIsActive(false);
             scheduleNextSpawn();
         }, FLIGHT_DURATION_MS);
-    }, [scheduleNextSpawn, rng, clock]);
+    }, [scheduleNextSpawn, rng, clock, storage]);
 
     // Keep ref updated
     useEffect(() => {
