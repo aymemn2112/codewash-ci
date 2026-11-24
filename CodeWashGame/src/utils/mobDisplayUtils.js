@@ -1,3 +1,4 @@
+import { defaultRng } from '../services/rng';
 // Mob display utilities for aura generation
 
 // Available aura types
@@ -26,20 +27,22 @@ export const AURA_ADJECTIVES = {
 
 /**
  * Get a random aura effect
+ * @param {() => number} [rng] - Source of randomness in [0, 1), defaults to Math.random
  * @returns {string} Random aura type from AURA_TYPES
  */
-export const getRandomAura = () => {
-    return AURA_TYPES[Math.floor(Math.random() * AURA_TYPES.length)];
+export const getRandomAura = (rng = defaultRng) => {
+    return AURA_TYPES[Math.floor(rng() * AURA_TYPES.length)];
 };
 
 /**
  * Generate mob with aura for display
  * @param {string} mobName - Name of the mob
  * @param {string} mobSrc - Source path for mob image
+ * @param {() => number} [rng] - Source of randomness in [0, 1), defaults to Math.random
  * @returns {object} Object with mobName, mobSrc, aura, and displayName
  */
-export const generateMobWithAura = (mobName, mobSrc) => {
-    const aura = getRandomAura();
+export const generateMobWithAura = (mobName, mobSrc, rng = defaultRng) => {
+    const aura = getRandomAura(rng);
     const displayName = AURA_ADJECTIVES[aura] ? `${AURA_ADJECTIVES[aura]} ${mobName}` : mobName;
 
     return {
