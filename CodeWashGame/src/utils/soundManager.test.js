@@ -128,3 +128,17 @@ describe('BGM manager', () => {
         expect(manager.getRandomTrack()).toBe(5);
     });
 });
+
+describe('BGM manager with an injected rng', () => {
+    it('getRandomTrack uses the given rng instead of Math.random', () => {
+        const manager = getBGMManager();
+        const spy = vi.spyOn(Math, 'random');
+        manager.currentTrackIndex = 2;
+
+        expect(manager.getRandomTrack(() => 0)).toBe(0);
+        expect(manager.getRandomTrack(() => 0.999)).toBe(5);
+        expect(spy).not.toHaveBeenCalled();
+
+        manager.currentTrackIndex = -1;
+    });
+});
