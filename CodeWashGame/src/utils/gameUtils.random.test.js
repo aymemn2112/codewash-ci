@@ -1,10 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import {
-    getRandomMob,
-    getRandomFriendlyMob,
-    getRandomMiniboss,
-    getRandomBoss,
-} from './gameUtils';
+import { getRandomMob, getRandomFriendlyMob, getRandomMiniboss, getRandomBoss } from './gameUtils';
 import { HOSTILE_MOBS, FRIENDLY_MOBS, MINIBOSS_MOBS, BOSS_MOBS } from '../constants/gameData';
 
 afterEach(() => vi.restoreAllMocks());
@@ -57,5 +52,23 @@ describe('getRandomMob', () => {
         const spy = vi.spyOn(Math, 'random').mockReturnValue(0.5);
         getRandomMob(null);
         expect(spy).toHaveBeenCalledTimes(1);
+    });
+});
+
+describe('injected rng', () => {
+    it('getRandomFriendlyMob, getRandomMiniboss and getRandomBoss use the given rng', () => {
+        const spy = vi.spyOn(Math, 'random');
+        expect(getRandomFriendlyMob(() => 0)).toBe(Object.keys(FRIENDLY_MOBS)[0]);
+        expect(getRandomMiniboss(() => 0)).toBe(Object.keys(MINIBOSS_MOBS)[0]);
+        expect(getRandomBoss(() => 0.999)).toBe(Object.keys(BOSS_MOBS).at(-1));
+        expect(spy).not.toHaveBeenCalled();
+    });
+
+    it('getRandomMob uses the given rng and still honours exclude', () => {
+        const keys = Object.keys(HOSTILE_MOBS);
+        const spy = vi.spyOn(Math, 'random');
+        expect(getRandomMob(null, () => 0)).toBe(keys[0]);
+        expect(getRandomMob(keys[0], () => 0)).toBe(keys[1]);
+        expect(spy).not.toHaveBeenCalled();
     });
 });
