@@ -14,30 +14,25 @@ import {
     WRITING_DIFFICULTY_POOLS,
 } from '../constants/gameData';
 
-export const getRandomMob = (exclude) => {
-    const pool = Object.keys(HOSTILE_MOBS).filter((m) => m !== exclude);
-    return pool.length > 0 ? pool[Math.floor(Math.random() * pool.length)] : 'Zombie';
-};
+// Pick a random element of `list`, or `fallback` when the list is empty.
+// `rng` defaults to Math.random so callers behave as before; tests can inject a fixed one.
+const pickRandomOr = (list, fallback, rng = Math.random) =>
+    list.length > 0 ? list[Math.floor(rng() * list.length)] : fallback;
+
+export const getRandomMob = (exclude, rng) =>
+    pickRandomOr(
+        Object.keys(HOSTILE_MOBS).filter((m) => m !== exclude),
+        'Zombie',
+        rng,
+    );
 
 // Get a random friendly mob key for the Memory skill
-export const getRandomFriendlyMob = () => {
-    const friendlyMobKeys = Object.keys(FRIENDLY_MOBS);
-    return friendlyMobKeys.length > 0
-        ? friendlyMobKeys[Math.floor(Math.random() * friendlyMobKeys.length)]
-        : 'Allay';
-};
+export const getRandomFriendlyMob = (rng) => pickRandomOr(Object.keys(FRIENDLY_MOBS), 'Allay', rng);
 
-export const getRandomMiniboss = () => {
-    const minibossKeys = Object.keys(MINIBOSS_MOBS);
-    return minibossKeys.length > 0
-        ? minibossKeys[Math.floor(Math.random() * minibossKeys.length)]
-        : 'Wither Skeleton';
-};
+export const getRandomMiniboss = (rng) =>
+    pickRandomOr(Object.keys(MINIBOSS_MOBS), 'Wither Skeleton', rng);
 
-export const getRandomBoss = () => {
-    const bossKeys = Object.keys(BOSS_MOBS);
-    return bossKeys.length > 0 ? bossKeys[Math.floor(Math.random() * bossKeys.length)] : 'Wither';
-};
+export const getRandomBoss = (rng) => pickRandomOr(Object.keys(BOSS_MOBS), 'Wither', rng);
 
 // Determines encounter type based on level cycle pattern
 // Level cycle: 1-9 = hostile, 10 = miniboss, 11-19 = hostile, 20 = boss (repeats)
@@ -91,11 +86,7 @@ export const getMobForSkill = (skillConfig, userSkill) => {
     // Normal hostile mob
     const hostileMobKeys = Object.keys(HOSTILE_MOBS);
     const currentMobIsValid = userSkill.currentMob && hostileMobKeys.includes(userSkill.currentMob);
-    return currentMobIsValid
-        ? userSkill.currentMob
-        : hostileMobKeys.length > 0
-          ? hostileMobKeys[Math.floor(Math.random() * hostileMobKeys.length)]
-          : 'Zombie';
+    return currentMobIsValid ? userSkill.currentMob : getRandomMob(null);
 };
 
 // ===== RPG Progression Utility Functions =====
