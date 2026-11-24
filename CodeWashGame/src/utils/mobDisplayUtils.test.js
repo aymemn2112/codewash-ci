@@ -39,3 +39,20 @@ describe('generateMobWithAura', () => {
         expect(result.displayName).toBe('Overgrown Creeper');
     });
 });
+
+describe('injected rng', () => {
+    it('getRandomAura uses the given rng instead of Math.random', () => {
+        const spy = vi.spyOn(Math, 'random');
+        expect(getRandomAura(() => 0)).toBe('rainbow');
+        expect(getRandomAura(() => 0.999)).toBe('nature');
+        expect(spy).not.toHaveBeenCalled();
+    });
+
+    it('generateMobWithAura forwards the rng to getRandomAura', () => {
+        const spy = vi.spyOn(Math, 'random');
+        const result = generateMobWithAura('Zombie', 'zombie.png', () => 0);
+        expect(result.aura).toBe('rainbow');
+        expect(result.displayName).toBe('Prismatic Zombie');
+        expect(spy).not.toHaveBeenCalled();
+    });
+});
