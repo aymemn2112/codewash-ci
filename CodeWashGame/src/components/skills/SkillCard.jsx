@@ -17,15 +17,14 @@ import {
 } from '../../constants/gameData';
 import { playClick, getSfxVolume } from '../../utils/soundManager';
 import { calculateXPToLevel } from '../../utils/gameUtils';
+import { getTempoDelays } from '../../domain/patternTempo';
+import { buildMemoryDeck, nextSimonSequence, pickRandom } from '../../domain/skillGames';
 import { AURA_ADJECTIVES } from '../../utils/mobDisplayUtils';
 
 const PRESTIGE_LEVEL_THRESHOLD = 20;
 
 // Voice recognition constants
 const MIN_SPOKEN_TEXT_LENGTH = 2;
-// Tempo constants for pattern recognition
-const MAX_TEMPO_DELAY = 800; // Slowest tempo (difficulty 1, round 1)
-const MIN_TEMPO_DELAY = 200; // Fastest tempo (difficulty 7, always)
 
 // Map axolotl colors to specific note files for consistent sound feedback
 const AXOLOTL_NOTE_MAP = {
@@ -37,39 +36,6 @@ const AXOLOTL_NOTE_MAP = {
     Red: 'a4',
     Green: 'b4',
     Black: 'g5',
-};
-
-// Helper: clamp a value between min and max
-const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
-
-// Helper: linearly interpolate between two values
-const lerp = (start, end, t) => start + (end - start) * clamp(t, 0, 1);
-
-// Calculate tempo delays based on completed rounds and difficulty
-// Difficulty scales both the starting delay and the acceleration runway
-const getTempoDelays = (completedRounds, currentDifficulty) => {
-    // Use 1-based round number
-    const round = completedRounds + 1;
-
-    // Calculate starting delay based on difficulty
-    // Difficulty 1: 800ms, Difficulty 7: 200ms
-    const startingDelay = lerp(MAX_TEMPO_DELAY, MIN_TEMPO_DELAY, (currentDifficulty - 1) / 6);
-
-    // Calculate acceleration runway based on difficulty
-    // Difficulty 1: ~10 rounds, Difficulty 7: 1 round (essentially no acceleration)
-    const maxRunwayRounds = lerp(10, 1, (currentDifficulty - 1) / 6);
-
-    // Calculate current tempo with acceleration
-    // Progress through the runway: 0 at round 1, 1 at maxRunwayRounds
-    // Handle edge case where maxRunwayRounds is 1 (no acceleration)
-    const runwayProgress = maxRunwayRounds > 1 ? (round - 1) / (maxRunwayRounds - 1) : 1;
-    const rawOnDelay = lerp(startingDelay, MIN_TEMPO_DELAY, runwayProgress);
-    const onDelay = clamp(rawOnDelay, MIN_TEMPO_DELAY, MAX_TEMPO_DELAY);
-
-    // offDelay scaled to ~35% of onDelay with a 100ms floor
-    const offDelay = Math.max(100, Math.round(onDelay * 0.35));
-
-    return { onDelay, offDelay };
 };
 
 const SkillCard = ({
@@ -310,14 +276,7 @@ const SkillCard = ({
         if (isBattling && config.id === 'memory' && !memorySessionStartedRef.current) {
             // Only regenerate cards when entering battle if no session started yet
             memorySessionStartedRef.current = true;
-            const allMobKeys = Object.keys(FRIENDLY_MOBS);
-            const shuffledMobs = [...allMobKeys].sort(() => Math.random() - 0.5);
-            const selectedMobs = shuffledMobs.slice(0, memoryPairs);
-            // Create pairs from the selected mobs
-            let deck = [...selectedMobs, ...selectedMobs].sort(() => Math.random() - 0.5);
-            setMemoryCards(
-                deck.map((mobKey, i) => ({ id: i, color: mobKey, img: FRIENDLY_MOBS[mobKey] })),
-            );
+            setMemoryCards(buildMemoryDeck(FRIENDLY_MOBS, memoryPairs));
             setFlippedIndices([]);
             setMatchedPairs([]);
             setIsProcessingMatch(false);
@@ -408,7 +367,7 @@ const SkillCard = ({
     );
 
     const startSimonGame = useCallback(() => {
-        const firstColor = axolotlColors[Math.floor(Math.random() * axolotlColors.length)];
+        const firstColor = pickRandom(axolotlColors);
         const newSequence = [firstColor];
         setSimonSequence(newSequence);
         setPlayerIndex(0);
@@ -440,21 +399,9 @@ const SkillCard = ({
                 }, 300);
 
                 // For difficulty 7, reset sequence each round instead of building
-                let newSequence;
-                if (shouldResetSequence) {
-                    // Generate completely new sequence of same length + 1
-                    newSequence = [];
-                    for (let i = 0; i < simonSequence.length + 1; i++) {
-                        newSequence.push(
-                            axolotlColors[Math.floor(Math.random() * axolotlColors.length)],
-                        );
-                    }
-                } else {
-                    // Normal mode: Add new random axolotl to sequence
-                    const nextColor =
-                        axolotlColors[Math.floor(Math.random() * axolotlColors.length)];
-                    newSequence = [...simonSequence, nextColor];
-                }
+                const newSequence = nextSimonSequence(simonSequence, axolotlColors, {
+                    reset: shouldResetSequence,
+                });
 
                 setSimonSequence(newSequence);
                 setPlayerIndex(0);
