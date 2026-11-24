@@ -8,6 +8,7 @@ import CornerControls from './components/game/CornerControls';
 import PlayerHealth from './components/game/PlayerHealth';
 import LoadWarning from './components/game/LoadWarning';
 import DeathOverlay from './components/game/DeathOverlay';
+import DrawersLayer from './components/game/DrawersLayer';
 import LevelRestored from './components/game/LevelRestored';
 import ResetModal from './components/modals/ResetModal';
 import BugReportModal from './components/modals/BugReportModal';
@@ -881,75 +882,26 @@ const App = () => {
 
             <PlayerHealth health={playerHealth} />
 
-            {/* Cosmetics drawer overlay - click to close */}
-            {drawers.isCosmeticsOpen && (
-                <div
-                    className="fixed inset-0 bg-black/50 z-40"
-                    onClick={() => {
-                        drawers.setIsCosmeticsOpen(false);
-                        playClick();
-                    }}
-                />
-            )}
-            <CosmeticsDrawer
-                isOpen={drawers.isCosmeticsOpen}
+            <DrawersLayer
+                drawers={drawers}
                 activeTheme={activeTheme}
-                setActiveTheme={handleThemeChange}
-                selectedBorder={borders.selectedBorder}
-                setSelectedBorder={handleBorderChange}
-                borderColor={borders.borderColor}
-                setBorderColor={borders.setBorderColor}
+                handleThemeChange={handleThemeChange}
+                handleBorderChange={handleBorderChange}
+                borders={borders}
                 unlockedBorders={unlockedBorders}
                 unlockedAchievements={unlockedAchievements}
-            />
-
-            {/* Settings drawer overlay - click to close */}
-            {drawers.isSettingsOpen && (
-                <div
-                    className="fixed inset-0 bg-black/50 z-40"
-                    onClick={() => {
-                        drawers.setIsSettingsOpen(false);
-                        playClick();
-                    }}
-                />
-            )}
-            <SettingsDrawer
-                isOpen={drawers.isSettingsOpen}
-                onReset={() => drawers.setIsResetOpen(true)}
-                bgmVol={audio.bgmVol}
-                setBgmVol={audio.setBgmVol}
-                sfxVol={audio.sfxVol}
-                setSfxVol={audio.setSfxVol}
+                audio={audio}
                 currentProfile={currentProfile}
-                onSwitchProfile={handleSwitchProfile}
+                handleSwitchProfile={handleSwitchProfile}
                 profileNames={profileNames}
-                onRenameProfile={handleRenameProfile}
+                handleRenameProfile={handleRenameProfile}
                 getProfileStats={(id, liveSkills) => getProfileStats(id, liveSkills, activeTheme)}
                 parentStatus={parentStatus}
-                onParentVerified={handleParentVerified}
-                currentSkills={skills}
+                handleParentVerified={handleParentVerified}
+                skills={skills}
+                stats={stats}
+                handleReset={handleReset}
             />
-            <ResetModal
-                isOpen={drawers.isResetOpen}
-                onClose={() => drawers.setIsResetOpen(false)}
-                onConfirm={handleReset}
-            />
-            <BugReportModal
-                isOpen={drawers.isBugReportOpen}
-                onClose={() => drawers.setIsBugReportOpen(false)}
-            />
-
-            {/* Achievement drawer overlay - click to close */}
-            {drawers.isMenuOpen && (
-                <div
-                    className="fixed inset-0 bg-black/50 z-40"
-                    onClick={() => {
-                        drawers.setIsMenuOpen(false);
-                        playClick();
-                    }}
-                />
-            )}
-            <MenuDrawer isOpen={drawers.isMenuOpen} skills={skills} stats={stats} />
 
             {/* Backdrop overlay when battling - click to exit */}
             {battlingSkillId && (
