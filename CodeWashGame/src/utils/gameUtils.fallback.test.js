@@ -9,12 +9,7 @@ vi.mock('../constants/gameData', async (importOriginal) => ({
     BOSS_MOBS: {},
 }));
 
-import {
-    getRandomMob,
-    getRandomFriendlyMob,
-    getRandomMiniboss,
-    getRandomBoss,
-} from './gameUtils';
+import { getRandomMob, getRandomFriendlyMob, getRandomMiniboss, getRandomBoss } from './gameUtils';
 
 describe('fallbacks when the source pool is empty', () => {
     it('returns the default name for friendly, miniboss and boss', () => {
