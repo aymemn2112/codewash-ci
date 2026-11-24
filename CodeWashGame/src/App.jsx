@@ -24,6 +24,9 @@ import { useSpeechRecognition } from './hooks/useSpeechRecognition';
 import { useFullscreen } from './hooks/useFullscreen';
 import { generateChallenge } from './domain/challenges';
 import { useCarousel } from './hooks/useCarousel';
+import { useDrawers } from './hooks/useDrawers';
+import { useAudioSettings } from './hooks/useAudioSettings';
+import { useBorders } from './hooks/useBorders';
 import {
     getStorageKey,
     loadSkills,
@@ -57,8 +60,6 @@ import {
     DEFAULT_THEME_ID,
 } from './constants/gameData';
 import {
-    getBGMManager,
-    setSfxVolume,
     playActionCardLeft,
     playActionCardRight,
     playClick,
@@ -117,11 +118,7 @@ const App = () => {
     const [battleDifficulty, setBattleDifficulty] = useState(null); // Track battle's starting difficulty for consistent challenge generation
     const [challengeData, setChallengeData] = useState(null);
     const [lootBox, setLootBox] = useState(null);
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-    const [isCosmeticsOpen, setIsCosmeticsOpen] = useState(false);
-    const [isResetOpen, setIsResetOpen] = useState(false);
-    const [isBugReportOpen, setIsBugReportOpen] = useState(false);
+    const drawers = useDrawers();
     const [damageNumbers, setDamageNumbers] = useState([]);
     const carousel = useCarousel({
         battling: Boolean(battlingSkillId),
@@ -136,19 +133,9 @@ const App = () => {
     const challengeDataRef = useRef(null);
     const damageIdRef = useRef(0); // Counter for generating unique damage number IDs
     const loginTrackedRef = useRef(false); // Track if we've already recorded today's login
-    const [bgmVol, setBgmVol] = useState(0.3);
-    const [sfxVol, setSfxVolState] = useState(0.5);
-    const bgmManager = useRef(getBGMManager());
+    const audio = useAudioSettings();
 
-    // Cosmetics state
-    const [selectedBorder, setSelectedBorder] = useState(() => {
-        const saved = localStorage.getItem(`borderEffect_p${currentProfile}`);
-        return saved || 'solid';
-    });
-    const [borderColor, setBorderColor] = useState(() => {
-        const saved = localStorage.getItem(`borderColor_p${currentProfile}`);
-        return saved || '#FFD700';
-    });
+    const borders = useBorders(currentProfile);
 
     useEffect(() => {
         const dataToSave = { skills: skills, theme: activeTheme, stats: stats };
@@ -157,12 +144,6 @@ const App = () => {
         localStorage.setItem('heroProfileNames_v1', JSON.stringify(profileNames));
         localStorage.setItem('heroParentStatus_v1', JSON.stringify(parentStatus));
     }, [skills, currentProfile, activeTheme, profileNames, parentStatus, stats]);
-
-    // Save cosmetics preferences
-    useEffect(() => {
-        localStorage.setItem(`borderEffect_p${currentProfile}`, selectedBorder);
-        localStorage.setItem(`borderColor_p${currentProfile}`, borderColor);
-    }, [selectedBorder, borderColor, currentProfile]);
 
     // Calculate unlocked borders based on earned badges (memoized)
     const unlockedBorders = React.useMemo(() => {
@@ -216,27 +197,10 @@ const App = () => {
         return unlocked;
     }, [stats, skills]);
 
-    // Update BGM volume
-    useEffect(() => {
-        bgmManager.current.setVolume(bgmVol);
-    }, [bgmVol]);
-
-    // Update SFX volume in sound manager
-    useEffect(() => {
-        setSfxVolume(sfxVol);
-    }, [sfxVol]);
-
     // Keep challengeDataRef in sync with challengeData state for voice listener
     useEffect(() => {
         challengeDataRef.current = challengeData;
     }, [challengeData]);
-
-    // Start BGM on first user interaction
-    const startBGM = useCallback(() => {
-        if (!bgmManager.current.isPlaying) {
-            bgmManager.current.play();
-        }
-    }, []);
 
     // Regenerate challenge when difficulty or level changes during active battle
     // This fixes the issue where challenges use stale difficulty after leveling up
@@ -690,11 +654,11 @@ const App = () => {
         [activeTheme, skills, checkAchievements],
     );
 
-    // Wrapper for setSelectedBorder to track border changes
+    // Wrapper for borders.setSelectedBorder to track border changes
     const handleBorderChange = useCallback(
         (newBorder) => {
-            if (newBorder !== selectedBorder) {
-                setSelectedBorder(newBorder);
+            if (newBorder !== borders.selectedBorder) {
+                borders.setSelectedBorder(newBorder);
                 setStats((prevStats) => {
                     const newStats = {
                         ...prevStats,
@@ -710,7 +674,7 @@ const App = () => {
                 });
             }
         },
-        [selectedBorder, skills, checkAchievements],
+        [borders.selectedBorder, skills, checkAchievements],
     );
 
     // Award a free level from phantom click
@@ -761,7 +725,7 @@ const App = () => {
 
         setChallengeData(generateChallenge(skill.challengeType, challengeDiff));
         playClick();
-        startBGM(); // Start BGM on first battle (user interaction)
+        audio.startBGM(); // Start BGM on first battle (user interaction)
         if (skill.challengeType === 'reading' && speech.isSupported)
             speech.start(id, handleSpeechResult);
     };
@@ -908,71 +872,54 @@ const App = () => {
 
             <CornerControls
                 isFullscreen={isFullscreen}
-                onOpenSettings={() => {
-                    setIsMenuOpen(false);
-                    setIsCosmeticsOpen(false);
-                    setIsSettingsOpen(true);
-                }}
-                onOpenCosmetics={() => {
-                    setIsMenuOpen(false);
-                    setIsSettingsOpen(false);
-                    setIsCosmeticsOpen(true);
-                }}
+                onOpenSettings={drawers.openSettings}
+                onOpenCosmetics={drawers.openCosmetics}
                 onToggleFullscreen={toggleFullscreen}
-                onOpenMenu={() => {
-                    setIsSettingsOpen(false);
-                    setIsCosmeticsOpen(false);
-                    setIsMenuOpen(true);
-                }}
-                onOpenBugReport={() => {
-                    setIsMenuOpen(false);
-                    setIsCosmeticsOpen(false);
-                    setIsSettingsOpen(false);
-                    setIsBugReportOpen(true);
-                }}
+                onOpenMenu={drawers.openMenu}
+                onOpenBugReport={drawers.openBugReport}
             />
 
             <PlayerHealth health={playerHealth} />
 
             {/* Cosmetics drawer overlay - click to close */}
-            {isCosmeticsOpen && (
+            {drawers.isCosmeticsOpen && (
                 <div
                     className="fixed inset-0 bg-black/50 z-40"
                     onClick={() => {
-                        setIsCosmeticsOpen(false);
+                        drawers.setIsCosmeticsOpen(false);
                         playClick();
                     }}
                 />
             )}
             <CosmeticsDrawer
-                isOpen={isCosmeticsOpen}
+                isOpen={drawers.isCosmeticsOpen}
                 activeTheme={activeTheme}
                 setActiveTheme={handleThemeChange}
-                selectedBorder={selectedBorder}
+                selectedBorder={borders.selectedBorder}
                 setSelectedBorder={handleBorderChange}
-                borderColor={borderColor}
-                setBorderColor={setBorderColor}
+                borderColor={borders.borderColor}
+                setBorderColor={borders.setBorderColor}
                 unlockedBorders={unlockedBorders}
                 unlockedAchievements={unlockedAchievements}
             />
 
             {/* Settings drawer overlay - click to close */}
-            {isSettingsOpen && (
+            {drawers.isSettingsOpen && (
                 <div
                     className="fixed inset-0 bg-black/50 z-40"
                     onClick={() => {
-                        setIsSettingsOpen(false);
+                        drawers.setIsSettingsOpen(false);
                         playClick();
                     }}
                 />
             )}
             <SettingsDrawer
-                isOpen={isSettingsOpen}
-                onReset={() => setIsResetOpen(true)}
-                bgmVol={bgmVol}
-                setBgmVol={setBgmVol}
-                sfxVol={sfxVol}
-                setSfxVol={setSfxVolState}
+                isOpen={drawers.isSettingsOpen}
+                onReset={() => drawers.setIsResetOpen(true)}
+                bgmVol={audio.bgmVol}
+                setBgmVol={audio.setBgmVol}
+                sfxVol={audio.sfxVol}
+                setSfxVol={audio.setSfxVol}
                 currentProfile={currentProfile}
                 onSwitchProfile={handleSwitchProfile}
                 profileNames={profileNames}
@@ -983,23 +930,26 @@ const App = () => {
                 currentSkills={skills}
             />
             <ResetModal
-                isOpen={isResetOpen}
-                onClose={() => setIsResetOpen(false)}
+                isOpen={drawers.isResetOpen}
+                onClose={() => drawers.setIsResetOpen(false)}
                 onConfirm={handleReset}
             />
-            <BugReportModal isOpen={isBugReportOpen} onClose={() => setIsBugReportOpen(false)} />
+            <BugReportModal
+                isOpen={drawers.isBugReportOpen}
+                onClose={() => drawers.setIsBugReportOpen(false)}
+            />
 
             {/* Achievement drawer overlay - click to close */}
-            {isMenuOpen && (
+            {drawers.isMenuOpen && (
                 <div
                     className="fixed inset-0 bg-black/50 z-40"
                     onClick={() => {
-                        setIsMenuOpen(false);
+                        drawers.setIsMenuOpen(false);
                         playClick();
                     }}
                 />
             )}
-            <MenuDrawer isOpen={isMenuOpen} skills={skills} stats={stats} />
+            <MenuDrawer isOpen={drawers.isMenuOpen} skills={skills} stats={stats} />
 
             {/* Backdrop overlay when battling - click to exit */}
             {battlingSkillId && (
@@ -1190,8 +1140,8 @@ const App = () => {
                                         7,
                                         Math.floor(skills[item.id].level / 20) + 1,
                                     )}
-                                    selectedBorder={selectedBorder}
-                                    borderColor={borderColor}
+                                    selectedBorder={borders.selectedBorder}
+                                    borderColor={borders.borderColor}
                                     bossHealing={bossHealing === item.id}
                                 />
                             </div>
