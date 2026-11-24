@@ -12,7 +12,7 @@ const PIXEL = {
 // Color configuration for filled and empty heart states
 const COLORS = {
     FILLED: {
-        fill: '#F22830', // Minecraft red
+        fill: '#F22830', // Classic pixel red
         dark: '#8B0000', // Dark red shadow
         highlight: '#FFFFFF', // White shine
     },
@@ -25,7 +25,7 @@ const COLORS = {
 };
 
 /**
- * A Minecraft-style pixelated heart component for health display.
+ * A pixel-art heart component for health display.
  * Uses a 9x9 pixel grid pattern with SVG for crisp rendering.
  *
  * @param {Object} props
