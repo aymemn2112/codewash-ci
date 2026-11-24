@@ -108,3 +108,64 @@ describe('getProfileStats', () => {
         });
     });
 });
+
+describe('backward-compatibility migrations', () => {
+    it('repairs incomplete saved skills', () => {
+        localStorage.setItem(
+            getStorageKey(1),
+            JSON.stringify({
+                skills: {
+                    reading: {
+                        level: 2,
+                        difficulty: null,
+                        earnedBadges: null,
+                        mobHealth: null,
+                        lostLevel: null,
+                        readingMob: null,
+                        readingMobAura: null,
+                        currentMiniboss: null,
+                        currentBoss: null,
+                        currentMinibossAura: null,
+                        currentBossAura: null,
+                    },
+                    math: { level: 2, mathMob: null, mathMobAura: null },
+                    writing: { level: 2, writingMob: null, writingMobAura: null },
+                    patterns: { level: 2, patternMob: null, patternMobAura: null },
+                    memory: { level: 2, memoryMob: null },
+                    cleaning: { level: 2 },
+                },
+            }),
+        );
+
+        const skills = loadSkills(1);
+        expect(skills.reading.difficulty).toBe(1);
+        expect(Array.isArray(skills.reading.earnedBadges)).toBe(true);
+        expect(typeof skills.reading.mobHealth).toBe('number');
+        expect(skills.reading.lostLevel).toBe(false);
+        ['reading', 'math', 'writing', 'patterns', 'memory'].forEach((id) => {
+            expect(skills[id].level).toBe(2);
+        });
+        expect(skills.reading.readingMob).toBeTruthy();
+        expect(skills.memory.memoryMob).toBeTruthy();
+    });
+
+    it('reads the legacy profile-1 key when the versioned key is absent', () => {
+        localStorage.setItem('heroSkills_v23', JSON.stringify({ skills: { math: { level: 9 } } }));
+        expect(loadSkills(1).math.level).toBe(9);
+        expect(loadTheme(1)).toBe('classic');
+    });
+});
+
+describe('load error reporting', () => {
+    it('flags a corrupt theme', () => {
+        localStorage.setItem(getStorageKey(1), '{ broken');
+        expect(loadTheme(1)).toBe('classic');
+        expect(getLoadErrors()).toContain('theme');
+    });
+
+    it('flags corrupt profile stats', () => {
+        localStorage.setItem(getStorageKey(1), '{ broken');
+        expect(getProfileStats(1)).toBeNull();
+        expect(getLoadErrors()).toContain('profile stats');
+    });
+});
