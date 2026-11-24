@@ -3,6 +3,7 @@
  * Centralized sound management for the game including BGM shuffle, UI sounds, and mob sounds.
  */
 
+import { defaultRng } from '../services/rng';
 // BGM tracks discovered from public/assets/sounds/bgm/
 const BGM_TRACKS = [
     'assets/sounds/bgm/calm1.wav',
@@ -97,7 +98,7 @@ class BGMManager {
         }
     }
 
-    getRandomTrack() {
+    getRandomTrack(rng = defaultRng) {
         // Get a random track that's different from the current one
         const availableIndices = this.tracks
             .map((_, i) => i)
@@ -108,7 +109,7 @@ class BGMManager {
             return this.currentTrackIndex >= 0 ? this.currentTrackIndex : 0;
         }
 
-        const randomIndex = Math.floor(Math.random() * availableIndices.length);
+        const randomIndex = Math.floor(rng() * availableIndices.length);
         return availableIndices[randomIndex];
     }
 
