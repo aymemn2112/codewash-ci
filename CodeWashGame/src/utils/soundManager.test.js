@@ -90,8 +90,8 @@ describe('mob sounds', () => {
 });
 
 describe('BGM manager', () => {
-    it('is a singleton', () => {
-        expect(getBGMManager()).toBe(getBGMManager());
+    it('creates a fresh manager on each call', () => {
+        expect(getBGMManager()).not.toBe(getBGMManager());
     });
 
     it('stores and applies volume', () => {
