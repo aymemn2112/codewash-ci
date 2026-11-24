@@ -1,10 +1,14 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { Menu, Sparkles, Gift, Maximize, Minimize, Settings, Bug } from 'lucide-react';
+import { Gift } from 'lucide-react';
 
 // Modules
 import GlobalStyles from './components/ui/GlobalStyles';
 import SafeImage from './components/ui/SafeImage';
-import PixelHeart from './components/ui/PixelHeart';
+import CornerControls from './components/game/CornerControls';
+import PlayerHealth from './components/game/PlayerHealth';
+import LoadWarning from './components/game/LoadWarning';
+import DeathOverlay from './components/game/DeathOverlay';
+import LevelRestored from './components/game/LevelRestored';
 import ResetModal from './components/modals/ResetModal';
 import BugReportModal from './components/modals/BugReportModal';
 import SettingsDrawer from './components/drawers/SettingsDrawer';
@@ -900,60 +904,35 @@ const App = () => {
             <GlobalStyles />
             <div className="absolute inset-0 bg-black/30 pointer-events-none z-0"></div>
 
-            {loadWarning && (
-                <div
-                    role="alert"
-                    className="absolute top-4 left-1/2 -translate-x-1/2 z-50 bg-red-900/90 border-2 border-red-500 text-red-50 px-4 py-2 rounded-lg shadow-lg flex items-center gap-3"
-                >
-                    <span>Some saved data could not be read and was reset to defaults.</span>
-                    <button
-                        onClick={() => setLoadWarning(false)}
-                        className="font-bold text-red-200 hover:text-white"
-                        aria-label="Dismiss warning"
-                    >
-                        ×
-                    </button>
-                </div>
-            )}
+            {loadWarning && <LoadWarning onDismiss={() => setLoadWarning(false)} />}
 
-            {/* Top Left Buttons */}
-            {/* Button dimensions: p-3 (12px) + icon(48px) + p-3 (12px) + border-2*2 (4px) = 76px + 8px gap = 84px spacing */}
-            <button
-                onClick={() => {
+            <CornerControls
+                isFullscreen={isFullscreen}
+                onOpenSettings={() => {
                     setIsMenuOpen(false);
                     setIsCosmeticsOpen(false);
                     setIsSettingsOpen(true);
-                    playClick();
                 }}
-                className="absolute z-40 bg-stone-800/90 text-white p-3 rounded-lg border-2 border-stone-600 hover:bg-stone-700 transition-all shadow-lg"
-                style={{ top: '24px', left: '24px' }}
-            >
-                <Settings size={48} className="text-slate-400" />
-            </button>
-            <button
-                onClick={() => {
+                onOpenCosmetics={() => {
                     setIsMenuOpen(false);
                     setIsSettingsOpen(false);
                     setIsCosmeticsOpen(true);
-                    playClick();
                 }}
-                className="absolute z-40 bg-stone-800/90 text-white p-3 rounded-lg border-2 border-stone-600 hover:bg-stone-700 transition-all shadow-lg"
-                style={{ top: '24px', left: 'calc(24px + 76px + 12px)' }}
-            >
-                <Sparkles size={48} className="text-purple-400" />
-            </button>
+                onToggleFullscreen={toggleFullscreen}
+                onOpenMenu={() => {
+                    setIsSettingsOpen(false);
+                    setIsCosmeticsOpen(false);
+                    setIsMenuOpen(true);
+                }}
+                onOpenBugReport={() => {
+                    setIsMenuOpen(false);
+                    setIsCosmeticsOpen(false);
+                    setIsSettingsOpen(false);
+                    setIsBugReportOpen(true);
+                }}
+            />
 
-            {/* Player Health Display - Centered */}
-            <div
-                className="absolute z-40 flex gap-1.5"
-                style={{ bottom: '20px', left: '50%', transform: 'translateX(-50%)' }}
-            >
-                {Array(10)
-                    .fill(0)
-                    .map((_, i) => (
-                        <PixelHeart key={i} size={48} filled={i < playerHealth} />
-                    ))}
-            </div>
+            <PlayerHealth health={playerHealth} />
 
             {/* Cosmetics drawer overlay - click to close */}
             {isCosmeticsOpen && (
@@ -1010,30 +989,6 @@ const App = () => {
             />
             <BugReportModal isOpen={isBugReportOpen} onClose={() => setIsBugReportOpen(false)} />
 
-            {/* Top Right Buttons */}
-            {/* Button dimensions: p-3 (12px) + icon(48px) + p-3 (12px) + border-2*2 (4px) = 76px + 8px gap = 84px spacing */}
-            <button
-                onClick={toggleFullscreen}
-                className="absolute z-40 bg-stone-800/90 text-white p-3 rounded-lg border-2 border-stone-600 hover:bg-stone-700 transition-all shadow-lg"
-                style={{ top: '24px', right: 'calc(24px + 76px + 12px)' }}
-                aria-label={isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen'}
-                title={isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen'}
-            >
-                {isFullscreen ? <Minimize size={48} /> : <Maximize size={48} />}
-            </button>
-            <button
-                onClick={() => {
-                    setIsSettingsOpen(false);
-                    setIsCosmeticsOpen(false);
-                    setIsMenuOpen(true);
-                    playClick();
-                }}
-                className="absolute z-40 bg-stone-800/90 text-white p-3 rounded-lg border-2 border-stone-600 hover:bg-stone-700 transition-all shadow-lg"
-                style={{ top: '24px', right: '24px' }}
-            >
-                <Menu size={48} />
-            </button>
-
             {/* Achievement drawer overlay - click to close */}
             {isMenuOpen && (
                 <div
@@ -1045,21 +1000,6 @@ const App = () => {
                 />
             )}
             <MenuDrawer isOpen={isMenuOpen} skills={skills} stats={stats} />
-
-            {/* Bottom Right Bug Report Button */}
-            <button
-                onClick={() => {
-                    setIsMenuOpen(false);
-                    setIsCosmeticsOpen(false);
-                    setIsSettingsOpen(false);
-                    setIsBugReportOpen(true);
-                    playClick();
-                }}
-                className="absolute z-40 bg-stone-800/90 text-white p-3 rounded-lg border-2 border-stone-600 hover:bg-stone-700 transition-all shadow-lg"
-                style={{ bottom: '24px', right: '24px' }}
-            >
-                <Bug size={48} className="text-red-400" />
-            </button>
 
             {/* Backdrop overlay when battling - click to exit */}
             {battlingSkillId && (
@@ -1298,36 +1238,9 @@ const App = () => {
                 />
             )}
 
-            {/* Death Overlay - pixel-art YOU DIED screen */}
-            {showDeathOverlay && (
-                <div className="fixed inset-0 z-[100] flex items-center justify-center bg-red-900/60 animate-pulse pointer-events-none">
-                    <div className="text-center">
-                        <h1
-                            className="text-8xl font-bold text-red-500 drop-shadow-[0_0_20px_rgba(255,0,0,0.8)]"
-                            style={{ textShadow: '4px 4px 0 #000, -2px -2px 0 #000' }}
-                        >
-                            YOU DIED
-                        </h1>
-                        <p className="text-2xl text-red-300 mt-4">Level -1</p>
-                        <p className="text-lg text-stone-400 mt-2">Take a moment to rest...</p>
-                    </div>
-                </div>
-            )}
+            {showDeathOverlay && <DeathOverlay />}
 
-            {/* Level Restored celebration */}
-            {showLevelRestored && (
-                <div className="fixed inset-0 z-[100] flex items-center justify-center pointer-events-none">
-                    <div className="text-center animate-bounce">
-                        <h1
-                            className="text-6xl font-bold text-green-400 drop-shadow-[0_0_20px_rgba(0,255,0,0.8)]"
-                            style={{ textShadow: '4px 4px 0 #000' }}
-                        >
-                            LEVEL RESTORED!
-                        </h1>
-                        <p className="text-2xl text-yellow-400 mt-4">Welcome back, hero!</p>
-                    </div>
-                </div>
-            )}
+            {showLevelRestored && <LevelRestored />}
 
             {/* Phantom Fly-By Bonus Event */}
             <PhantomEvent
