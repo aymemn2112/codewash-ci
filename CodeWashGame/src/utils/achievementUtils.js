@@ -1,4 +1,5 @@
 import { ACHIEVEMENTS } from '../constants/achievements';
+import { defaultClock } from '../services/clock';
 
 /**
  * Achievement Utilities
@@ -186,8 +187,8 @@ export const addUniqueToArray = (arr, value) => {
  * @param {array} loginDates - Array of date strings
  * @returns {array} - Updated login dates
  */
-export const recordLoginDate = (loginDates) => {
-    const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD format
+export const recordLoginDate = (loginDates, clock = defaultClock) => {
+    const today = clock().toISOString().split('T')[0]; // YYYY-MM-DD format
     if (!loginDates.includes(today)) {
         return [...loginDates, today];
     }
