@@ -37,6 +37,16 @@ describe('App', () => {
         fireEvent.click(screen.getAllByText(/^Writing$/)[0]);
     });
 
+    it('routes drag navigation through the injected sfx player', () => {
+        const { container } = render(<App />);
+        const carousel = container.querySelector('.perspective-1000');
+
+        fireEvent.mouseDown(carousel, { clientX: 200 });
+        fireEvent.mouseMove(carousel, { clientX: 50 });
+        fireEvent.mouseDown(carousel, { clientX: 50 });
+        fireEvent.mouseMove(carousel, { clientX: 200 });
+    });
+
     it('starts and ends a battle through the injected sfx player', () => {
         render(<App />);
 
