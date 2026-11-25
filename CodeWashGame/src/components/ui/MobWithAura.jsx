@@ -45,7 +45,7 @@ const MobWithAura = ({
             }}
             data-aura={aura}
         >
-            {/* Aura is rendered via CSS ::before pseudo-element in GlobalStyles.jsx */}
+            {/* Aura is rendered via CSS ::before pseudo-element in global.css */}
             <SafeImage
                 src={mobSrc}
                 alt={displayName}
