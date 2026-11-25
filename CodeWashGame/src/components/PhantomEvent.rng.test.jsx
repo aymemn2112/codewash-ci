@@ -1,8 +1,9 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { render, screen, act } from '@testing-library/react';
 import PhantomEvent from './PhantomEvent';
+import { STORAGE_KEYS } from '../services/storageKeys';
 
-const COOLDOWN_KEY = 'phantomEvent_lastSpawn_v1';
+const COOLDOWN_KEY = STORAGE_KEYS.PHANTOM_LAST_SPAWN;
 const MIN_COOLDOWN_MS = 5 * 60 * 1000;
 const MAX_EXTRA_MS = 5 * 60 * 1000;
 

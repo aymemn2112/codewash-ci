@@ -15,6 +15,6 @@ Conserver les mesures initiales dans `docs/metrics/` et écrire les mesures apr�
 
 - Chaque affirmation d’amélioration est appuyée par un chiffre et une commande reproductible.
 - Les régressions de métriques (duplication de tests, occurrences I/O dans les stubs) sont explicitement listées comme dettes résiduelles.
-- Le périmètre de mesure est indiqué : la branche `docs/adrs` part de `refactor/audio-io` et n’inclut pas les services de `refactor/dependency-injection`.
+- Le périmètre de mesure est indiqué : l’arbre Track A complet est identique sur `refactor/dependency-injection`, `refactor/audio-io` et `docs/adrs` (services, audio, ADR, métriques).
 
 Voir aussi [ADR-001](./ADR-001-test-runner-and-gates.md) et [ADR-002](./ADR-002-characterization-first.md).

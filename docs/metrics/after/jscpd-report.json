@@ -40,11 +40,11 @@
     },
     {
       "firstFile": {
-        "end": 30,
+        "end": 7,
         "endLoc": {
-          "column": 9,
-          "line": 30,
-          "position": 733
+          "column": 38,
+          "line": 7,
+          "position": 328
         },
         "name": "components/PhantomEvent.clock.test.jsx",
         "start": 1,
@@ -55,16 +55,130 @@
         }
       },
       "format": "jsx",
-      "fragment": "import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';\nimport { render, screen, act } from '@testing-library/react';\nimport PhantomEvent from './PhantomEvent';\n\nconst COOLDOWN_KEY = 'phantomEvent_lastSpawn_v1';\nconst MIN_COOLDOWN_MS = 5 * 60 * 1000;\n\nbeforeEach(() => {\n    vi.useFakeTimers();\n    vi.setSystemTime(new Date('2025-01-01T00:00:00Z'));\n    localStorage.clear();\n});\n\nafterEach(() => {\n    vi.useRealTimers();\n    vi.restoreAllMocks();\n    localStorage.clear();\n});\n\nconst renderPhantom = (props = {}) =>\n    render(\n        <PhantomEvent\n            battlingSkillId={null}\n            onAwardLevel={() => {}}\n            onPhantomCaught={() => {}}\n            {...props}\n        />,\n    );\n\ndescribe('PhantomEvent cooldown clock', () => {",
+      "fragment": "import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';\nimport { render, screen, act } from '@testing-library/react';\nimport PhantomEvent from './PhantomEvent';\nimport { STORAGE_KEYS } from '../services/storageKeys';\n\nconst COOLDOWN_KEY = STORAGE_KEYS.PHANTOM_LAST_SPAWN;\nconst MIN_COOLDOWN_MS = 5 * 60 * 1000;",
       "isNew": false,
       "kind": "exact",
-      "lines": 30,
+      "lines": 7,
       "secondFile": {
-        "end": 30,
+        "end": 7,
+        "endLoc": {
+          "column": 38,
+          "line": 7,
+          "position": 328
+        },
+        "name": "components/PhantomEvent.injectedClock.test.jsx",
+        "start": 1,
+        "startLoc": {
+          "column": 0,
+          "line": 1,
+          "position": 0
+        }
+      },
+      "tokens": 56
+    },
+    {
+      "firstFile": {
+        "end": 7,
+        "endLoc": {
+          "column": 38,
+          "line": 7,
+          "position": 328
+        },
+        "name": "components/PhantomEvent.clock.test.jsx",
+        "start": 1,
+        "startLoc": {
+          "column": 0,
+          "line": 1,
+          "position": 0
+        }
+      },
+      "format": "jsx",
+      "fragment": "import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';\nimport { render, screen, act } from '@testing-library/react';\nimport PhantomEvent from './PhantomEvent';\nimport { STORAGE_KEYS } from '../services/storageKeys';\n\nconst COOLDOWN_KEY = STORAGE_KEYS.PHANTOM_LAST_SPAWN;\nconst MIN_COOLDOWN_MS = 5 * 60 * 1000;",
+      "isNew": false,
+      "kind": "exact",
+      "lines": 7,
+      "secondFile": {
+        "end": 7,
+        "endLoc": {
+          "column": 38,
+          "line": 7,
+          "position": 328
+        },
+        "name": "components/PhantomEvent.injectedStorage.test.jsx",
+        "start": 1,
+        "startLoc": {
+          "column": 0,
+          "line": 1,
+          "position": 0
+        }
+      },
+      "tokens": 56
+    },
+    {
+      "firstFile": {
+        "end": 7,
+        "endLoc": {
+          "column": 38,
+          "line": 7,
+          "position": 328
+        },
+        "name": "components/PhantomEvent.clock.test.jsx",
+        "start": 1,
+        "startLoc": {
+          "column": 0,
+          "line": 1,
+          "position": 0
+        }
+      },
+      "format": "jsx",
+      "fragment": "import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';\nimport { render, screen, act } from '@testing-library/react';\nimport PhantomEvent from './PhantomEvent';\nimport { STORAGE_KEYS } from '../services/storageKeys';\n\nconst COOLDOWN_KEY = STORAGE_KEYS.PHANTOM_LAST_SPAWN;\nconst MIN_COOLDOWN_MS = 5 * 60 * 1000;",
+      "isNew": false,
+      "kind": "exact",
+      "lines": 7,
+      "secondFile": {
+        "end": 7,
+        "endLoc": {
+          "column": 38,
+          "line": 7,
+          "position": 328
+        },
+        "name": "components/PhantomEvent.rng.test.jsx",
+        "start": 1,
+        "startLoc": {
+          "column": 0,
+          "line": 1,
+          "position": 0
+        }
+      },
+      "tokens": 56
+    },
+    {
+      "firstFile": {
+        "end": 31,
         "endLoc": {
           "column": 9,
-          "line": 30,
-          "position": 733
+          "line": 31,
+          "position": 793
+        },
+        "name": "components/PhantomEvent.clock.test.jsx",
+        "start": 1,
+        "startLoc": {
+          "column": 0,
+          "line": 1,
+          "position": 0
+        }
+      },
+      "format": "jsx",
+      "fragment": "import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';\nimport { render, screen, act } from '@testing-library/react';\nimport PhantomEvent from './PhantomEvent';\nimport { STORAGE_KEYS } from '../services/storageKeys';\n\nconst COOLDOWN_KEY = STORAGE_KEYS.PHANTOM_LAST_SPAWN;\nconst MIN_COOLDOWN_MS = 5 * 60 * 1000;\n\nbeforeEach(() => {\n    vi.useFakeTimers();\n    vi.setSystemTime(new Date('2025-01-01T00:00:00Z'));\n    localStorage.clear();\n});\n\nafterEach(() => {\n    vi.useRealTimers();\n    vi.restoreAllMocks();\n    localStorage.clear();\n});\n\nconst renderPhantom = (props = {}) =>\n    render(\n        <PhantomEvent\n            battlingSkillId={null}\n            onAwardLevel={() => {}}\n            onPhantomCaught={() => {}}\n            {...props}\n        />,\n    );\n\ndescribe('PhantomEvent cooldown clock', () => {",
+      "isNew": false,
+      "kind": "exact",
+      "lines": 31,
+      "secondFile": {
+        "end": 31,
+        "endLoc": {
+          "column": 9,
+          "line": 31,
+          "position": 793
         },
         "name": "components/PhantomEvent.storage.test.jsx",
         "start": 1,
@@ -74,22 +188,22 @@
           "position": 0
         }
       },
-      "tokens": 154
+      "tokens": 163
     },
     {
       "firstFile": {
-        "end": 30,
+        "end": 31,
         "endLoc": {
           "column": 9,
-          "line": 30,
-          "position": 733
+          "line": 31,
+          "position": 793
         },
         "name": "components/PhantomEvent.clock.test.jsx",
-        "start": 6,
+        "start": 7,
         "startLoc": {
           "column": 37,
-          "line": 6,
-          "position": 267
+          "line": 7,
+          "position": 327
         }
       },
       "format": "jsx",
@@ -98,36 +212,36 @@
       "kind": "exact",
       "lines": 25,
       "secondFile": {
-        "end": 31,
+        "end": 32,
         "endLoc": {
           "column": 9,
-          "line": 31,
-          "position": 798
+          "line": 32,
+          "position": 858
         },
         "name": "components/PhantomEvent.injectedClock.test.jsx",
-        "start": 7,
+        "start": 8,
         "startLoc": {
           "column": 63,
-          "line": 7,
-          "position": 332
+          "line": 8,
+          "position": 392
         }
       },
       "tokens": 108
     },
     {
       "firstFile": {
-        "end": 28,
+        "end": 29,
         "endLoc": {
           "column": 6,
-          "line": 28,
-          "position": 722
+          "line": 29,
+          "position": 782
         },
         "name": "components/PhantomEvent.clock.test.jsx",
-        "start": 6,
+        "start": 7,
         "startLoc": {
           "column": 22,
-          "line": 6,
-          "position": 252
+          "line": 7,
+          "position": 312
         }
       },
       "format": "jsx",
@@ -136,112 +250,112 @@
       "kind": "exact",
       "lines": 23,
       "secondFile": {
-        "end": 28,
+        "end": 29,
         "endLoc": {
           "column": 6,
-          "line": 28,
-          "position": 719
+          "line": 29,
+          "position": 779
         },
         "name": "components/PhantomEvent.injectedRng.test.jsx",
-        "start": 6,
+        "start": 7,
         "startLoc": {
           "column": 19,
-          "line": 6,
-          "position": 249
+          "line": 7,
+          "position": 309
         }
       },
       "tokens": 112
     },
     {
       "firstFile": {
-        "end": 30,
-        "endLoc": {
-          "column": 9,
-          "line": 30,
-          "position": 733
-        },
-        "name": "components/PhantomEvent.clock.test.jsx",
-        "start": 6,
-        "startLoc": {
-          "column": 37,
-          "line": 6,
-          "position": 267
-        }
-      },
-      "format": "jsx",
-      "fragment": "const MIN_COOLDOWN_MS = 5 * 60 * 1000;\n\nbeforeEach(() => {\n    vi.useFakeTimers();\n    vi.setSystemTime(new Date('2025-01-01T00:00:00Z'));\n    localStorage.clear();\n});\n\nafterEach(() => {\n    vi.useRealTimers();\n    vi.restoreAllMocks();\n    localStorage.clear();\n});\n\nconst renderPhantom = (props = {}) =>\n    render(\n        <PhantomEvent\n            battlingSkillId={null}\n            onAwardLevel={() => {}}\n            onPhantomCaught={() => {}}\n            {...props}\n        />,\n    );\n\ndescribe('PhantomEvent cooldown clock', () => {",
-      "isNew": false,
-      "kind": "exact",
-      "lines": 25,
-      "secondFile": {
-        "end": 39,
-        "endLoc": {
-          "column": 9,
-          "line": 39,
-          "position": 1039
-        },
-        "name": "components/PhantomEvent.injectedStorage.test.jsx",
-        "start": 15,
-        "startLoc": {
-          "column": 1,
-          "line": 15,
-          "position": 573
-        }
-      },
-      "tokens": 108
-    },
-    {
-      "firstFile": {
-        "end": 30,
-        "endLoc": {
-          "column": 9,
-          "line": 30,
-          "position": 733
-        },
-        "name": "components/PhantomEvent.clock.test.jsx",
-        "start": 6,
-        "startLoc": {
-          "column": 37,
-          "line": 6,
-          "position": 267
-        }
-      },
-      "format": "jsx",
-      "fragment": "const MIN_COOLDOWN_MS = 5 * 60 * 1000;\n\nbeforeEach(() => {\n    vi.useFakeTimers();\n    vi.setSystemTime(new Date('2025-01-01T00:00:00Z'));\n    localStorage.clear();\n});\n\nafterEach(() => {\n    vi.useRealTimers();\n    vi.restoreAllMocks();\n    localStorage.clear();\n});\n\nconst renderPhantom = (props = {}) =>\n    render(\n        <PhantomEvent\n            battlingSkillId={null}\n            onAwardLevel={() => {}}\n            onPhantomCaught={() => {}}\n            {...props}\n        />,\n    );\n\ndescribe('PhantomEvent cooldown clock', () => {",
-      "isNew": false,
-      "kind": "exact",
-      "lines": 25,
-      "secondFile": {
         "end": 31,
         "endLoc": {
           "column": 9,
           "line": 31,
-          "position": 826
+          "position": 793
         },
-        "name": "components/PhantomEvent.test.jsx",
+        "name": "components/PhantomEvent.clock.test.jsx",
         "start": 7,
         "startLoc": {
-          "column": 35,
+          "column": 37,
           "line": 7,
-          "position": 315
+          "position": 327
+        }
+      },
+      "format": "jsx",
+      "fragment": "const MIN_COOLDOWN_MS = 5 * 60 * 1000;\n\nbeforeEach(() => {\n    vi.useFakeTimers();\n    vi.setSystemTime(new Date('2025-01-01T00:00:00Z'));\n    localStorage.clear();\n});\n\nafterEach(() => {\n    vi.useRealTimers();\n    vi.restoreAllMocks();\n    localStorage.clear();\n});\n\nconst renderPhantom = (props = {}) =>\n    render(\n        <PhantomEvent\n            battlingSkillId={null}\n            onAwardLevel={() => {}}\n            onPhantomCaught={() => {}}\n            {...props}\n        />,\n    );\n\ndescribe('PhantomEvent cooldown clock', () => {",
+      "isNew": false,
+      "kind": "exact",
+      "lines": 25,
+      "secondFile": {
+        "end": 40,
+        "endLoc": {
+          "column": 9,
+          "line": 40,
+          "position": 1099
+        },
+        "name": "components/PhantomEvent.injectedStorage.test.jsx",
+        "start": 16,
+        "startLoc": {
+          "column": 1,
+          "line": 16,
+          "position": 633
         }
       },
       "tokens": 108
     },
     {
       "firstFile": {
-        "end": 41,
+        "end": 31,
         "endLoc": {
-          "column": 59,
-          "line": 41,
-          "position": 1151
+          "column": 9,
+          "line": 31,
+          "position": 793
         },
         "name": "components/PhantomEvent.clock.test.jsx",
-        "start": 33,
+        "start": 7,
+        "startLoc": {
+          "column": 37,
+          "line": 7,
+          "position": 327
+        }
+      },
+      "format": "jsx",
+      "fragment": "const MIN_COOLDOWN_MS = 5 * 60 * 1000;\n\nbeforeEach(() => {\n    vi.useFakeTimers();\n    vi.setSystemTime(new Date('2025-01-01T00:00:00Z'));\n    localStorage.clear();\n});\n\nafterEach(() => {\n    vi.useRealTimers();\n    vi.restoreAllMocks();\n    localStorage.clear();\n});\n\nconst renderPhantom = (props = {}) =>\n    render(\n        <PhantomEvent\n            battlingSkillId={null}\n            onAwardLevel={() => {}}\n            onPhantomCaught={() => {}}\n            {...props}\n        />,\n    );\n\ndescribe('PhantomEvent cooldown clock', () => {",
+      "isNew": false,
+      "kind": "exact",
+      "lines": 25,
+      "secondFile": {
+        "end": 32,
+        "endLoc": {
+          "column": 9,
+          "line": 32,
+          "position": 886
+        },
+        "name": "components/PhantomEvent.test.jsx",
+        "start": 8,
+        "startLoc": {
+          "column": 35,
+          "line": 8,
+          "position": 375
+        }
+      },
+      "tokens": 108
+    },
+    {
+      "firstFile": {
+        "end": 42,
+        "endLoc": {
+          "column": 59,
+          "line": 42,
+          "position": 1211
+        },
+        "name": "components/PhantomEvent.clock.test.jsx",
+        "start": 34,
         "startLoc": {
           "column": 8,
-          "line": 33,
-          "position": 881
+          "line": 34,
+          "position": 941
         }
       },
       "format": "jsx",
@@ -250,36 +364,36 @@
       "kind": "exact",
       "lines": 9,
       "secondFile": {
-        "end": 57,
+        "end": 58,
         "endLoc": {
           "column": 59,
-          "line": 57,
-          "position": 1735
+          "line": 58,
+          "position": 1795
         },
         "name": "components/PhantomEvent.test.jsx",
-        "start": 50,
+        "start": 51,
         "startLoc": {
           "column": 8,
-          "line": 50,
-          "position": 1466
+          "line": 51,
+          "position": 1526
         }
       },
       "tokens": 61
     },
     {
       "firstFile": {
-        "end": 59,
+        "end": 60,
         "endLoc": {
           "column": 3,
-          "line": 59,
-          "position": 1734
+          "line": 60,
+          "position": 1794
         },
         "name": "components/PhantomEvent.clock.test.jsx",
-        "start": 44,
+        "start": 45,
         "startLoc": {
           "column": 64,
-          "line": 44,
-          "position": 1241
+          "line": 45,
+          "position": 1301
         }
       },
       "format": "jsx",
@@ -288,36 +402,36 @@
       "kind": "exact",
       "lines": 16,
       "secondFile": {
-        "end": 57,
+        "end": 58,
         "endLoc": {
           "column": 3,
-          "line": 57,
-          "position": 1600
+          "line": 58,
+          "position": 1660
         },
         "name": "components/PhantomEvent.storage.test.jsx",
-        "start": 42,
+        "start": 43,
         "startLoc": {
           "column": 53,
-          "line": 42,
-          "position": 1107
+          "line": 43,
+          "position": 1167
         }
       },
       "tokens": 115
     },
     {
       "firstFile": {
-        "end": 59,
+        "end": 60,
         "endLoc": {
           "column": 3,
-          "line": 59,
-          "position": 1734
+          "line": 60,
+          "position": 1794
         },
         "name": "components/PhantomEvent.clock.test.jsx",
-        "start": 47,
+        "start": 48,
         "startLoc": {
           "column": 22,
-          "line": 47,
-          "position": 1412
+          "line": 48,
+          "position": 1472
         }
       },
       "format": "jsx",
@@ -326,36 +440,36 @@
       "kind": "exact",
       "lines": 13,
       "secondFile": {
-        "end": 58,
+        "end": 59,
         "endLoc": {
           "column": 3,
-          "line": 58,
-          "position": 1821
+          "line": 59,
+          "position": 1881
         },
         "name": "components/PhantomEvent.injectedClock.test.jsx",
-        "start": 46,
+        "start": 47,
         "startLoc": {
           "column": 75,
-          "line": 46,
-          "position": 1499
+          "line": 47,
+          "position": 1559
         }
       },
       "tokens": 74
     },
     {
       "firstFile": {
-        "end": 57,
+        "end": 58,
         "endLoc": {
           "column": 67,
-          "line": 57,
-          "position": 1722
+          "line": 58,
+          "position": 1782
         },
         "name": "components/PhantomEvent.clock.test.jsx",
-        "start": 50,
+        "start": 51,
         "startLoc": {
           "column": 58,
-          "line": 50,
-          "position": 1494
+          "line": 51,
+          "position": 1554
         }
       },
       "format": "jsx",
@@ -364,36 +478,36 @@
       "kind": "exact",
       "lines": 8,
       "secondFile": {
-        "end": 75,
+        "end": 76,
         "endLoc": {
           "column": 67,
-          "line": 75,
-          "position": 2271
+          "line": 76,
+          "position": 2331
         },
         "name": "components/PhantomEvent.injectedRng.test.jsx",
-        "start": 68,
+        "start": 69,
         "startLoc": {
           "column": 41,
-          "line": 68,
-          "position": 2043
+          "line": 69,
+          "position": 2103
         }
       },
       "tokens": 51
     },
     {
       "firstFile": {
-        "end": 58,
+        "end": 59,
         "endLoc": {
           "column": 7,
-          "line": 58,
-          "position": 1730
+          "line": 59,
+          "position": 1790
         },
         "name": "components/PhantomEvent.clock.test.jsx",
-        "start": 50,
+        "start": 51,
         "startLoc": {
           "column": 58,
-          "line": 50,
-          "position": 1494
+          "line": 51,
+          "position": 1554
         }
       },
       "format": "jsx",
@@ -402,36 +516,36 @@
       "kind": "exact",
       "lines": 9,
       "secondFile": {
-        "end": 74,
+        "end": 75,
         "endLoc": {
           "column": 7,
-          "line": 74,
-          "position": 2337
+          "line": 75,
+          "position": 2397
         },
         "name": "components/PhantomEvent.rng.test.jsx",
-        "start": 66,
+        "start": 67,
         "startLoc": {
           "column": 45,
-          "line": 66,
-          "position": 2101
+          "line": 67,
+          "position": 2161
         }
       },
       "tokens": 54
     },
     {
       "firstFile": {
-        "end": 59,
+        "end": 60,
         "endLoc": {
           "column": 3,
-          "line": 59,
-          "position": 1734
+          "line": 60,
+          "position": 1794
         },
         "name": "components/PhantomEvent.clock.test.jsx",
-        "start": 50,
+        "start": 51,
         "startLoc": {
           "column": 55,
-          "line": 50,
-          "position": 1491
+          "line": 51,
+          "position": 1551
         }
       },
       "format": "jsx",
@@ -440,36 +554,36 @@
       "kind": "exact",
       "lines": 10,
       "secondFile": {
-        "end": 92,
+        "end": 93,
         "endLoc": {
           "column": 3,
-          "line": 92,
-          "position": 2930
+          "line": 93,
+          "position": 2990
         },
         "name": "components/PhantomEvent.rng.test.jsx",
-        "start": 83,
+        "start": 84,
         "startLoc": {
           "column": 49,
-          "line": 83,
-          "position": 2687
+          "line": 84,
+          "position": 2747
         }
       },
       "tokens": 59
     },
     {
       "firstFile": {
-        "end": 58,
+        "end": 59,
         "endLoc": {
           "column": 7,
-          "line": 58,
-          "position": 1730
+          "line": 59,
+          "position": 1790
         },
         "name": "components/PhantomEvent.clock.test.jsx",
-        "start": 50,
+        "start": 51,
         "startLoc": {
           "column": 55,
-          "line": 50,
-          "position": 1491
+          "line": 51,
+          "position": 1551
         }
       },
       "format": "jsx",
@@ -478,56 +592,18 @@
       "kind": "exact",
       "lines": 9,
       "secondFile": {
-        "end": 47,
+        "end": 48,
         "endLoc": {
           "column": 7,
-          "line": 47,
-          "position": 1378
+          "line": 48,
+          "position": 1438
         },
         "name": "components/PhantomEvent.test.jsx",
-        "start": 39,
+        "start": 40,
         "startLoc": {
           "column": 56,
-          "line": 39,
-          "position": 1139
-        }
-      },
-      "tokens": 56
-    },
-    {
-      "firstFile": {
-        "end": 58,
-        "endLoc": {
-          "column": 7,
-          "line": 58,
-          "position": 1730
-        },
-        "name": "components/PhantomEvent.clock.test.jsx",
-        "start": 50,
-        "startLoc": {
-          "column": 55,
-          "line": 50,
-          "position": 1491
-        }
-      },
-      "format": "jsx",
-      "fragment": "            vi.advanceTimersByTime(MIN_COOLDOWN_MS / 2 - 1);\n        });\n        expect(screen.queryByAltText('Phantom')).not.toBeInTheDocument();\n\n        act(() => {\n            vi.advanceTimersByTime(1);\n        });\n        expect(screen.getByAltText('Phantom')).toBeInTheDocument();\n    });",
-      "isNew": false,
-      "kind": "exact",
-      "lines": 9,
-      "secondFile": {
-        "end": 74,
-        "endLoc": {
-          "column": 7,
-          "line": 74,
-          "position": 2284
-        },
-        "name": "components/PhantomEvent.test.jsx",
-        "start": 66,
-        "startLoc": {
-          "column": 51,
-          "line": 66,
-          "position": 2045
+          "line": 40,
+          "position": 1199
         }
       },
       "tokens": 56
@@ -536,16 +612,54 @@
       "firstFile": {
         "end": 59,
         "endLoc": {
-          "column": 3,
+          "column": 7,
           "line": 59,
-          "position": 1734
+          "position": 1790
         },
         "name": "components/PhantomEvent.clock.test.jsx",
-        "start": 50,
+        "start": 51,
+        "startLoc": {
+          "column": 55,
+          "line": 51,
+          "position": 1551
+        }
+      },
+      "format": "jsx",
+      "fragment": "            vi.advanceTimersByTime(MIN_COOLDOWN_MS / 2 - 1);\n        });\n        expect(screen.queryByAltText('Phantom')).not.toBeInTheDocument();\n\n        act(() => {\n            vi.advanceTimersByTime(1);\n        });\n        expect(screen.getByAltText('Phantom')).toBeInTheDocument();\n    });",
+      "isNew": false,
+      "kind": "exact",
+      "lines": 9,
+      "secondFile": {
+        "end": 75,
+        "endLoc": {
+          "column": 7,
+          "line": 75,
+          "position": 2344
+        },
+        "name": "components/PhantomEvent.test.jsx",
+        "start": 67,
+        "startLoc": {
+          "column": 51,
+          "line": 67,
+          "position": 2105
+        }
+      },
+      "tokens": 56
+    },
+    {
+      "firstFile": {
+        "end": 60,
+        "endLoc": {
+          "column": 3,
+          "line": 60,
+          "position": 1794
+        },
+        "name": "components/PhantomEvent.clock.test.jsx",
+        "start": 51,
         "startLoc": {
           "column": 58,
-          "line": 50,
-          "position": 1494
+          "line": 51,
+          "position": 1554
         }
       },
       "format": "jsx",
@@ -554,36 +668,112 @@
       "kind": "exact",
       "lines": 10,
       "secondFile": {
-        "end": 144,
+        "end": 145,
         "endLoc": {
           "column": 3,
-          "line": 144,
-          "position": 4346
+          "line": 145,
+          "position": 4406
         },
         "name": "components/PhantomEvent.test.jsx",
-        "start": 135,
+        "start": 136,
         "startLoc": {
           "column": 41,
-          "line": 135,
-          "position": 4106
+          "line": 136,
+          "position": 4166
         }
       },
       "tokens": 57
     },
     {
       "firstFile": {
-        "end": 56,
+        "end": 8,
         "endLoc": {
-          "column": 67,
-          "line": 56,
-          "position": 1809
+          "column": 5,
+          "line": 8,
+          "position": 334
         },
         "name": "components/PhantomEvent.injectedClock.test.jsx",
-        "start": 46,
+        "start": 1,
+        "startLoc": {
+          "column": 29,
+          "line": 1,
+          "position": 29
+        }
+      },
+      "format": "jsx",
+      "fragment": "import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';\nimport { render, screen, act } from '@testing-library/react';\nimport PhantomEvent from './PhantomEvent';\nimport { STORAGE_KEYS } from '../services/storageKeys';\n\nconst COOLDOWN_KEY = STORAGE_KEYS.PHANTOM_LAST_SPAWN;\nconst MIN_COOLDOWN_MS = 5 * 60 * 1000;\nconst INJECTED_NOW = new Date('2025-02-02T00:00:00Z').getTime();",
+      "isNew": false,
+      "kind": "exact",
+      "lines": 8,
+      "secondFile": {
+        "end": 9,
+        "endLoc": {
+          "column": 5,
+          "line": 9,
+          "position": 335
+        },
+        "name": "components/PhantomEvent.injectedStorage.test.jsx",
+        "start": 1,
+        "startLoc": {
+          "column": 29,
+          "line": 1,
+          "position": 29
+        }
+      },
+      "tokens": 50
+    },
+    {
+      "firstFile": {
+        "end": 8,
+        "endLoc": {
+          "column": 5,
+          "line": 8,
+          "position": 334
+        },
+        "name": "components/PhantomEvent.injectedClock.test.jsx",
+        "start": 1,
+        "startLoc": {
+          "column": 29,
+          "line": 1,
+          "position": 29
+        }
+      },
+      "format": "jsx",
+      "fragment": "import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';\nimport { render, screen, act } from '@testing-library/react';\nimport PhantomEvent from './PhantomEvent';\nimport { STORAGE_KEYS } from '../services/storageKeys';\n\nconst COOLDOWN_KEY = STORAGE_KEYS.PHANTOM_LAST_SPAWN;\nconst MIN_COOLDOWN_MS = 5 * 60 * 1000;\nconst INJECTED_NOW = new Date('2025-02-02T00:00:00Z').getTime();",
+      "isNew": false,
+      "kind": "exact",
+      "lines": 8,
+      "secondFile": {
+        "end": 8,
+        "endLoc": {
+          "column": 5,
+          "line": 8,
+          "position": 334
+        },
+        "name": "components/PhantomEvent.rng.test.jsx",
+        "start": 1,
+        "startLoc": {
+          "column": 29,
+          "line": 1,
+          "position": 29
+        }
+      },
+      "tokens": 50
+    },
+    {
+      "firstFile": {
+        "end": 57,
+        "endLoc": {
+          "column": 67,
+          "line": 57,
+          "position": 1869
+        },
+        "name": "components/PhantomEvent.injectedClock.test.jsx",
+        "start": 47,
         "startLoc": {
           "column": 74,
-          "line": 46,
-          "position": 1498
+          "line": 47,
+          "position": 1558
         }
       },
       "format": "jsx",
@@ -592,74 +782,74 @@
       "kind": "exact",
       "lines": 11,
       "secondFile": {
-        "end": 72,
+        "end": 73,
         "endLoc": {
           "column": 67,
-          "line": 72,
-          "position": 2284
+          "line": 73,
+          "position": 2344
         },
         "name": "components/PhantomEvent.injectedStorage.test.jsx",
-        "start": 62,
+        "start": 63,
         "startLoc": {
           "column": 46,
-          "line": 62,
-          "position": 1973
+          "line": 63,
+          "position": 2033
         }
       },
       "tokens": 69
     },
     {
       "firstFile": {
-        "end": 32,
-        "endLoc": {
-          "column": 9,
-          "line": 32,
-          "position": 818
-        },
-        "name": "components/PhantomEvent.injectedRng.test.jsx",
-        "start": 5,
-        "startLoc": {
-          "column": 48,
-          "line": 5,
-          "position": 228
-        }
-      },
-      "format": "jsx",
-      "fragment": "const COOLDOWN_KEY = 'phantomEvent_lastSpawn_v1';\nconst MAX_EXTRA_MS = 5 * 60 * 1000;\n\nbeforeEach(() => {\n    vi.useFakeTimers();\n    vi.setSystemTime(new Date('2025-01-01T00:00:00Z'));\n    localStorage.clear();\n});\n\nafterEach(() => {\n    vi.useRealTimers();\n    vi.restoreAllMocks();\n    localStorage.clear();\n});\n\nconst renderPhantom = (props = {}) =>\n    render(\n        <PhantomEvent\n            battlingSkillId={null}\n            onAwardLevel={() => {}}\n            onPhantomCaught={() => {}}\n            {...props}\n        />,\n    );\n\nconst outerWrapper = () => screen.getByAltText('Phantom').parentElement.parentElement;\n\ndescribe('PhantomEvent with an injected rng', () => {",
-      "isNew": false,
-      "kind": "exact",
-      "lines": 28,
-      "secondFile": {
         "end": 33,
         "endLoc": {
           "column": 9,
           "line": 33,
-          "position": 857
+          "position": 878
         },
-        "name": "components/PhantomEvent.rng.test.jsx",
+        "name": "components/PhantomEvent.injectedRng.test.jsx",
         "start": 6,
         "startLoc": {
-          "column": 37,
+          "column": 52,
           "line": 6,
-          "position": 267
+          "position": 288
+        }
+      },
+      "format": "jsx",
+      "fragment": "const COOLDOWN_KEY = STORAGE_KEYS.PHANTOM_LAST_SPAWN;\nconst MAX_EXTRA_MS = 5 * 60 * 1000;\n\nbeforeEach(() => {\n    vi.useFakeTimers();\n    vi.setSystemTime(new Date('2025-01-01T00:00:00Z'));\n    localStorage.clear();\n});\n\nafterEach(() => {\n    vi.useRealTimers();\n    vi.restoreAllMocks();\n    localStorage.clear();\n});\n\nconst renderPhantom = (props = {}) =>\n    render(\n        <PhantomEvent\n            battlingSkillId={null}\n            onAwardLevel={() => {}}\n            onPhantomCaught={() => {}}\n            {...props}\n        />,\n    );\n\nconst outerWrapper = () => screen.getByAltText('Phantom').parentElement.parentElement;\n\ndescribe('PhantomEvent with an injected rng', () => {",
+      "isNew": false,
+      "kind": "exact",
+      "lines": 28,
+      "secondFile": {
+        "end": 34,
+        "endLoc": {
+          "column": 9,
+          "line": 34,
+          "position": 917
+        },
+        "name": "components/PhantomEvent.rng.test.jsx",
+        "start": 7,
+        "startLoc": {
+          "column": 37,
+          "line": 7,
+          "position": 327
         }
       },
       "tokens": 134
     },
     {
       "firstFile": {
-        "end": 76,
+        "end": 77,
         "endLoc": {
           "column": 15,
-          "line": 76,
-          "position": 2287
+          "line": 77,
+          "position": 2347
         },
         "name": "components/PhantomEvent.injectedRng.test.jsx",
-        "start": 69,
+        "start": 70,
         "startLoc": {
           "column": 8,
-          "line": 69,
-          "position": 2054
+          "line": 70,
+          "position": 2114
         }
       },
       "format": "jsx",
@@ -668,36 +858,36 @@
       "kind": "exact",
       "lines": 8,
       "secondFile": {
-        "end": 73,
+        "end": 74,
         "endLoc": {
           "column": 15,
-          "line": 73,
-          "position": 2300
+          "line": 74,
+          "position": 2360
         },
         "name": "components/PhantomEvent.injectedStorage.test.jsx",
-        "start": 66,
+        "start": 67,
         "startLoc": {
           "column": 8,
-          "line": 66,
-          "position": 2067
+          "line": 67,
+          "position": 2127
         }
       },
       "tokens": 51
     },
     {
       "firstFile": {
-        "end": 76,
+        "end": 77,
         "endLoc": {
           "column": 7,
-          "line": 76,
-          "position": 2346
+          "line": 77,
+          "position": 2406
         },
         "name": "components/PhantomEvent.rng.test.jsx",
-        "start": 68,
+        "start": 69,
         "startLoc": {
           "column": 8,
-          "line": 68,
-          "position": 2124
+          "line": 69,
+          "position": 2184
         }
       },
       "format": "jsx",
@@ -706,36 +896,36 @@
       "kind": "exact",
       "lines": 9,
       "secondFile": {
-        "end": 49,
+        "end": 50,
         "endLoc": {
           "column": 7,
-          "line": 49,
-          "position": 1387
+          "line": 50,
+          "position": 1447
         },
         "name": "components/PhantomEvent.test.jsx",
-        "start": 41,
+        "start": 42,
         "startLoc": {
           "column": 8,
-          "line": 41,
-          "position": 1165
+          "line": 42,
+          "position": 1225
         }
       },
       "tokens": 51
     },
     {
       "firstFile": {
-        "end": 76,
+        "end": 77,
         "endLoc": {
           "column": 7,
-          "line": 76,
-          "position": 2346
+          "line": 77,
+          "position": 2406
         },
         "name": "components/PhantomEvent.rng.test.jsx",
-        "start": 68,
+        "start": 69,
         "startLoc": {
           "column": 8,
-          "line": 68,
-          "position": 2124
+          "line": 69,
+          "position": 2184
         }
       },
       "format": "jsx",
@@ -744,18 +934,18 @@
       "kind": "exact",
       "lines": 9,
       "secondFile": {
-        "end": 76,
+        "end": 77,
         "endLoc": {
           "column": 7,
-          "line": 76,
-          "position": 2293
+          "line": 77,
+          "position": 2353
         },
         "name": "components/PhantomEvent.test.jsx",
-        "start": 68,
+        "start": 69,
         "startLoc": {
           "column": 8,
-          "line": 68,
-          "position": 2071
+          "line": 69,
+          "position": 2131
         }
       },
       "tokens": 51
@@ -1218,7 +1408,7 @@
     }
   ],
   "statistics": {
-    "detectionDate": "2026-11-25T13:31:44.651Z",
+    "detectionDate": "2026-11-25T13:50:48.450Z",
     "formats": {
       "css": {
         "clones": 0,
@@ -1236,38 +1426,38 @@
         "clones": 6,
         "duplicatedLines": 95,
         "duplicatedTokens": 469,
-        "lines": 2671,
+        "lines": 2673,
         "newClones": 0,
         "newDuplicatedLines": 0,
-        "percentage": 3.5567203294646204,
-        "percentageTokens": 3.0326543808600066,
+        "percentage": 3.554059109614665,
+        "percentageTokens": 3.029520056843873,
         "sources": 26,
-        "tokens": 15465
+        "tokens": 15481
       },
       "jsx": {
-        "clones": 26,
-        "duplicatedLines": 393,
-        "duplicatedTokens": 2126,
-        "lines": 6766,
+        "clones": 31,
+        "duplicatedLines": 431,
+        "duplicatedTokens": 2403,
+        "lines": 6773,
         "newClones": 0,
         "newDuplicatedLines": 0,
-        "percentage": 5.808454034880284,
-        "percentageTokens": 6.132987162844367,
+        "percentage": 6.363502140853389,
+        "percentageTokens": 6.918293314907584,
         "sources": 27,
-        "tokens": 34665
+        "tokens": 34734
       }
     },
     "total": {
-      "clones": 32,
-      "duplicatedLines": 488,
-      "duplicatedTokens": 2595,
-      "lines": 9491,
+      "clones": 37,
+      "duplicatedLines": 526,
+      "duplicatedTokens": 2872,
+      "lines": 9500,
       "newClones": 0,
       "newDuplicatedLines": 0,
-      "percentage": 5.141713201980824,
-      "percentageTokens": 5.145746579417014,
+      "percentage": 5.536842105263158,
+      "percentageTokens": 5.68543996832624,
       "sources": 54,
-      "tokens": 50430
+      "tokens": 50515
     }
   }
 }

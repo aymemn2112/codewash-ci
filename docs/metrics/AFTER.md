@@ -13,11 +13,12 @@ Les chiffres « avant » correspondent à l’état initial snapshoté (`DEBT.md
 | Métrique | Avant | Après | Commentaire |
 |---|---:|---:|---|
 | Tests | 0 | **27 fichiers / 147 tests** | Vitest + RTL (ADR-001) |
-| Couverture — statements | 0 % | **59,80 %** (1052/1759) | |
+| Couverture — statements | 0 % | **59,78 %** (1051/1758) | |
 | Couverture — branches | 0 % | **54,65 %** (698/1277) | |
 | Couverture — functions | 0 % | **54,06 %** (193/357) | |
-| Couverture — lines | 0 % | **59,90 %** (983/1641) | Voir `after/patch-coverage.txt` pour le code nouveau |
+| Couverture — lines | 0 % | **59,87 %** (982/1640) | |
 | Patch coverage (lignes modifiées) | — | **80,59 %** (137/170) | Gate à 80 % respecté (`BASE_REF=origin/develop`) |
+| Couverture du code nouveau | — | **100 %** (4 fichiers `services/*`) | Lignes, statements, fonctions et branches (`after/new-code-coverage.txt`) |
 | ESLint (erreurs) | 0 | **0** | |
 | ESLint (warnings) | 0 | **14** | Warnings `complexity` préexistants |
 | Règle `complexity` (erreurs) | 38 | **14** | Baisse nette |
@@ -48,7 +49,9 @@ npx jscpd src/ --min-lines 5 --min-tokens 50 --ignore '**/._*' --reporters conso
 npx madge --circular --extensions js,jsx src/ > ../docs/metrics/after/madge-circular.txt
 npm run coverage > ../docs/metrics/after/coverage.txt 2>&1
 BASE_REF=origin/develop npm run coverage:patch > ../docs/metrics/after/patch-coverage.txt 2>&1
+BASE_REF=origin/develop npm run coverage:new-code > ../docs/metrics/after/new-code-coverage.txt 2>&1
+npm run coverage:gates
 npm run build > ../docs/metrics/after/build.log 2>&1
 ```
 
-Les fichiers bruts sont dans `docs/metrics/after/` (`coverage.txt`, `patch-coverage.txt`, `build.log`, `jscpd-console.txt`, `madge-circular.txt`, `wc-lines.txt`, etc.).
+`coverage:gates` enchaîne les deux gates (lignes modifiées ≥ 80 % et nouveau code 100 %). Les fichiers bruts sont dans `docs/metrics/after/` (`coverage.txt`, `patch-coverage.txt`, `new-code-coverage.txt`, `build.log`, `jscpd-console.txt`, `madge-circular.txt`, `wc-lines.txt`, etc.).

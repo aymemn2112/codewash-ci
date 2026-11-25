@@ -1,0 +1,6 @@
+
+> eliott-rpg-game@0.0.0 coverage:new-code
+> node scripts/check-new-code-coverage.mjs
+
+[new-code-coverage] 4 new source file(s) checked: 100% lines/statements/functions/branches required.
+[new-code-coverage] Gate passed.
