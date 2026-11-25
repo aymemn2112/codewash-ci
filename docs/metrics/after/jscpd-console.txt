@@ -1,0 +1,54 @@
+npm warn exec The following package was not found and will be installed: jscpd@5.4.3
+[1mClone found (jsx)[22m
+ - [1m[32mApp.jsx[39m[22m [254:37 - 260:55] (7 lines, 53 tokens)
+   App.jsx [273:37 - 279:55]
+[1mClone found (jsx)[22m
+ - [1m[32mcomponents/PhantomEvent.test.jsx[39m[22m [39:57 - 49:8] (11 lines, 58 tokens)
+   components/PhantomEvent.test.jsx [66:52 - 76:8]
+[1mClone found (jsx)[22m
+ - [1m[32mcomponents/PhantomEvent.test.jsx[39m[22m [39:60 - 47:8] (9 lines, 54 tokens)
+   components/PhantomEvent.test.jsx [135:42 - 143:8]
+[1mClone found (jsx)[22m
+ - [1m[32mcomponents/drawers/CosmeticsDrawer.jsx[39m[22m [275:53 - 303:47] (29 lines, 141 tokens)
+   components/drawers/CosmeticsDrawer.jsx [396:152 - 424:47]
+[1mClone found (jsx)[22m
+ - [1m[32mcomponents/drawers/MenuDrawer.jsx[39m[22m [20:5 - 30:11] (11 lines, 110 tokens)
+   components/drawers/MenuDrawer_old.jsx [40:5 - 50:11]
+[1mClone found (jsx)[22m
+ - [1m[32mcomponents/drawers/MenuDrawer.jsx[39m[22m [36:63 - 55:29] (20 lines, 112 tokens)
+   components/drawers/MenuDrawer_old.jsx [50:10 - 69:29]
+[1mClone found (jsx)[22m
+ - [1m[32mcomponents/drawers/MenuDrawer.jsx[39m[22m [72:98 - 84:34] (13 lines, 79 tokens)
+   components/drawers/MenuDrawer_old.jsx [108:33 - 120:38]
+[1mClone found (jsx)[22m
+ - [1m[32mcomponents/skills/SkillCard.jsx[39m[22m [225:42 - 237:6] (13 lines, 52 tokens)
+   components/skills/SkillCard.jsx [237:12 - 250:6]
+[1mClone found (jsx)[22m
+ - [1m[32mcomponents/skills/SkillCard.jsx[39m[22m [824:81 - 837:64] (14 lines, 50 tokens)
+   components/skills/SkillCard.jsx [876:74 - 889:64]
+[1mClone found (javascript)[22m
+ - [1m[32mutils/achievementUtils.js[39m[22m [11:38 - 26:4] (16 lines, 66 tokens)
+   utils/achievementUtils.test.js [31:42 - 46:12]
+[1mClone found (javascript)[22m
+ - [1m[32mutils/soundManager.audioIo.test.js[39m[22m [2:64 - 13:10] (12 lines, 63 tokens)
+   utils/soundManager.injectedAudio.test.js [8:1 - 19:10]
+[1mClone found (javascript)[22m
+ - [1m[32mutils/soundManager.audioIo.test.js[39m[22m [5:13 - 29:10] (25 lines, 132 tokens)
+   utils/soundManager.test.js [14:13 - 38:10]
+[1mClone found (javascript)[22m
+ - [1m[32mutils/soundManager.injectedAudio.test.js[39m[22m [7:17 - 19:10] (13 lines, 64 tokens)
+   utils/soundManager.test.js [10:15 - 22:10]
+[90m┌────────────┬────────────────┬─────────────┬──────────────┬──────────────┬──────────────────┬───────────────────┐[39m
+[90m│[39m[31m Format     [39m[90m│[39m[31m Files analyzed [39m[90m│[39m[31m Total lines [39m[90m│[39m[31m Total tokens [39m[90m│[39m[31m Clones found [39m[90m│[39m[31m Duplicated lines [39m[90m│[39m[31m Duplicated tokens [39m[90m│[39m
+[90m├────────────┼────────────────┼─────────────┼──────────────┼──────────────┼──────────────────┼───────────────────┤[39m
+[90m│[39m css        [90m│[39m 1              [90m│[39m 54          [90m│[39m 300          [90m│[39m 0            [90m│[39m 0 (0.00%)        [90m│[39m 0 (0.00%)         [90m│[39m
+[90m├────────────┼────────────────┼─────────────┼──────────────┼──────────────┼──────────────────┼───────────────────┤[39m
+[90m│[39m javascript [90m│[39m 17             [90m│[39m 2254        [90m│[39m 12602        [90m│[39m 4            [90m│[39m 66 (2.93%)       [90m│[39m 325 (2.58%)       [90m│[39m
+[90m├────────────┼────────────────┼─────────────┼──────────────┼──────────────┼──────────────────┼───────────────────┤[39m
+[90m│[39m jsx        [90m│[39m 21             [90m│[39m 6264        [90m│[39m 31305        [90m│[39m 9            [90m│[39m 127 (2.03%)      [90m│[39m 709 (2.26%)       [90m│[39m
+[90m├────────────┼────────────────┼─────────────┼──────────────┼──────────────┼──────────────────┼───────────────────┤[39m
+[90m│[39m [1mTotal:[22m     [90m│[39m 39             [90m│[39m 8572        [90m│[39m 44207        [90m│[39m 13           [90m│[39m 193 (2.25%)      [90m│[39m 1034 (2.34%)      [90m│[39m
+[90m└────────────┴────────────────┴─────────────┴──────────────┴──────────────┴──────────────────┴───────────────────┘[39m
+[90mFound 13 clones.[39m
+[32mJSON report saved to ../docs/metrics/after/jscpd-report.json[39m
+[90mtime: 11.062ms[39m
