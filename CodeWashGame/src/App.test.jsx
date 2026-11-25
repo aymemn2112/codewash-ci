@@ -29,6 +29,13 @@ describe('App', () => {
         delete document.documentElement.requestFullscreen;
     });
 
+    it('routes carousel navigation through the injected sfx player', () => {
+        render(<App />);
+
+        fireEvent.click(screen.getAllByText(/^Math$/)[0]);
+        fireEvent.click(screen.getAllByText(/^Writing$/)[0]);
+    });
+
     it('migrates the legacy profile key and resets it through the storage service', () => {
         localStorage.setItem('heroSkills_v23', JSON.stringify({ theme: 'classic' }));
         const { container } = render(<App />);

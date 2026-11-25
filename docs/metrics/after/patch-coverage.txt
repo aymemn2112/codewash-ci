@@ -2,10 +2,8 @@
 > eliott-rpg-game@0.0.0 coverage:patch
 > node scripts/check-patch-coverage.mjs
 
-[patch-coverage] 121/170 changed executable lines covered (71.18%). Threshold: 80%.
+[patch-coverage] 131/170 changed executable lines covered (77.06%). Threshold: 80%.
 [patch-coverage] Uncovered changed lines (first 20):
-  - src/App.jsx:450
-  - src/App.jsx:508
   - src/App.jsx:515
   - src/App.jsx:545
   - src/App.jsx:555
@@ -21,8 +19,10 @@
   - src/App.jsx:1012
   - src/App.jsx:1024
   - src/App.jsx:1029
-  - src/App.jsx:1074
-  - src/App.jsx:1075
-  - src/App.jsx:1078
-  ... and 29 more
-[patch-coverage] FAILED: 71.18% < 80% of changed lines covered.
+  - src/App.jsx:1274
+  - src/App.jsx:1277
+  - src/App.jsx:1289
+  - src/App.jsx:1291
+  - src/App.jsx:1376
+  ... and 19 more
+[patch-coverage] FAILED: 77.06% < 80% of changed lines covered.
