@@ -4,6 +4,7 @@ export const STORAGE_KEYS = {
     PROFILE_NAMES: 'heroProfileNames_v1',
     PARENT_STATUS: 'heroParentStatus_v1',
     LEGACY_SKILLS: 'heroSkills_v23',
+    PHANTOM_LAST_SPAWN: 'phantomEvent_lastSpawn_v1',
 };
 
 export const getStorageKey = (profileId) => `heroSkills_v23_p${profileId}`;

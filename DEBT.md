@@ -195,7 +195,7 @@ npm run build
 | D-28 | `gameData.jsx` (`THEME_CONFIG`), `App.jsx › loadTheme`/`handleThemeChange` (172, 824), assets par thème | Système de thèmes incomplet : toutes les images ne changent pas, tailles incohérentes, jeux et audio non thémés, pas de barre de défilement | 🟠 | 🟠 | L | P4 | todo | P5-4 |
 | D-29 | `App.jsx` rendu initial ; `dist/assets` | Démarrage/menu lents ; aucun découpage de code ; `dist` = 244 Mo dont 4 WAV de 34–48 Mo ; aucune mesure de démarrage | 🔴 | 🟠 | L | P4 | todo | P5-1 |
 | D-30 | `App.jsx` : `handleSuccessHit`, `checkAchievements`, effets de toasts/level-up | Nombreux `setTimeout` non nettoyés au démontage (mises à jour d'état après unmount) | 🟠 | 🟠 | M | P2 | todo | à créer |
-| D-31 | `PhantomEvent.jsx:5,21,55` | Clé `localStorage` propre (`phantomEvent_lastSpawn_v1`) hors schéma central | 🟢 | 🟢 | S | P2 | todo | P4-6 |
+| D-31 | `services/storageKeys.js` (`STORAGE_KEYS.PHANTOM_LAST_SPAWN`) | Clé `localStorage` propre (`phantomEvent_lastSpawn_v1`) hors schéma central | 🟢 | 🟢 | S | P2 | done | P4-6 |
 | D-32 | `SafeImage.jsx:6–17` | Erreur de chargement d'image avalée silencieusement (fallback sans log) | 🟢 | 🟢 | S | P3 | todo | P4-11 |
 
 ### 3.5 Dette process
