@@ -17,6 +17,8 @@ const SettingsDrawer = ({
     parentStatus,
     onParentVerified,
     currentSkills,
+    bugReportEndpoint,
+    onBugReportEndpointChange,
 }) => (
     <div
         className={`fixed h-full w-[85%] md:w-[60%] bg-[#0f172a]/95 backdrop-blur-xl z-50 border-r-4 border-slate-700 shadow-2xl transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}
@@ -100,6 +102,32 @@ const SettingsDrawer = ({
                                     className="h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-yellow-400"
                                 />
                             </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 className="text-xl text-blue-300 mb-5 font-bold flex items-center gap-3 uppercase tracking-wider">
+                            <AlertTriangle size={20} /> Bug Reporting
+                        </h3>
+                        <div className="space-y-3 bg-slate-900/50 p-5 rounded-xl border-2 border-slate-600">
+                            <label
+                                htmlFor="bug-report-endpoint"
+                                className="block text-slate-400 font-bold text-sm uppercase"
+                            >
+                                Report endpoint
+                            </label>
+                            <input
+                                id="bug-report-endpoint"
+                                type="url"
+                                value={bugReportEndpoint || ''}
+                                onChange={(e) => onBugReportEndpointChange(e.target.value)}
+                                placeholder="http://localhost:8787/report"
+                                className="w-full bg-slate-950 border-2 border-slate-600 rounded-lg p-2 text-slate-100"
+                            />
+                            <p className="text-xs text-slate-400">
+                                The bug report button sends a JSON report to this URL. Leave empty
+                                to disable reporting.
+                            </p>
                         </div>
                     </div>
                 </div>

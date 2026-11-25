@@ -32,3 +32,5 @@ pnpm-debug.log*
 .vscode/
 .idea/
 *.swp
+# Local bug-report receiver output
+bug-reports/

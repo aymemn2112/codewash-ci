@@ -25,6 +25,8 @@ const DrawersLayer = ({
     skills,
     stats,
     handleReset,
+    bugReportEndpoint,
+    onBugReportEndpointChange,
 }) => (
     <>
         {/* Cosmetics drawer overlay - click to close */}
@@ -74,6 +76,8 @@ const DrawersLayer = ({
             parentStatus={parentStatus}
             onParentVerified={handleParentVerified}
             currentSkills={skills}
+            bugReportEndpoint={bugReportEndpoint}
+            onBugReportEndpointChange={onBugReportEndpointChange}
         />
         <ResetModal
             isOpen={drawers.isResetOpen}
@@ -83,6 +87,7 @@ const DrawersLayer = ({
         <BugReportModal
             isOpen={drawers.isBugReportOpen}
             onClose={() => drawers.setIsBugReportOpen(false)}
+            endpoint={bugReportEndpoint}
         />
 
         {/* Achievement drawer overlay - click to close */}

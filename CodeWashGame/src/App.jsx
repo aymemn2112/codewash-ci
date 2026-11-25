@@ -28,6 +28,7 @@ import { useCarousel } from './hooks/useCarousel';
 import { useDrawers } from './hooks/useDrawers';
 import { useAudioSettings } from './hooks/useAudioSettings';
 import { useBorders } from './hooks/useBorders';
+import { useBugReportSettings } from './hooks/useBugReportSettings';
 import {
     getStorageKey,
     loadSkills,
@@ -139,6 +140,7 @@ const App = () => {
     const audio = useAudioSettings();
 
     const borders = useBorders(currentProfile);
+    const bugReport = useBugReportSettings();
 
     useEffect(() => {
         const dataToSave = { skills: skills, theme: activeTheme, stats: stats };
@@ -907,6 +909,8 @@ const App = () => {
                 skills={skills}
                 stats={stats}
                 handleReset={handleReset}
+                bugReportEndpoint={bugReport.endpoint}
+                onBugReportEndpointChange={bugReport.setEndpoint}
             />
 
             {/* Backdrop overlay when battling - click to exit */}
