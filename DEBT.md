@@ -191,7 +191,7 @@ npm run build
 | D-20 | `App.jsx:50` | `parseInt` sans radix | 🟢 | 🟢 | S | P3 | todo | P4-14 |
 | D-21 | `MenuDrawer_old.jsx` (231 l.) | Code mort | 🟢 | 🟢 | S | P3 | todo | P4-10 |
 | D-22 | `BugReportModal.jsx` (19 l.) | Stub non fonctionnel | 🟠 | 🟢 | M | P4 | todo | P5-2 |
-| D-27 | `src/**` (ex. `App.jsx`, `MenuDrawer.jsx`, `ResetModal.jsx`, `BugReportModal.jsx`) | Chaînes d'interface codées en dur en anglais ; aucune couche i18n ; bloque la mission Traduction | 🟢 | 🟢 | M | P4 | done (voir `docs/i18n/TRANSLATING.md`) | P5-3 |
+| D-27 | `src/**` (ex. `App.jsx`, `MenuDrawer.jsx`, `ResetModal.jsx`, `BugReportModal.jsx`) | Chaînes d'interface codées en dur en anglais ; aucune couche i18n ; bloque la mission Traduction | 🟢 | 🟢 | M | P4 | done — `ee4642f` (voir `docs/i18n/TRANSLATING.md`) | P5-3 |
 | D-28 | `gameData.jsx` (`THEME_CONFIG`), `App.jsx › loadTheme`/`handleThemeChange` (172, 824), assets par thème | Système de thèmes incomplet : toutes les images ne changent pas, tailles incohérentes, jeux et audio non thémés, pas de barre de défilement | 🟠 | 🟠 | L | P4 | todo | P5-4 |
 | D-29 | `App.jsx` rendu initial ; `dist/assets` | Démarrage/menu lents ; aucun découpage de code ; `dist` = 244 Mo dont 4 WAV de 34–48 Mo ; aucune mesure de démarrage | 🔴 | 🟠 | L | P4 | todo | P5-1 |
 | D-30 | `App.jsx` : `handleSuccessHit`, `checkAchievements`, effets de toasts/level-up | Nombreux `setTimeout` non nettoyés au démontage (mises à jour d'état après unmount) | 🟠 | 🟠 | M | P2 | todo | à créer |
