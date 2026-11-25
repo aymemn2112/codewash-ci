@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Gift } from 'lucide-react';
 
 // Modules
-import GlobalStyles from './components/ui/GlobalStyles';
 import SafeImage from './components/ui/SafeImage';
 import CornerControls from './components/game/CornerControls';
 import PlayerHealth from './components/game/PlayerHealth';
@@ -205,6 +204,11 @@ const App = () => {
     useEffect(() => {
         challengeDataRef.current = challengeData;
     }, [challengeData]);
+
+    // Tell the boot loader (index.html) that the menu is ready.
+    useEffect(() => {
+        window.__APP_READY__?.();
+    }, []);
 
     // Regenerate challenge when difficulty or level changes during active battle
     // This fixes the issue where challenges use stale difficulty after leveling up
@@ -678,7 +682,7 @@ const App = () => {
                 });
             }
         },
-        [borders.selectedBorder, skills, checkAchievements],
+        [borders.selectedBorder, borders.setSelectedBorder, skills, checkAchievements],
     );
 
     // Award a free level from phantom click
@@ -869,7 +873,6 @@ const App = () => {
             className="min-h-screen overflow-hidden relative flex flex-col bg-cover bg-center bg-no-repeat font-sans text-stone-100"
             style={containerStyle}
         >
-            <GlobalStyles />
             <div className="absolute inset-0 bg-black/30 pointer-events-none z-0"></div>
 
             {loadWarning && <LoadWarning onDismiss={() => setLoadWarning(false)} />}

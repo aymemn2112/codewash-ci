@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
@@ -17,5 +17,12 @@ describe('App', () => {
         localStorage.setItem('heroSkills_v23_p1', '{ not valid json');
         render(<App />);
         expect(screen.getByRole('alert')).toHaveTextContent(/could not be read/i);
+    });
+
+    it('signals the boot loader when the menu is ready', () => {
+        window.__APP_READY__ = vi.fn();
+        render(<App />);
+        expect(window.__APP_READY__).toHaveBeenCalled();
+        delete window.__APP_READY__;
     });
 });

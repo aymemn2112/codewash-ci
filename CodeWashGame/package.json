@@ -14,6 +14,7 @@
         "coverage:patch": "node scripts/check-patch-coverage.mjs",
         "coverage:new-code": "node scripts/check-new-code-coverage.mjs",
         "coverage:gates": "npm run coverage:patch && npm run coverage:new-code",
+        "perf": "node scripts/perf-report.mjs",
         "format": "prettier --write \"src/**/*.{js,jsx,css}\" \"electron/**/*.{js,cjs}\" \"scripts/**/*.mjs\" \"*.{js,json}\"",
         "format:check": "prettier --check \"src/**/*.{js,jsx,css}\" \"electron/**/*.{js,cjs}\" \"scripts/**/*.mjs\" \"*.{js,json}\"",
         "preview": "vite preview",

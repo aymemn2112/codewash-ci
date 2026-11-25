@@ -1130,4 +1130,4 @@ const SkillCard = ({
     );
 };
 
-export default SkillCard;
+export default React.memo(SkillCard);

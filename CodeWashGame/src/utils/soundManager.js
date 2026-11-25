@@ -10,12 +10,12 @@ const defaultAudioFactory = (src) => new Audio(src);
 
 // BGM tracks discovered from public/assets/sounds/bgm/
 const BGM_TRACKS = [
-    'assets/sounds/bgm/calm1.wav',
-    'assets/sounds/bgm/calm2.wav',
-    'assets/sounds/bgm/calm3.wav',
-    'assets/sounds/bgm/piano1.wav',
-    'assets/sounds/bgm/piano2.wav',
-    'assets/sounds/bgm/piano3.wav',
+    'assets/sounds/bgm/calm1.ogg',
+    'assets/sounds/bgm/calm2.ogg',
+    'assets/sounds/bgm/calm3.ogg',
+    'assets/sounds/bgm/piano1.ogg',
+    'assets/sounds/bgm/piano2.ogg',
+    'assets/sounds/bgm/piano3.ogg',
 ];
 
 // UI sound paths

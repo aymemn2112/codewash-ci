@@ -4,10 +4,111 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>eliott-rpg-game</title>
+    <title>Level Up!</title>
+    <style>
+      #boot-loader {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
+        background: #1c1917;
+        color: #fde047;
+        font-family: 'VT323', monospace, sans-serif;
+        transition: opacity 0.3s ease;
+      }
+      #boot-loader .boot-title {
+        font-size: 48px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        text-shadow: 4px 4px 0 #000;
+      }
+      #boot-loader .boot-bar {
+        width: min(420px, 70vw);
+        height: 14px;
+        border: 2px solid #57534e;
+        border-radius: 8px;
+        background: #292524;
+        overflow: hidden;
+      }
+      #boot-fill {
+        width: 0%;
+        height: 100%;
+        background: #fde047;
+        transition: width 0.15s linear;
+      }
+      #boot-percent {
+        font-size: 22px;
+        color: #d6d3d1;
+      }
+    </style>
   </head>
   <body>
+    <div id="boot-loader">
+      <div class="boot-title">Level Up!</div>
+      <div class="boot-bar"><div id="boot-fill"></div></div>
+      <div id="boot-percent">0%</div>
+    </div>
     <div id="root"></div>
+    <script>
+      (function () {
+        var fill = document.getElementById('boot-fill');
+        var percent = document.getElementById('boot-percent');
+        var loader = document.getElementById('boot-loader');
+        var progress = 0;
+        var finished = false;
+
+        function render() {
+          fill.style.width = progress + '%';
+          percent.textContent = Math.round(progress) + '%';
+        }
+
+        function setProgress(value) {
+          progress = Math.max(progress, Math.min(95, value));
+          render();
+        }
+
+        var timer = setInterval(function () {
+          setProgress(progress + Math.max(1, (95 - progress) * 0.08));
+        }, 120);
+
+        var assets = ['assets/themes/classic.png', 'assets/themes/classic_logo.png'];
+        var loaded = 0;
+        var total = assets.length + 1;
+        assets.forEach(function (src) {
+          var img = new Image();
+          var step = function () {
+            loaded += 1;
+            setProgress((loaded / total) * 95);
+          };
+          img.onload = step;
+          img.onerror = step;
+          img.src = src;
+        });
+
+        window.__APP_READY__ = function () {
+          if (finished) return;
+          finished = true;
+          clearInterval(timer);
+          progress = 100;
+          render();
+          setTimeout(function () {
+            loader.style.opacity = '0';
+            setTimeout(function () {
+              loader.remove();
+            }, 300);
+          }, 150);
+        };
+
+        // Fallback: never leave a child staring at the loader forever.
+        setTimeout(function () {
+          window.__APP_READY__();
+        }, 8000);
+      })();
+    </script>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
