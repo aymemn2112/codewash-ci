@@ -3,17 +3,17 @@
     17 src/services/rng.test.js
      7 src/services/storage.js
      5 src/services/rng.js
-    65 src/services/storageKeys.test.js
-    23 src/services/storageKeys.js
+    66 src/services/storageKeys.test.js
+    24 src/services/storageKeys.js
      3 src/services/clock.js
     18 src/test/smoke.test.js
     17 src/test/setup.js
    161 src/components/PhantomEvent.jsx
-   144 src/components/PhantomEvent.test.jsx
-    58 src/components/PhantomEvent.injectedClock.test.jsx
-    59 src/components/PhantomEvent.clock.test.jsx
-    78 src/components/PhantomEvent.injectedRng.test.jsx
-    57 src/components/PhantomEvent.storage.test.jsx
+   145 src/components/PhantomEvent.test.jsx
+    59 src/components/PhantomEvent.injectedClock.test.jsx
+    60 src/components/PhantomEvent.clock.test.jsx
+    79 src/components/PhantomEvent.injectedRng.test.jsx
+    58 src/components/PhantomEvent.storage.test.jsx
    135 src/components/modals/ResetModal.jsx
     16 src/components/modals/BugReportModal.test.jsx
     21 src/components/modals/BugReportModal.jsx
@@ -23,8 +23,8 @@
    124 src/components/drawers/SettingsDrawer.jsx
    347 src/components/drawers/MenuDrawer.jsx
    235 src/components/profile/ProfileCard.jsx
-    76 src/components/PhantomEvent.injectedStorage.test.jsx
-    92 src/components/PhantomEvent.rng.test.jsx
+    77 src/components/PhantomEvent.injectedStorage.test.jsx
+    93 src/components/PhantomEvent.rng.test.jsx
     24 src/components/ui/SafeImage.test.jsx
     65 src/components/ui/MobWithAura.jsx
     35 src/components/ui/SafeImage.jsx
@@ -55,4 +55,4 @@
     79 src/App.test.jsx
   1765 src/App.jsx
     54 src/index.css
- 10801 total
+ 10810 total

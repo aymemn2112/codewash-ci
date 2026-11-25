@@ -10,7 +10,7 @@ Browserslist: browsers data (caniuse-lite) is 12 months old. Please run:
 ✓ 1696 modules transformed.
 rendering chunks...
 computing gzip size...
-dist/index.html                   0.46 kB │ gzip:   0.30 kB
+dist/index.html                   0.46 kB │ gzip:   0.29 kB
 dist/assets/index-AgTOvkb1.css   61.75 kB │ gzip:  11.06 kB
-dist/assets/index-DxvgbNUJ.js   362.67 kB │ gzip: 103.01 kB
-✓ built in 698ms
+dist/assets/index-CidIUrwY.js   362.72 kB │ gzip: 103.03 kB
+✓ built in 671ms

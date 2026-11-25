@@ -14,46 +14,46 @@ src/services/rng.js:5:export const defaultRng = () => Math.random();
 src/services/clock.js:2:// Enveloppé dans une fonction fléchée pour que `new Date()` soit évalué à chaque appel.
 src/services/clock.js:3:export const defaultClock = () => new Date();
 src/test/setup.js:15:    localStorage.clear();
-src/components/PhantomEvent.test.jsx:7:const HALF_WINDOW_DELAY_MS = 150000; // Math.random() === 0.5 on a fresh cooldown
-src/components/PhantomEvent.test.jsx:11:    vi.setSystemTime(new Date('2025-01-01T00:00:00Z'));
-src/components/PhantomEvent.test.jsx:12:    localStorage.clear();
-src/components/PhantomEvent.test.jsx:18:    localStorage.clear();
-src/components/PhantomEvent.test.jsx:57:        expect(Number(localStorage.getItem(COOLDOWN_KEY))).toBeGreaterThan(0);
-src/components/PhantomEvent.test.jsx:61:        localStorage.setItem(COOLDOWN_KEY, String(Date.now()));
-src/components/PhantomEvent.injectedClock.test.jsx:7:const INJECTED_NOW = new Date('2025-02-02T00:00:00Z').getTime();
-src/components/PhantomEvent.injectedClock.test.jsx:11:    vi.setSystemTime(new Date('2025-01-01T00:00:00Z'));
-src/components/PhantomEvent.injectedClock.test.jsx:12:    localStorage.clear();
-src/components/PhantomEvent.injectedClock.test.jsx:18:    localStorage.clear();
-src/components/PhantomEvent.injectedClock.test.jsx:34:        renderPhantom({ rng: () => 0, clock: () => new Date(INJECTED_NOW) });
-src/components/PhantomEvent.injectedClock.test.jsx:41:        expect(Number(localStorage.getItem(COOLDOWN_KEY))).toBe(INJECTED_NOW);
-src/components/PhantomEvent.injectedClock.test.jsx:45:        localStorage.setItem(COOLDOWN_KEY, String(INJECTED_NOW - MIN_COOLDOWN_MS / 2));
-src/components/PhantomEvent.injectedClock.test.jsx:46:        renderPhantom({ rng: () => 0, clock: () => new Date(INJECTED_NOW) });
-src/components/PhantomEvent.clock.test.jsx:10:    vi.setSystemTime(new Date('2025-01-01T00:00:00Z'));
-src/components/PhantomEvent.clock.test.jsx:11:    localStorage.clear();
-src/components/PhantomEvent.clock.test.jsx:17:    localStorage.clear();
-src/components/PhantomEvent.clock.test.jsx:32:        const spawnTime = Date.now();
-src/components/PhantomEvent.clock.test.jsx:41:        expect(Number(localStorage.getItem(COOLDOWN_KEY))).toBe(spawnTime);
-src/components/PhantomEvent.clock.test.jsx:45:        localStorage.setItem(COOLDOWN_KEY, String(Date.now() - MIN_COOLDOWN_MS / 2));
-src/components/PhantomEvent.injectedRng.test.jsx:10:    vi.setSystemTime(new Date('2025-01-01T00:00:00Z'));
-src/components/PhantomEvent.injectedRng.test.jsx:11:    localStorage.clear();
-src/components/PhantomEvent.injectedRng.test.jsx:17:    localStorage.clear();
-src/components/PhantomEvent.injectedRng.test.jsx:33:    it('uses it for the delay and the direction instead of Math.random', () => {
-src/components/PhantomEvent.injectedRng.test.jsx:64:        localStorage.setItem(COOLDOWN_KEY, String(Date.now()));
-src/components/PhantomEvent.storage.test.jsx:10:    vi.setSystemTime(new Date('2025-01-01T00:00:00Z'));
-src/components/PhantomEvent.storage.test.jsx:11:    localStorage.clear();
-src/components/PhantomEvent.storage.test.jsx:17:    localStorage.clear();
-src/components/PhantomEvent.storage.test.jsx:39:        expect(localStorage.getItem(COOLDOWN_KEY)).not.toBeNull();
-src/components/PhantomEvent.storage.test.jsx:42:    it('reads an existing cooldown from localStorage', () => {
-src/components/PhantomEvent.storage.test.jsx:43:        localStorage.setItem(COOLDOWN_KEY, String(Date.now() - MIN_COOLDOWN_MS / 2));
-src/components/PhantomEvent.injectedStorage.test.jsx:19:    vi.setSystemTime(new Date('2025-01-01T00:00:00Z'));
-src/components/PhantomEvent.injectedStorage.test.jsx:20:    localStorage.clear();
-src/components/PhantomEvent.injectedStorage.test.jsx:26:    localStorage.clear();
-src/components/PhantomEvent.injectedStorage.test.jsx:52:            new Date('2025-01-01T00:00:00Z').getTime().toString(),
-src/components/PhantomEvent.injectedStorage.test.jsx:60:            [COOLDOWN_KEY]: String(Date.now() - MIN_COOLDOWN_MS / 2),
-src/components/PhantomEvent.rng.test.jsx:11:    vi.setSystemTime(new Date('2025-01-01T00:00:00Z'));
-src/components/PhantomEvent.rng.test.jsx:12:    localStorage.clear();
-src/components/PhantomEvent.rng.test.jsx:18:    localStorage.clear();
-src/components/PhantomEvent.rng.test.jsx:77:        localStorage.setItem(COOLDOWN_KEY, String(Date.now()));
+src/components/PhantomEvent.test.jsx:8:const HALF_WINDOW_DELAY_MS = 150000; // Math.random() === 0.5 on a fresh cooldown
+src/components/PhantomEvent.test.jsx:12:    vi.setSystemTime(new Date('2025-01-01T00:00:00Z'));
+src/components/PhantomEvent.test.jsx:13:    localStorage.clear();
+src/components/PhantomEvent.test.jsx:19:    localStorage.clear();
+src/components/PhantomEvent.test.jsx:58:        expect(Number(localStorage.getItem(COOLDOWN_KEY))).toBeGreaterThan(0);
+src/components/PhantomEvent.test.jsx:62:        localStorage.setItem(COOLDOWN_KEY, String(Date.now()));
+src/components/PhantomEvent.injectedClock.test.jsx:8:const INJECTED_NOW = new Date('2025-02-02T00:00:00Z').getTime();
+src/components/PhantomEvent.injectedClock.test.jsx:12:    vi.setSystemTime(new Date('2025-01-01T00:00:00Z'));
+src/components/PhantomEvent.injectedClock.test.jsx:13:    localStorage.clear();
+src/components/PhantomEvent.injectedClock.test.jsx:19:    localStorage.clear();
+src/components/PhantomEvent.injectedClock.test.jsx:35:        renderPhantom({ rng: () => 0, clock: () => new Date(INJECTED_NOW) });
+src/components/PhantomEvent.injectedClock.test.jsx:42:        expect(Number(localStorage.getItem(COOLDOWN_KEY))).toBe(INJECTED_NOW);
+src/components/PhantomEvent.injectedClock.test.jsx:46:        localStorage.setItem(COOLDOWN_KEY, String(INJECTED_NOW - MIN_COOLDOWN_MS / 2));
+src/components/PhantomEvent.injectedClock.test.jsx:47:        renderPhantom({ rng: () => 0, clock: () => new Date(INJECTED_NOW) });
+src/components/PhantomEvent.clock.test.jsx:11:    vi.setSystemTime(new Date('2025-01-01T00:00:00Z'));
+src/components/PhantomEvent.clock.test.jsx:12:    localStorage.clear();
+src/components/PhantomEvent.clock.test.jsx:18:    localStorage.clear();
+src/components/PhantomEvent.clock.test.jsx:33:        const spawnTime = Date.now();
+src/components/PhantomEvent.clock.test.jsx:42:        expect(Number(localStorage.getItem(COOLDOWN_KEY))).toBe(spawnTime);
+src/components/PhantomEvent.clock.test.jsx:46:        localStorage.setItem(COOLDOWN_KEY, String(Date.now() - MIN_COOLDOWN_MS / 2));
+src/components/PhantomEvent.injectedRng.test.jsx:11:    vi.setSystemTime(new Date('2025-01-01T00:00:00Z'));
+src/components/PhantomEvent.injectedRng.test.jsx:12:    localStorage.clear();
+src/components/PhantomEvent.injectedRng.test.jsx:18:    localStorage.clear();
+src/components/PhantomEvent.injectedRng.test.jsx:34:    it('uses it for the delay and the direction instead of Math.random', () => {
+src/components/PhantomEvent.injectedRng.test.jsx:65:        localStorage.setItem(COOLDOWN_KEY, String(Date.now()));
+src/components/PhantomEvent.storage.test.jsx:11:    vi.setSystemTime(new Date('2025-01-01T00:00:00Z'));
+src/components/PhantomEvent.storage.test.jsx:12:    localStorage.clear();
+src/components/PhantomEvent.storage.test.jsx:18:    localStorage.clear();
+src/components/PhantomEvent.storage.test.jsx:40:        expect(localStorage.getItem(COOLDOWN_KEY)).not.toBeNull();
+src/components/PhantomEvent.storage.test.jsx:43:    it('reads an existing cooldown from localStorage', () => {
+src/components/PhantomEvent.storage.test.jsx:44:        localStorage.setItem(COOLDOWN_KEY, String(Date.now() - MIN_COOLDOWN_MS / 2));
+src/components/PhantomEvent.injectedStorage.test.jsx:20:    vi.setSystemTime(new Date('2025-01-01T00:00:00Z'));
+src/components/PhantomEvent.injectedStorage.test.jsx:21:    localStorage.clear();
+src/components/PhantomEvent.injectedStorage.test.jsx:27:    localStorage.clear();
+src/components/PhantomEvent.injectedStorage.test.jsx:53:            new Date('2025-01-01T00:00:00Z').getTime().toString(),
+src/components/PhantomEvent.injectedStorage.test.jsx:61:            [COOLDOWN_KEY]: String(Date.now() - MIN_COOLDOWN_MS / 2),
+src/components/PhantomEvent.rng.test.jsx:12:    vi.setSystemTime(new Date('2025-01-01T00:00:00Z'));
+src/components/PhantomEvent.rng.test.jsx:13:    localStorage.clear();
+src/components/PhantomEvent.rng.test.jsx:19:    localStorage.clear();
+src/components/PhantomEvent.rng.test.jsx:78:        localStorage.setItem(COOLDOWN_KEY, String(Date.now()));
 src/utils/achievementUtils.test.js:168:        vi.setSystemTime(new Date('2025-01-15T10:00:00Z'));
 src/utils/achievementUtils.test.js:173:        vi.setSystemTime(new Date('2025-01-16T08:00:00Z'));
 src/utils/mobDisplayUtils.js:30: * @param {() => number} [rng] - Source of randomness in [0, 1), defaults to Math.random

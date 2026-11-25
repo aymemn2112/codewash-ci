@@ -19,7 +19,15 @@ npm run build
 npm run coverage
 ```
 
-Un gate supplémentaire exige **100 % de couverture sur le code nouveau** et **au moins 80 % sur les lignes modifiées** (`BASE_REF=origin/develop npm run coverage:patch`).
+Deux gates mécaniques vérifient la couverture :
+
+```bash
+BASE_REF=origin/develop npm run coverage:patch     # ≥ 80 % des lignes modifiées
+BASE_REF=origin/develop npm run coverage:new-code  # 100 % des nouveaux fichiers sources
+npm run coverage:gates                             # les deux à la suite
+```
+
+Le gate « nouveau code » s'applique aux fichiers sources ajoutés par la branche (lignes, statements, fonctions et branches). Les lignes modifiées dans des fichiers existants sont couvertes par le gate à 80 %.
 
 ## Conséquences
 

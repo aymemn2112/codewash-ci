@@ -4,8 +4,8 @@ import { playSuccessfulHit } from '../utils/soundManager';
 import { defaultRng } from '../services/rng';
 import { defaultClock } from '../services/clock';
 import { browserStorage } from '../services/storage';
+import { STORAGE_KEYS } from '../services/storageKeys';
 
-const PHANTOM_COOLDOWN_KEY = 'phantomEvent_lastSpawn_v1';
 const MIN_COOLDOWN_MS = 5 * 60 * 1000; // 5 minutes
 const MAX_COOLDOWN_MS = 10 * 60 * 1000; // 10 minutes
 const FLIGHT_DURATION_MS = 8000; // 8 seconds to cross the screen (slow enough for a child to click)
@@ -28,7 +28,7 @@ const PhantomEvent = ({
 
     // Schedule the next phantom spawn
     const scheduleNextSpawn = useCallback(() => {
-        const lastSpawn = parseInt(storage.getItem(PHANTOM_COOLDOWN_KEY) || '0', 10);
+        const lastSpawn = parseInt(storage.getItem(STORAGE_KEYS.PHANTOM_LAST_SPAWN) || '0', 10);
         const now = clock().getTime();
         const timeSinceLastSpawn = now - lastSpawn;
 
@@ -63,7 +63,7 @@ const PhantomEvent = ({
         setIsActive(true);
 
         // Record spawn time
-        storage.setItem(PHANTOM_COOLDOWN_KEY, clock().getTime().toString());
+        storage.setItem(STORAGE_KEYS.PHANTOM_LAST_SPAWN, clock().getTime().toString());
 
         // Set timeout for when phantom reaches the other side
         if (flightTimeoutRef.current) {
