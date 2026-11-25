@@ -1,0 +1,79 @@
+src/services/storage.test.js:4:afterEach(() => localStorage.clear());
+src/services/storage.test.js:7:    it('writes, reads and removes through localStorage', () => {
+src/services/storage.test.js:9:        expect(localStorage.getItem('storage_service_test')).toBe('value');
+src/services/clock.test.js:9:        vi.setSystemTime(new Date('2025-01-15T10:00:00Z'));
+src/services/rng.test.js:7:    it('delegates to Math.random at call time', () => {
+src/services/storage.js:2:// Les méthodes lisent `localStorage` à chaque appel pour rester testables.
+src/services/storage.js:4:    getItem: (key) => localStorage.getItem(key),
+src/services/storage.js:5:    setItem: (key, value) => localStorage.setItem(key, value),
+src/services/storage.js:6:    removeItem: (key) => localStorage.removeItem(key),
+src/services/rng.js:1:// Source de hasard : renvoie un nombre dans [0, 1), comme Math.random.
+src/services/rng.js:2:// Enveloppé dans une fonction fléchée (et non `= Math.random`) pour que
+src/services/rng.js:3:// Math.random soit lu à chaque appel : les tests qui font
+src/services/rng.js:5:export const defaultRng = () => Math.random();
+src/services/clock.js:2:// Enveloppé dans une fonction fléchée pour que `new Date()` soit évalué à chaque appel.
+src/services/clock.js:3:export const defaultClock = () => new Date();
+src/test/setup.js:15:    localStorage.clear();
+src/components/PhantomEvent.test.jsx:7:const HALF_WINDOW_DELAY_MS = 150000; // Math.random() === 0.5 on a fresh cooldown
+src/components/PhantomEvent.test.jsx:11:    vi.setSystemTime(new Date('2025-01-01T00:00:00Z'));
+src/components/PhantomEvent.test.jsx:12:    localStorage.clear();
+src/components/PhantomEvent.test.jsx:18:    localStorage.clear();
+src/components/PhantomEvent.test.jsx:57:        expect(Number(localStorage.getItem(COOLDOWN_KEY))).toBeGreaterThan(0);
+src/components/PhantomEvent.test.jsx:61:        localStorage.setItem(COOLDOWN_KEY, String(Date.now()));
+src/components/PhantomEvent.injectedClock.test.jsx:7:const INJECTED_NOW = new Date('2025-02-02T00:00:00Z').getTime();
+src/components/PhantomEvent.injectedClock.test.jsx:11:    vi.setSystemTime(new Date('2025-01-01T00:00:00Z'));
+src/components/PhantomEvent.injectedClock.test.jsx:12:    localStorage.clear();
+src/components/PhantomEvent.injectedClock.test.jsx:18:    localStorage.clear();
+src/components/PhantomEvent.injectedClock.test.jsx:34:        renderPhantom({ rng: () => 0, clock: () => new Date(INJECTED_NOW) });
+src/components/PhantomEvent.injectedClock.test.jsx:41:        expect(Number(localStorage.getItem(COOLDOWN_KEY))).toBe(INJECTED_NOW);
+src/components/PhantomEvent.injectedClock.test.jsx:45:        localStorage.setItem(COOLDOWN_KEY, String(INJECTED_NOW - MIN_COOLDOWN_MS / 2));
+src/components/PhantomEvent.injectedClock.test.jsx:46:        renderPhantom({ rng: () => 0, clock: () => new Date(INJECTED_NOW) });
+src/components/PhantomEvent.clock.test.jsx:10:    vi.setSystemTime(new Date('2025-01-01T00:00:00Z'));
+src/components/PhantomEvent.clock.test.jsx:11:    localStorage.clear();
+src/components/PhantomEvent.clock.test.jsx:17:    localStorage.clear();
+src/components/PhantomEvent.clock.test.jsx:32:        const spawnTime = Date.now();
+src/components/PhantomEvent.clock.test.jsx:41:        expect(Number(localStorage.getItem(COOLDOWN_KEY))).toBe(spawnTime);
+src/components/PhantomEvent.clock.test.jsx:45:        localStorage.setItem(COOLDOWN_KEY, String(Date.now() - MIN_COOLDOWN_MS / 2));
+src/components/PhantomEvent.injectedRng.test.jsx:10:    vi.setSystemTime(new Date('2025-01-01T00:00:00Z'));
+src/components/PhantomEvent.injectedRng.test.jsx:11:    localStorage.clear();
+src/components/PhantomEvent.injectedRng.test.jsx:17:    localStorage.clear();
+src/components/PhantomEvent.injectedRng.test.jsx:33:    it('uses it for the delay and the direction instead of Math.random', () => {
+src/components/PhantomEvent.injectedRng.test.jsx:64:        localStorage.setItem(COOLDOWN_KEY, String(Date.now()));
+src/components/PhantomEvent.storage.test.jsx:10:    vi.setSystemTime(new Date('2025-01-01T00:00:00Z'));
+src/components/PhantomEvent.storage.test.jsx:11:    localStorage.clear();
+src/components/PhantomEvent.storage.test.jsx:17:    localStorage.clear();
+src/components/PhantomEvent.storage.test.jsx:39:        expect(localStorage.getItem(COOLDOWN_KEY)).not.toBeNull();
+src/components/PhantomEvent.storage.test.jsx:42:    it('reads an existing cooldown from localStorage', () => {
+src/components/PhantomEvent.storage.test.jsx:43:        localStorage.setItem(COOLDOWN_KEY, String(Date.now() - MIN_COOLDOWN_MS / 2));
+src/components/PhantomEvent.injectedStorage.test.jsx:19:    vi.setSystemTime(new Date('2025-01-01T00:00:00Z'));
+src/components/PhantomEvent.injectedStorage.test.jsx:20:    localStorage.clear();
+src/components/PhantomEvent.injectedStorage.test.jsx:26:    localStorage.clear();
+src/components/PhantomEvent.injectedStorage.test.jsx:52:            new Date('2025-01-01T00:00:00Z').getTime().toString(),
+src/components/PhantomEvent.injectedStorage.test.jsx:60:            [COOLDOWN_KEY]: String(Date.now() - MIN_COOLDOWN_MS / 2),
+src/components/PhantomEvent.rng.test.jsx:11:    vi.setSystemTime(new Date('2025-01-01T00:00:00Z'));
+src/components/PhantomEvent.rng.test.jsx:12:    localStorage.clear();
+src/components/PhantomEvent.rng.test.jsx:18:    localStorage.clear();
+src/components/PhantomEvent.rng.test.jsx:77:        localStorage.setItem(COOLDOWN_KEY, String(Date.now()));
+src/utils/achievementUtils.test.js:168:        vi.setSystemTime(new Date('2025-01-15T10:00:00Z'));
+src/utils/achievementUtils.test.js:173:        vi.setSystemTime(new Date('2025-01-16T08:00:00Z'));
+src/utils/mobDisplayUtils.js:30: * @param {() => number} [rng] - Source of randomness in [0, 1), defaults to Math.random
+src/utils/mobDisplayUtils.js:41: * @param {() => number} [rng] - Source of randomness in [0, 1), defaults to Math.random
+src/utils/achievementUtils.clock.test.js:9:        vi.setSystemTime(new Date('2025-01-15T10:00:00Z'));
+src/utils/achievementUtils.clock.test.js:17:        vi.setSystemTime(new Date('2025-01-16T23:59:00Z'));
+src/utils/soundManager.js:9:const defaultAudioFactory = (src) => new Audio(src);
+src/utils/soundManager.test.js:150:    it('getRandomTrack uses the given rng instead of Math.random', () => {
+src/utils/achievementUtils.injectedClock.test.js:9:        vi.setSystemTime(new Date('2025-01-15T10:00:00Z'));
+src/utils/achievementUtils.injectedClock.test.js:10:        const clock = () => new Date('2030-05-06T08:00:00Z');
+src/utils/mobDisplayUtils.test.js:44:    it('getRandomAura uses the given rng instead of Math.random', () => {
+src/App.test.jsx:17:        document.documentElement.requestFullscreen = vi.fn(() => Promise.resolve());
+src/App.test.jsx:30:        delete document.documentElement.requestFullscreen;
+src/App.test.jsx:67:        localStorage.setItem('heroSkills_v23', JSON.stringify({ theme: 'classic' }));
+src/App.test.jsx:70:        expect(localStorage.getItem('heroSkills_v23_p1')).not.toBeNull();
+src/App.test.jsx:77:        expect(localStorage.getItem('heroSkills_v23_p1')).toBeNull();
+src/App.jsx:442:            document.documentElement.requestFullscreen().catch((err) => {
+src/App.jsx:1014:        if (skill.challengeType === 'reading' && window.webkitSpeechRecognition)
+src/App.jsx:1077:        // Update parent status in localStorage directly
+src/App.jsx:1085:        // Update profile name in localStorage directly
+src/App.jsx:1112:        if (!window.webkitSpeechRecognition) {
+src/App.jsx:1124:        recognitionRef.current = new window.webkitSpeechRecognition();
+src/App.jsx:1203:        if (!window.webkitSpeechRecognition) {

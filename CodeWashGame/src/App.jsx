@@ -31,6 +31,16 @@ import {
     calculateXPToLevel,
 } from './utils/gameUtils';
 import { getRandomAura } from './utils/mobDisplayUtils';
+import { defaultClock } from './services/clock';
+import { defaultRng } from './services/rng';
+import { browserStorage } from './services/storage';
+import {
+    STORAGE_KEYS,
+    getStorageKey,
+    getBorderEffectKey,
+    getBorderColorKey,
+    migrateLegacySkills,
+} from './services/storageKeys';
 import {
     BASE_ASSETS,
     THEME_CONFIG,
@@ -42,8 +52,8 @@ import {
     MINIBOSS_MOBS,
 } from './constants/gameData';
 import {
+    createSfxPlayer,
     getBGMManager,
-    setSfxVolume,
     playActionCardLeft,
     playActionCardRight,
     playClick,
@@ -78,23 +88,32 @@ const BOSS_HEALING_ANIMATION_DURATION = 600;
 
 const App = () => {
     const [currentProfile, setCurrentProfile] = useState(() =>
-        localStorage.getItem('currentProfile_v1')
-            ? parseInt(localStorage.getItem('currentProfile_v1'))
+        browserStorage.getItem(STORAGE_KEYS.CURRENT_PROFILE)
+            ? parseInt(browserStorage.getItem(STORAGE_KEYS.CURRENT_PROFILE), 10)
             : 1,
     );
     const [profileNames, setProfileNames] = useState(() =>
-        localStorage.getItem('heroProfileNames_v1')
-            ? JSON.parse(localStorage.getItem('heroProfileNames_v1'))
+        browserStorage.getItem(STORAGE_KEYS.PROFILE_NAMES)
+            ? JSON.parse(browserStorage.getItem(STORAGE_KEYS.PROFILE_NAMES))
             : { 1: 'Player 1', 2: 'Player 2', 3: 'Player 3' },
     );
     const [parentStatus, setParentStatus] = useState(() =>
-        localStorage.getItem('heroParentStatus_v1')
-            ? JSON.parse(localStorage.getItem('heroParentStatus_v1'))
+        browserStorage.getItem(STORAGE_KEYS.PARENT_STATUS)
+            ? JSON.parse(browserStorage.getItem(STORAGE_KEYS.PARENT_STATUS))
             : { 1: false, 2: false, 3: false },
     );
     const [playerHealth, setPlayerHealth] = useState(10);
 
-    const getStorageKey = (profileId) => `heroSkills_v23_p${profileId}`;
+    // Single read path for profile data: migrate the legacy key once, then read
+    // the versioned key. All storage access goes through the injected service.
+    const readProfileRaw = (profileId) => {
+        if (profileId === 1) migrateLegacySkills(browserStorage, profileId);
+        return (
+            browserStorage.getItem(getStorageKey(profileId)) ||
+            (profileId === 1 ? browserStorage.getItem(STORAGE_KEYS.LEGACY_SKILLS) : null)
+        );
+    };
+
     const loadSkills = (profileId) => {
         const initial = {};
         // Initialize each skill with level, xp, currentMob, difficulty (1-7), earnedBadges array,
@@ -127,8 +146,7 @@ const App = () => {
                 currentBossAura: getRandomAura(), // Aura for boss encounters
             };
         });
-        let saved = localStorage.getItem(getStorageKey(profileId));
-        if (!saved && profileId === 1) saved = localStorage.getItem('heroSkills_v23');
+        const saved = readProfileRaw(profileId);
         try {
             if (saved) {
                 const parsed = JSON.parse(saved);
@@ -212,10 +230,7 @@ const App = () => {
         return initial;
     };
     const loadTheme = (profileId) => {
-        let saved = localStorage.getItem(getStorageKey(profileId));
-        if (!saved && profileId === 1) {
-            saved = localStorage.getItem('heroSkills_v23');
-        }
+        const saved = readProfileRaw(profileId);
         try {
             return JSON.parse(saved).theme || 'minecraft';
         } catch (e) {
@@ -225,10 +240,7 @@ const App = () => {
     };
 
     const loadStats = (profileId) => {
-        let saved = localStorage.getItem(getStorageKey(profileId));
-        if (!saved && profileId === 1) {
-            saved = localStorage.getItem('heroSkills_v23');
-        }
+        const saved = readProfileRaw(profileId);
         try {
             const data = JSON.parse(saved);
             if (data.stats) {
@@ -260,9 +272,7 @@ const App = () => {
             return { totalLevel, highestLevel, skills: liveSkills, theme: activeTheme };
         }
 
-        const key = getStorageKey(id);
-        let saved = localStorage.getItem(key);
-        if (!saved && id === 1) saved = localStorage.getItem('heroSkills_v23');
+        const saved = readProfileRaw(id);
         if (!saved) return null;
         try {
             const data = JSON.parse(saved);
@@ -313,29 +323,30 @@ const App = () => {
     const [bgmVol, setBgmVol] = useState(0.3);
     const [sfxVol, setSfxVolState] = useState(0.5);
     const bgmManager = useRef(getBGMManager());
+    const sfxPlayer = useRef(createSfxPlayer());
 
     // Cosmetics state
     const [selectedBorder, setSelectedBorder] = useState(() => {
-        const saved = localStorage.getItem(`borderEffect_p${currentProfile}`);
+        const saved = browserStorage.getItem(getBorderEffectKey(currentProfile));
         return saved || 'solid';
     });
     const [borderColor, setBorderColor] = useState(() => {
-        const saved = localStorage.getItem(`borderColor_p${currentProfile}`);
+        const saved = browserStorage.getItem(getBorderColorKey(currentProfile));
         return saved || '#FFD700';
     });
 
     useEffect(() => {
         const dataToSave = { skills: skills, theme: activeTheme, stats: stats };
-        localStorage.setItem(getStorageKey(currentProfile), JSON.stringify(dataToSave));
-        localStorage.setItem('currentProfile_v1', currentProfile);
-        localStorage.setItem('heroProfileNames_v1', JSON.stringify(profileNames));
-        localStorage.setItem('heroParentStatus_v1', JSON.stringify(parentStatus));
+        browserStorage.setItem(getStorageKey(currentProfile), JSON.stringify(dataToSave));
+        browserStorage.setItem(STORAGE_KEYS.CURRENT_PROFILE, currentProfile);
+        browserStorage.setItem(STORAGE_KEYS.PROFILE_NAMES, JSON.stringify(profileNames));
+        browserStorage.setItem(STORAGE_KEYS.PARENT_STATUS, JSON.stringify(parentStatus));
     }, [skills, currentProfile, activeTheme, profileNames, parentStatus, stats]);
 
     // Save cosmetics preferences
     useEffect(() => {
-        localStorage.setItem(`borderEffect_p${currentProfile}`, selectedBorder);
-        localStorage.setItem(`borderColor_p${currentProfile}`, borderColor);
+        browserStorage.setItem(getBorderEffectKey(currentProfile), selectedBorder);
+        browserStorage.setItem(getBorderColorKey(currentProfile), borderColor);
     }, [selectedBorder, borderColor, currentProfile]);
 
     // Calculate unlocked borders based on earned badges (memoized)
@@ -395,9 +406,9 @@ const App = () => {
         bgmManager.current.setVolume(bgmVol);
     }, [bgmVol]);
 
-    // Update SFX volume in sound manager
+    // Update SFX volume on the local player (no module-level mutable state)
     useEffect(() => {
-        setSfxVolume(sfxVol);
+        sfxPlayer.current.setVolume(sfxVol);
     }, [sfxVol]);
 
     // Keep challengeDataRef in sync with challengeData state for voice listener
@@ -436,7 +447,7 @@ const App = () => {
                 console.warn('Failed to exit fullscreen:', err);
             });
         }
-        playClick();
+        playClick(sfxPlayer.current);
     };
 
     const generateChallenge = (type, diff) => {
@@ -494,14 +505,14 @@ const App = () => {
         if (newlyUnlocked.length > 0) {
             // Show first newly unlocked achievement
             setAchievementToast({ achievementId: newlyUnlocked[0], tierIndex: null });
-            playAchievement();
+            playAchievement(sfxPlayer.current);
         } else if (newTiers.length > 0) {
             // Show first new tier
             setAchievementToast({
                 achievementId: newTiers[0].achievementId,
                 tierIndex: newTiers[0].tierIndex,
             });
-            playAchievement();
+            playAchievement(sfxPlayer.current);
         }
     }, []);
 
@@ -531,7 +542,7 @@ const App = () => {
                     setTimeout(() => setBossHealing(null), BOSS_HEALING_ANIMATION_DURATION);
 
                     // Play fail sound to indicate mistake
-                    playFail();
+                    playFail(sfxPlayer.current);
                     return;
                 }
             }
@@ -541,7 +552,7 @@ const App = () => {
                 const newH = h - 1;
                 if (newH <= 0) {
                     // Death sequence - play UI death sound
-                    playDeath();
+                    playDeath(sfxPlayer.current);
                     setShowDeathOverlay(true);
 
                     // Track death in stats
@@ -586,7 +597,7 @@ const App = () => {
                     return 10; // Heal to full health
                 }
                 // Player takes damage but doesn't die - play fail sound
-                playFail();
+                playFail(sfxPlayer.current);
                 return newH;
             });
             return;
@@ -623,21 +634,21 @@ const App = () => {
                     id,
                     skillId,
                     val: actualDamage,
-                    x: Math.random() * 100 - 50,
-                    y: Math.random() * 50 - 25,
+                    x: defaultRng() * 100 - 50,
+                    y: defaultRng() * 50 - 25,
                 },
             ]);
             setTimeout(() => setDamageNumbers((prev) => prev.filter((n) => n.id !== id)), 800);
 
             // Play mob hurt or death sound based on if mob is defeated
             if (willDefeatMob) {
-                playMobDeath(currentMobName);
+                playMobDeath(sfxPlayer.current, currentMobName);
             } else {
-                playMobHurt(currentMobName);
+                playMobHurt(sfxPlayer.current, currentMobName);
             }
 
             // Play successful hit UI sound
-            playSuccessfulHit();
+            playSuccessfulHit(sfxPlayer.current);
         }
 
         setSkills((prev) => {
@@ -784,7 +795,7 @@ const App = () => {
                     newRecoveryDifficulty = null;
                     setShowLevelRestored(true);
                     setTimeout(() => setShowLevelRestored(false), 2000);
-                    playNotification();
+                    playNotification(sfxPlayer.current);
                 }
 
                 // Process level ups - use difficulty-scaled XP requirement
@@ -818,7 +829,7 @@ const App = () => {
                                         item: 'New Rank!',
                                         img: BASE_ASSETS.badges.Wood,
                                     });
-                                    playNotification();
+                                    playNotification(sfxPlayer.current);
                                 }
                             }
                         }
@@ -830,7 +841,7 @@ const App = () => {
                     }
 
                     if (leveledUp) {
-                        playLevelUp();
+                        playLevelUp(sfxPlayer.current);
                     }
                 }
 
@@ -956,7 +967,7 @@ const App = () => {
         if (!skillId) return;
 
         // Play level up sound
-        playLevelUp();
+        playLevelUp(sfxPlayer.current);
 
         setSkills((prev) => {
             const current = prev[skillId];
@@ -978,7 +989,7 @@ const App = () => {
                 item: 'Phantom Bonus!',
                 img: HOSTILE_MOBS['Phantom'],
             });
-            playNotification();
+            playNotification(sfxPlayer.current);
         }
     };
 
@@ -998,7 +1009,7 @@ const App = () => {
         setBattleDifficulty(challengeDiff);
 
         setChallengeData(generateChallenge(skill.challengeType, challengeDiff));
-        playClick();
+        playClick(sfxPlayer.current);
         startBGM(); // Start BGM on first battle (user interaction)
         if (skill.challengeType === 'reading' && window.webkitSpeechRecognition)
             startVoiceListener(id);
@@ -1010,12 +1021,12 @@ const App = () => {
         setBattleDifficulty(null);
         setChallengeData(null);
         stopVoiceRecognition();
-        playClick();
+        playClick(sfxPlayer.current);
     };
 
     const handleSwitchProfile = (newId) => {
         if (newId === currentProfile) return;
-        playClick();
+        playClick(sfxPlayer.current);
         const newSkills = loadSkills(newId);
         const newTheme = loadTheme(newId);
         setSkills(newSkills);
@@ -1060,24 +1071,24 @@ const App = () => {
     };
     const handleReset = () => {
         // Remove skills data for current profile
-        localStorage.removeItem(getStorageKey(currentProfile));
-        if (currentProfile === 1) localStorage.removeItem('heroSkills_v23');
+        browserStorage.removeItem(getStorageKey(currentProfile));
+        if (currentProfile === 1) browserStorage.removeItem(STORAGE_KEYS.LEGACY_SKILLS);
 
         // Update parent status in localStorage directly
-        const currentParentStatus = localStorage.getItem('heroParentStatus_v1');
+        const currentParentStatus = browserStorage.getItem(STORAGE_KEYS.PARENT_STATUS);
         const parentStatusObj = currentParentStatus
             ? JSON.parse(currentParentStatus)
             : { 1: false, 2: false, 3: false };
         parentStatusObj[currentProfile] = false;
-        localStorage.setItem('heroParentStatus_v1', JSON.stringify(parentStatusObj));
+        browserStorage.setItem(STORAGE_KEYS.PARENT_STATUS, JSON.stringify(parentStatusObj));
 
         // Update profile name in localStorage directly
-        const currentProfileNames = localStorage.getItem('heroProfileNames_v1');
+        const currentProfileNames = browserStorage.getItem(STORAGE_KEYS.PROFILE_NAMES);
         const profileNamesObj = currentProfileNames
             ? JSON.parse(currentProfileNames)
             : { 1: 'Player 1', 2: 'Player 2', 3: 'Player 3' };
         profileNamesObj[currentProfile] = `Player ${currentProfile}`;
-        localStorage.setItem('heroProfileNames_v1', JSON.stringify(profileNamesObj));
+        browserStorage.setItem(STORAGE_KEYS.PROFILE_NAMES, JSON.stringify(profileNamesObj));
 
         window.location.reload();
     };
@@ -1222,7 +1233,7 @@ const App = () => {
         if (loginTrackedRef.current) return; // Skip if already tracked
         loginTrackedRef.current = true;
 
-        const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD format
+        const today = defaultClock().toISOString().split('T')[0]; // YYYY-MM-DD format
         const currentDates = stats.loginDates || [];
         // Only set if today's date is not already recorded
         if (!currentDates.includes(today)) {
@@ -1260,10 +1271,10 @@ const App = () => {
         if (Math.abs(diff) >= 100) {
             if (diff > 0) {
                 setSelectedIndex((p) => p + 1);
-                playActionCardRight();
+                playActionCardRight(sfxPlayer.current);
             } else {
                 setSelectedIndex((p) => p - 1);
-                playActionCardLeft();
+                playActionCardLeft(sfxPlayer.current);
             }
             setIsDragging(false);
         }
@@ -1275,9 +1286,9 @@ const App = () => {
         if (battlingSkillId || offset === 0) return;
         setSelectedIndex((p) => p + offset);
         if (offset > 0) {
-            playActionCardRight();
+            playActionCardRight(sfxPlayer.current);
         } else {
-            playActionCardLeft();
+            playActionCardLeft(sfxPlayer.current);
         }
     };
 
@@ -1324,7 +1335,7 @@ const App = () => {
                     setIsMenuOpen(false);
                     setIsCosmeticsOpen(false);
                     setIsSettingsOpen(true);
-                    playClick();
+                    playClick(sfxPlayer.current);
                 }}
                 className="absolute z-40 bg-stone-800/90 text-white p-3 rounded-lg border-2 border-stone-600 hover:bg-stone-700 transition-all shadow-lg"
                 style={{ top: '24px', left: '24px' }}
@@ -1336,7 +1347,7 @@ const App = () => {
                     setIsMenuOpen(false);
                     setIsSettingsOpen(false);
                     setIsCosmeticsOpen(true);
-                    playClick();
+                    playClick(sfxPlayer.current);
                 }}
                 className="absolute z-40 bg-stone-800/90 text-white p-3 rounded-lg border-2 border-stone-600 hover:bg-stone-700 transition-all shadow-lg"
                 style={{ top: '24px', left: 'calc(24px + 76px + 12px)' }}
@@ -1362,7 +1373,7 @@ const App = () => {
                     className="fixed inset-0 bg-black/50 z-40"
                     onClick={() => {
                         setIsCosmeticsOpen(false);
-                        playClick();
+                        playClick(sfxPlayer.current);
                     }}
                 />
             )}
@@ -1384,7 +1395,7 @@ const App = () => {
                     className="fixed inset-0 bg-black/50 z-40"
                     onClick={() => {
                         setIsSettingsOpen(false);
-                        playClick();
+                        playClick(sfxPlayer.current);
                     }}
                 />
             )}
@@ -1427,7 +1438,7 @@ const App = () => {
                     setIsSettingsOpen(false);
                     setIsCosmeticsOpen(false);
                     setIsMenuOpen(true);
-                    playClick();
+                    playClick(sfxPlayer.current);
                 }}
                 className="absolute z-40 bg-stone-800/90 text-white p-3 rounded-lg border-2 border-stone-600 hover:bg-stone-700 transition-all shadow-lg"
                 style={{ top: '24px', right: '24px' }}
@@ -1441,7 +1452,7 @@ const App = () => {
                     className="fixed inset-0 bg-black/50 z-40"
                     onClick={() => {
                         setIsMenuOpen(false);
-                        playClick();
+                        playClick(sfxPlayer.current);
                     }}
                 />
             )}
@@ -1454,7 +1465,7 @@ const App = () => {
                     setIsCosmeticsOpen(false);
                     setIsSettingsOpen(false);
                     setIsBugReportOpen(true);
-                    playClick();
+                    playClick(sfxPlayer.current);
                 }}
                 className="absolute z-40 bg-stone-800/90 text-white p-3 rounded-lg border-2 border-stone-600 hover:bg-stone-700 transition-all shadow-lg"
                 style={{ bottom: '24px', right: '24px' }}
@@ -1498,7 +1509,7 @@ const App = () => {
                 <button
                     onClick={() => {
                         setSelectedIndex((p) => p - 1);
-                        playActionCardLeft();
+                        playActionCardLeft(sfxPlayer.current);
                     }}
                     className="flex absolute left-0 z-30 items-center justify-center h-full"
                     style={{
@@ -1529,7 +1540,7 @@ const App = () => {
                 <button
                     onClick={() => {
                         setSelectedIndex((p) => p + 1);
-                        playActionCardRight();
+                        playActionCardRight(sfxPlayer.current);
                     }}
                     className="flex absolute right-0 z-30 items-center justify-center h-full"
                     style={{
@@ -1623,6 +1634,7 @@ const App = () => {
                             >
                                 <SkillCard
                                     config={item}
+                                    sfxPlayer={sfxPlayer.current}
                                     data={skills[item.id]}
                                     themeData={currentThemeData}
                                     isCenter={item.offset === 0}

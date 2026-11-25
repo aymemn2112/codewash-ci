@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, afterEach } from 'vitest';
-import { getBGMManager, setSfxVolume, playUISound, playMobHurt } from './soundManager';
+import { createSfxPlayer, getBGMManager, playUISound, playMobHurt } from './soundManager';
 
 const createAudioMock = () => ({
     volume: 0,
@@ -23,15 +23,15 @@ const stubAudio = () => {
 afterEach(() => {
     vi.unstubAllGlobals();
     vi.restoreAllMocks();
-    setSfxVolume(0.5);
 });
 
 describe('audio output before injection', () => {
     it('creates UI sounds through the global Audio constructor', () => {
         const { AudioCtor, instances } = stubAudio();
-        setSfxVolume(0.3);
+        const player = createSfxPlayer();
+        player.setVolume(0.3);
 
-        playUISound('levelup');
+        playUISound('levelup', player);
 
         expect(AudioCtor).toHaveBeenCalledWith('assets/sounds/ui/levelup.wav');
         expect(instances[0].volume).toBe(0.3);
