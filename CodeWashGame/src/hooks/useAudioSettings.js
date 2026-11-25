@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { getBGMManager, setSfxVolume } from '../utils/soundManager';
+import { createBGMManager, createSfxPlayer } from '../utils/soundManager';
 
 /**
  * BGM/SFX volume state plus the side effects that push them to the sound
@@ -8,14 +8,15 @@ import { getBGMManager, setSfxVolume } from '../utils/soundManager';
 export function useAudioSettings({ initialBgm = 0.3, initialSfx = 0.5 } = {}) {
     const [bgmVol, setBgmVol] = useState(initialBgm);
     const [sfxVol, setSfxVol] = useState(initialSfx);
-    const bgmManager = useRef(getBGMManager());
+    const bgmManager = useRef(createBGMManager());
+    const sfxPlayer = useRef(createSfxPlayer({ volume: initialSfx }));
 
     useEffect(() => {
         bgmManager.current.setVolume(bgmVol);
     }, [bgmVol]);
 
     useEffect(() => {
-        setSfxVolume(sfxVol);
+        sfxPlayer.current.setVolume(sfxVol);
     }, [sfxVol]);
 
     const startBGM = useCallback(() => {
@@ -24,7 +25,7 @@ export function useAudioSettings({ initialBgm = 0.3, initialSfx = 0.5 } = {}) {
         }
     }, []);
 
-    return { bgmVol, setBgmVol, sfxVol, setSfxVol, startBGM };
+    return { bgmVol, setBgmVol, sfxVol, setSfxVol, startBGM, sfxPlayer };
 }
 
 export default useAudioSettings;

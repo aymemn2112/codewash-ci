@@ -36,6 +36,10 @@ import {
     loadStats,
     getProfileStats,
 } from './domain/profileStorage';
+import { browserStorage } from './services/storage';
+import { STORAGE_KEYS } from './services/storageKeys';
+import { defaultClock } from './services/clock';
+import { defaultRng } from './services/rng';
 import {
     getRandomMob,
     getRandomFriendlyMob,
@@ -93,18 +97,18 @@ const BOSS_HEALING_ANIMATION_DURATION = 600;
 
 const App = () => {
     const [currentProfile, setCurrentProfile] = useState(() =>
-        localStorage.getItem('currentProfile_v1')
-            ? parseInt(localStorage.getItem('currentProfile_v1'), 10)
+        browserStorage.getItem(STORAGE_KEYS.CURRENT_PROFILE)
+            ? parseInt(browserStorage.getItem(STORAGE_KEYS.CURRENT_PROFILE), 10)
             : 1,
     );
     const [profileNames, setProfileNames] = useState(() =>
-        localStorage.getItem('heroProfileNames_v1')
-            ? JSON.parse(localStorage.getItem('heroProfileNames_v1'))
+        browserStorage.getItem(STORAGE_KEYS.PROFILE_NAMES)
+            ? JSON.parse(browserStorage.getItem(STORAGE_KEYS.PROFILE_NAMES))
             : { 1: 'Player 1', 2: 'Player 2', 3: 'Player 3' },
     );
     const [parentStatus, setParentStatus] = useState(() =>
-        localStorage.getItem('heroParentStatus_v1')
-            ? JSON.parse(localStorage.getItem('heroParentStatus_v1'))
+        browserStorage.getItem(STORAGE_KEYS.PARENT_STATUS)
+            ? JSON.parse(browserStorage.getItem(STORAGE_KEYS.PARENT_STATUS))
             : { 1: false, 2: false, 3: false },
     );
     const [playerHealth, setPlayerHealth] = useState(10);
@@ -139,10 +143,10 @@ const App = () => {
 
     useEffect(() => {
         const dataToSave = { skills: skills, theme: activeTheme, stats: stats };
-        localStorage.setItem(getStorageKey(currentProfile), JSON.stringify(dataToSave));
-        localStorage.setItem('currentProfile_v1', currentProfile);
-        localStorage.setItem('heroProfileNames_v1', JSON.stringify(profileNames));
-        localStorage.setItem('heroParentStatus_v1', JSON.stringify(parentStatus));
+        browserStorage.setItem(getStorageKey(currentProfile), JSON.stringify(dataToSave));
+        browserStorage.setItem(STORAGE_KEYS.CURRENT_PROFILE, currentProfile);
+        browserStorage.setItem(STORAGE_KEYS.PROFILE_NAMES, JSON.stringify(profileNames));
+        browserStorage.setItem(STORAGE_KEYS.PARENT_STATUS, JSON.stringify(parentStatus));
     }, [skills, currentProfile, activeTheme, profileNames, parentStatus, stats]);
 
     // Calculate unlocked borders based on earned badges (memoized)
@@ -353,8 +357,8 @@ const App = () => {
                     id,
                     skillId,
                     val: actualDamage,
-                    x: Math.random() * 100 - 50,
-                    y: Math.random() * 50 - 25,
+                    x: defaultRng() * 100 - 50,
+                    y: defaultRng() * 50 - 25,
                 },
             ]);
             setTimeout(() => setDamageNumbers((prev) => prev.filter((n) => n.id !== id)), 800);
@@ -785,24 +789,24 @@ const App = () => {
     };
     const handleReset = () => {
         // Remove skills data for current profile
-        localStorage.removeItem(getStorageKey(currentProfile));
-        if (currentProfile === 1) localStorage.removeItem('heroSkills_v23');
+        browserStorage.removeItem(getStorageKey(currentProfile));
+        if (currentProfile === 1) browserStorage.removeItem(STORAGE_KEYS.LEGACY_SKILLS);
 
-        // Update parent status in localStorage directly
-        const currentParentStatus = localStorage.getItem('heroParentStatus_v1');
+        // Update parent status through the storage service
+        const currentParentStatus = browserStorage.getItem(STORAGE_KEYS.PARENT_STATUS);
         const parentStatusObj = currentParentStatus
             ? JSON.parse(currentParentStatus)
             : { 1: false, 2: false, 3: false };
         parentStatusObj[currentProfile] = false;
-        localStorage.setItem('heroParentStatus_v1', JSON.stringify(parentStatusObj));
+        browserStorage.setItem(STORAGE_KEYS.PARENT_STATUS, JSON.stringify(parentStatusObj));
 
-        // Update profile name in localStorage directly
-        const currentProfileNames = localStorage.getItem('heroProfileNames_v1');
+        // Update profile name through the storage service
+        const currentProfileNames = browserStorage.getItem(STORAGE_KEYS.PROFILE_NAMES);
         const profileNamesObj = currentProfileNames
             ? JSON.parse(currentProfileNames)
             : { 1: 'Player 1', 2: 'Player 2', 3: 'Player 3' };
         profileNamesObj[currentProfile] = `Player ${currentProfile}`;
-        localStorage.setItem('heroProfileNames_v1', JSON.stringify(profileNamesObj));
+        browserStorage.setItem(STORAGE_KEYS.PROFILE_NAMES, JSON.stringify(profileNamesObj));
 
         window.location.reload();
     };
@@ -845,7 +849,7 @@ const App = () => {
         if (loginTrackedRef.current) return; // Skip if already tracked
         loginTrackedRef.current = true;
 
-        const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD format
+        const today = defaultClock().toISOString().split('T')[0]; // YYYY-MM-DD format
         const currentDates = stats.loginDates || [];
         // Only set if today's date is not already recorded
         if (!currentDates.includes(today)) {
@@ -934,6 +938,7 @@ const App = () => {
                 setSkillDifficulty={setSkillDifficulty}
                 borders={borders}
                 bossHealing={bossHealing}
+                sfxPlayer={audio.sfxPlayer}
             />
             {lootBox && (
                 <div className="fixed bottom-8 left-1/2 z-50 animate-toast w-full max-w-2xl pointer-events-none transform -translate-x-1/2">

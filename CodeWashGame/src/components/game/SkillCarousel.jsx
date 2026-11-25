@@ -21,6 +21,7 @@ const SkillCarousel = ({
     setSkillDifficulty,
     borders,
     bossHealing,
+    sfxPlayer,
 }) => (
     <main className="flex-1 relative flex flex-col items-center justify-center w-full">
         <div className="z-10 relative mb-[-30px] md:mb-[-50px] pointer-events-none opacity-90">
@@ -184,6 +185,7 @@ const SkillCarousel = ({
                             selectedBorder={borders.selectedBorder}
                             borderColor={borders.borderColor}
                             bossHealing={bossHealing === item.id}
+                            sfxPlayer={sfxPlayer}
                         />
                     </div>
                 );

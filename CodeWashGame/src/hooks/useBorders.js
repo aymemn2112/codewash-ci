@@ -1,19 +1,21 @@
 import { useEffect, useState } from 'react';
+import { browserStorage } from '../services/storage';
+import { getBorderEffectKey, getBorderColorKey } from '../services/storageKeys';
 
 /**
- * Cosmetics borders per profile, persisted in localStorage.
+ * Cosmetics borders per profile, persisted through the storage service.
  */
 export function useBorders(profileId) {
     const [selectedBorder, setSelectedBorder] = useState(
-        () => localStorage.getItem(`borderEffect_p${profileId}`) || 'solid',
+        () => browserStorage.getItem(getBorderEffectKey(profileId)) || 'solid',
     );
     const [borderColor, setBorderColor] = useState(
-        () => localStorage.getItem(`borderColor_p${profileId}`) || '#FFD700',
+        () => browserStorage.getItem(getBorderColorKey(profileId)) || '#FFD700',
     );
 
     useEffect(() => {
-        localStorage.setItem(`borderEffect_p${profileId}`, selectedBorder);
-        localStorage.setItem(`borderColor_p${profileId}`, borderColor);
+        browserStorage.setItem(getBorderEffectKey(profileId), selectedBorder);
+        browserStorage.setItem(getBorderColorKey(profileId), borderColor);
     }, [selectedBorder, borderColor, profileId]);
 
     return { selectedBorder, setSelectedBorder, borderColor, setBorderColor };

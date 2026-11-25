@@ -15,7 +15,7 @@ import {
     DIFFICULTY_CONTENT,
     HOMOPHONES,
 } from '../../constants/gameData';
-import { playClick, getSfxVolume } from '../../utils/soundManager';
+import { createSfxPlayer, playClick } from '../../utils/soundManager';
 import { calculateXPToLevel } from '../../utils/gameUtils';
 import { getTempoDelays } from '../../domain/patternTempo';
 import { buildMemoryDeck, nextSimonSequence, pickRandom } from '../../domain/skillGames';
@@ -60,7 +60,11 @@ const SkillCard = ({
     selectedBorder,
     borderColor,
     bossHealing,
+    sfxPlayer,
 }) => {
+    const [fallbackSfxPlayer] = useState(() => createSfxPlayer());
+    const player = sfxPlayer || fallbackSfxPlayer;
+
     const [mathInput, setMathInput] = useState('');
     const [isHit, setIsHit] = useState(false);
     const [isWrong, setIsWrong] = useState(false);
@@ -94,20 +98,22 @@ const SkillCard = ({
     const simonSessionStartedRef = useRef(false);
 
     // Helper function to play axolotl-specific note with fallback to click
-    const playAxolotlNote = useCallback((color) => {
-        const noteName = AXOLOTL_NOTE_MAP[color];
-        if (noteName) {
-            const audio = new Audio(`assets/sounds/axolotl/${noteName}.wav`);
-            audio.volume = getSfxVolume();
-            audio.play().catch(() => {
-                // Fallback to click sound if note file fails to load
-                playClick();
-            });
-        } else {
-            // Fallback to click sound if no mapping exists
-            playClick();
-        }
-    }, []);
+    const playAxolotlNote = useCallback(
+        (color) => {
+            const noteName = AXOLOTL_NOTE_MAP[color];
+            if (noteName) {
+                const audio = player.create(`assets/sounds/axolotl/${noteName}.wav`);
+                audio.play().catch(() => {
+                    // Fallback to click sound if note file fails to load
+                    playClick(player);
+                });
+            } else {
+                // Fallback to click sound if no mapping exists
+                playClick(player);
+            }
+        },
+        [player],
+    );
 
     // Handler for when parental verification succeeds for Cleaning skill
     const handleParentalVerified = useCallback(() => {
@@ -258,9 +264,7 @@ const SkillCard = ({
 
     // Helper function to play mismatch sound with proper volume
     const playMismatch = () => {
-        const audio = new Audio(BASE_ASSETS.audio.mismatch);
-        audio.volume = getSfxVolume();
-        audio.play().catch(() => {});
+        player.play(BASE_ASSETS.audio.mismatch);
     };
 
     useEffect(() => {
@@ -385,9 +389,7 @@ const SkillCard = ({
             // Correct click
             if (playerIndex === simonSequence.length - 1) {
                 // Completed the sequence
-                const matchAudio = new Audio(BASE_ASSETS.audio.match);
-                matchAudio.volume = getSfxVolume();
-                matchAudio.play().catch(() => {});
+                player.play(BASE_ASSETS.audio.match);
                 const newRounds = completedRounds + 1;
                 setCompletedRounds(newRounds);
 
@@ -412,9 +414,7 @@ const SkillCard = ({
             }
         } else {
             // Wrong click - game over
-            const mismatchAudio = new Audio(BASE_ASSETS.audio.mismatch);
-            mismatchAudio.volume = getSfxVolume();
-            mismatchAudio.play().catch(() => {});
+            player.play(BASE_ASSETS.audio.mismatch);
             setSimonGameActive(false);
             // No damage on failure since damage was already applied during successful rounds
         }
@@ -452,9 +452,7 @@ const SkillCard = ({
             setIsProcessingMatch(true);
             setTimeout(() => {
                 if (memoryCards[newFlipped[0]].color === memoryCards[newFlipped[1]].color) {
-                    const matchAudio = new Audio(BASE_ASSETS.audio.match);
-                    matchAudio.volume = getSfxVolume();
-                    matchAudio.play().catch(() => {});
+                    player.play(BASE_ASSETS.audio.match);
                     const newMatched = [...matchedPairs, memoryCards[newFlipped[0]].color];
                     setMatchedPairs(newMatched);
                     setFlippedIndices([]);
@@ -463,9 +461,7 @@ const SkillCard = ({
                     if (newMatched.length === memoryPairs)
                         setTimeout(() => onMathSubmit('WIN'), 500);
                 } else {
-                    const mismatchAudio = new Audio(BASE_ASSETS.audio.mismatch);
-                    mismatchAudio.volume = getSfxVolume();
-                    mismatchAudio.play().catch(() => {});
+                    player.play(BASE_ASSETS.audio.mismatch);
                     setMismatchShake(true);
                     setTimeout(() => {
                         setMismatchShake(false);

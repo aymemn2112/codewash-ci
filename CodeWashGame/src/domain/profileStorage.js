@@ -10,16 +10,18 @@ import { getRandomAura } from '../utils/mobDisplayUtils';
 import { getDefaultStats } from '../utils/achievementUtils';
 import { recordLoadError } from '../lib/loadErrors';
 import { logger } from '../lib/logger';
+import { browserStorage } from '../services/storage';
+import { STORAGE_KEYS, getStorageKey, migrateLegacySkills } from '../services/storageKeys';
 
-const LEGACY_KEY = 'heroSkills_v23';
-
-export const getStorageKey = (profileId) => `heroSkills_v23_p${profileId}`;
+export { getStorageKey };
 
 /** Read the raw profile JSON, falling back to the legacy profile-1 key. */
 const readRawProfile = (profileId) => {
-    let saved = localStorage.getItem(getStorageKey(profileId));
-    if (!saved && profileId === 1) saved = localStorage.getItem(LEGACY_KEY);
-    return saved;
+    if (profileId === 1) migrateLegacySkills(browserStorage, profileId);
+    return (
+        browserStorage.getItem(getStorageKey(profileId)) ||
+        (profileId === 1 ? browserStorage.getItem(STORAGE_KEYS.LEGACY_SKILLS) : null)
+    );
 };
 
 /** Fresh skill state, with random mobs/auras, then merged with saved data. */

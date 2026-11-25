@@ -12,8 +12,13 @@ const bgmManager = {
 };
 
 vi.mock('../utils/soundManager', () => ({
-    getBGMManager: () => bgmManager,
-    setSfxVolume: vi.fn(),
+    createBGMManager: () => bgmManager,
+    createSfxPlayer: () => ({
+        setVolume: vi.fn(),
+        getVolume: () => 0.5,
+        play: vi.fn(),
+        create: vi.fn(),
+    }),
 }));
 
 beforeEach(() => {
