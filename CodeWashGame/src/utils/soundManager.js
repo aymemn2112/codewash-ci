@@ -87,13 +87,30 @@ const MOB_FOLDER_MAP = {
 
 // Class for managing BGM playback with shuffle
 class BGMManager {
-    constructor({ audioFactory = defaultAudioFactory } = {}) {
+    constructor({ audioFactory = defaultAudioFactory, tracks = BGM_TRACKS } = {}) {
         this.audioFactory = audioFactory;
         this.audio = null;
         this.volume = 0.3;
         this.isPlaying = false;
         this.currentTrackIndex = -1;
-        this.tracks = [...BGM_TRACKS];
+        this.tracks = [...tracks];
+    }
+
+    setTracks(tracks = BGM_TRACKS) {
+        const nextTracks = tracks.length > 0 ? [...tracks] : [...BGM_TRACKS];
+        const isSamePlaylist =
+            nextTracks.length === this.tracks.length &&
+            nextTracks.every((track, index) => track === this.tracks[index]);
+        if (isSamePlaylist) return;
+
+        this.tracks = nextTracks;
+        this.currentTrackIndex = this.getRandomTrack();
+        if (this.audio) {
+            this.audio.src = this.tracks[this.currentTrackIndex];
+            if (this.isPlaying) {
+                this.audio.play().catch(() => {});
+            }
+        }
     }
 
     setVolume(vol) {

@@ -16,6 +16,11 @@ export const GLOBAL_CSS = `
     .scrollbar-hide::-webkit-scrollbar { display: none; }
     .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
 
+    .themed-scroll { scrollbar-color: var(--scrollbar-thumb, #fbbf24) var(--scrollbar-track, #1c1917); scrollbar-width: thin; }
+    .themed-scroll::-webkit-scrollbar { width: 10px; height: 10px; }
+    .themed-scroll::-webkit-scrollbar-track { background: var(--scrollbar-track, #1c1917); }
+    .themed-scroll::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb, #fbbf24); border: 2px solid var(--scrollbar-track, #1c1917); border-radius: 9999px; }
+
     /* Animations */
     @keyframes toast-slide {
       0% { transform: translate(-50%, 150%); opacity: 0; }

@@ -8,6 +8,7 @@ const bgmManager = {
     isPlaying: false,
     volume: 0.3,
     setVolume: vi.fn(),
+    setTracks: vi.fn(),
     play: vi.fn(),
 };
 
@@ -72,6 +73,13 @@ describe('useAudioSettings', () => {
         bgmManager.isPlaying = true;
         act(() => result.current.startBGM());
         expect(bgmManager.play).toHaveBeenCalledTimes(1);
+    });
+
+    it('pushes the theme playlist to the BGM manager', () => {
+        const tracks = ['assets/sounds/bgm/piano1.wav', 'assets/sounds/bgm/piano2.wav'];
+        renderHook(() => useAudioSettings({ tracks }));
+
+        expect(bgmManager.setTracks).toHaveBeenCalledWith(tracks);
     });
 });
 
