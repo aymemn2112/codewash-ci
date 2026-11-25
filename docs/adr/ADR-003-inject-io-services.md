@@ -22,4 +22,4 @@ Les fonctions et composants reçoivent ces dépendances en paramètre ou en prop
 
 - Les tests injectent une horloge, un RNG et un stockage en mémoire.
 - Aucune dépendance à un global dans le domaine.
-- Le câblage dans `App.jsx` et `SkillCard.jsx` reste à faire côté interface (track B).
+- `App.jsx` et `SkillCard.jsx` utilisent ces services : plus d’appel direct à `Date.now()`, `Math.random()` ou `localStorage` hors des services.

@@ -20,4 +20,4 @@ La migration **copie** la valeur legacy vers la clé du profil cible uniquement 
 ## Conséquences
 
 - Aucune perte de données en cas d’échec ou de rollback.
-- Le câblage dans `App.jsx` est nécessaire pour bénéficier du service (track B).
+- `App.jsx` lit les profils via `readProfileRaw()`, qui passe par `migrateLegacySkills()` et `getStorageKey()` : la migration est réellement appliquée au démarrage.

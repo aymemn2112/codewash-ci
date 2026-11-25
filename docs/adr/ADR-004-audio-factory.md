@@ -17,4 +17,4 @@
 
 - Les tests vérifient la fabrique reçue et prouvent que `Audio` global n’est pas appelé.
 - Chaque appel à `getBGMManager()` donne un manager indépendant.
-- Les `new Audio(...)` restants de `SkillCard.jsx` doivent encore être routés vers le manager (track B).
+- Les `new Audio(...)` de `SkillCard.jsx` passent par un `SfxPlayer` injecté depuis `App.jsx` : la fabrique reste le seul point de création d’`Audio`.

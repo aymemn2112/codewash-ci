@@ -165,73 +165,92 @@ export const createBGMManager = (options = {}) => new BGMManager(options);
 // Conservé pour les appelants existants, mais sans état global mutable.
 export const getBGMManager = () => createBGMManager();
 
-// SFX volume (separate from BGM)
-let sfxVolume = 0.5;
+// SFX player: volume is held by the instance, never in a module-level variable.
+// Passing a bare audio factory is still supported for backwards compatibility.
+export const createSfxPlayer = ({ volume = 0.5, audioFactory = defaultAudioFactory } = {}) => {
+    let currentVolume = volume;
 
-export const setSfxVolume = (vol) => {
-    sfxVolume = vol;
+    return {
+        setVolume: (vol) => {
+            currentVolume = vol;
+        },
+        getVolume: () => currentVolume,
+        create: (src) => {
+            const audio = audioFactory(src);
+            audio.volume = currentVolume;
+            return audio;
+        },
+        play: (src) => {
+            const audio = audioFactory(src);
+            audio.volume = currentVolume;
+            // Some environments (jsdom, old browsers) return undefined from play().
+            return Promise.resolve(audio.play()).catch(() => {});
+        },
+    };
 };
 
-export const getSfxVolume = () => sfxVolume;
+const resolveSfxPlayer = (playerOrFactory) =>
+    typeof playerOrFactory === 'function'
+        ? createSfxPlayer({ audioFactory: playerOrFactory })
+        : playerOrFactory || createSfxPlayer();
 
 /**
  * Play a UI sound
  * @param {string} soundName - Name of the UI sound (click, death, fail, levelup, etc.)
+ * @param {object|Function} [playerOrFactory] - Sfx player or legacy audio factory
  */
-export const playUISound = (soundName, audioFactory = defaultAudioFactory) => {
+export const playUISound = (soundName, playerOrFactory) => {
     const path = UI_SOUNDS[soundName];
     if (!path) return;
 
-    const audio = audioFactory(path);
-    audio.volume = sfxVolume;
-    audio.play().catch(() => {});
+    resolveSfxPlayer(playerOrFactory).play(path);
 };
 
 /**
  * Play actioncard left sound
  */
-export const playActionCardLeft = (audioFactory) => playUISound('actioncard_left', audioFactory);
+export const playActionCardLeft = (player) => playUISound('actioncard_left', player);
 
 /**
  * Play actioncard right sound
  */
-export const playActionCardRight = (audioFactory) => playUISound('actioncard_right', audioFactory);
+export const playActionCardRight = (player) => playUISound('actioncard_right', player);
 
 /**
  * Play click sound
  */
-export const playClick = (audioFactory) => playUISound('click', audioFactory);
+export const playClick = (player) => playUISound('click', player);
 
 /**
  * Play death sound (player death)
  */
-export const playDeath = (audioFactory) => playUISound('death', audioFactory);
+export const playDeath = (player) => playUISound('death', player);
 
 /**
  * Play fail sound (player takes damage but doesn't die)
  */
-export const playFail = (audioFactory) => playUISound('fail', audioFactory);
+export const playFail = (player) => playUISound('fail', player);
 
 /**
  * Play level up sound
  */
-export const playLevelUp = (audioFactory) => playUISound('levelup', audioFactory);
+export const playLevelUp = (player) => playUISound('levelup', player);
 
 /**
  * Play notification sound
  */
-export const playNotification = (audioFactory) => playUISound('notification', audioFactory);
+export const playNotification = (player) => playUISound('notification', player);
 
 /**
  * Play successful hit sound
  */
-export const playSuccessfulHit = (audioFactory) => playUISound('successful_hit', audioFactory);
+export const playSuccessfulHit = (player) => playUISound('successful_hit', player);
 
 /**
  * Play achievement unlock sound
  * Uses the notification sound for achievement unlocks
  */
-export const playAchievement = (audioFactory) => playUISound('notification', audioFactory);
+export const playAchievement = (player) => playUISound('notification', player);
 
 /**
  * Get the folder name for a mob
@@ -247,42 +266,36 @@ const getMobFolder = (mobName) => {
  * Play mob hurt sound
  * @param {string} mobName - Display name of the mob
  */
-export const playMobHurt = (mobName, audioFactory = defaultAudioFactory) => {
+export const playMobHurt = (mobName, playerOrFactory) => {
     const folder = getMobFolder(mobName);
     if (!folder) return;
 
     // Use standardized naming (all files renamed to hurt.wav)
-    const audio = audioFactory(`assets/sounds/mob/${folder}/hurt.wav`);
-    audio.volume = sfxVolume;
-    audio.play().catch(() => {});
+    resolveSfxPlayer(playerOrFactory).play(`assets/sounds/mob/${folder}/hurt.wav`);
 };
 
 /**
  * Play mob death sound
  * @param {string} mobName - Display name of the mob
  */
-export const playMobDeath = (mobName, audioFactory = defaultAudioFactory) => {
+export const playMobDeath = (mobName, playerOrFactory) => {
     const folder = getMobFolder(mobName);
     if (!folder) return;
 
     // Use standardized naming (all files renamed to death.wav)
-    const audio = audioFactory(`assets/sounds/mob/${folder}/death.wav`);
-    audio.volume = sfxVolume;
-    audio.play().catch(() => {});
+    resolveSfxPlayer(playerOrFactory).play(`assets/sounds/mob/${folder}/death.wav`);
 };
 
 /**
  * Play mob say sound (for friendly mobs)
  * @param {string} mobName - Display name of the mob
  */
-export const playMobSay = (mobName, audioFactory = defaultAudioFactory) => {
+export const playMobSay = (mobName, playerOrFactory) => {
     const folder = getMobFolder(mobName);
     if (!folder) return;
 
     // Use standardized naming (all files renamed to say.wav)
-    const audio = audioFactory(`assets/sounds/mob/${folder}/say.wav`);
-    audio.volume = sfxVolume;
-    audio.play().catch(() => {});
+    resolveSfxPlayer(playerOrFactory).play(`assets/sounds/mob/${folder}/say.wav`);
 };
 
 // Export UI sound names for reference

@@ -1,11 +1,5 @@
 import { describe, it, expect, vi, afterEach } from 'vitest';
-import {
-    createBGMManager,
-    setSfxVolume,
-    playUISound,
-    playClick,
-    playMobDeath,
-} from './soundManager';
+import { createBGMManager, playUISound, playClick, playMobDeath } from './soundManager';
 
 const createAudioMock = () => ({
     volume: 0,
@@ -31,7 +25,6 @@ const audioFactory = () => {
 afterEach(() => {
     vi.unstubAllGlobals();
     vi.restoreAllMocks();
-    setSfxVolume(0.5);
 });
 
 describe('injected audio factory', () => {
