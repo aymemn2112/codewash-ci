@@ -22,6 +22,7 @@ describe('App', () => {
         // icon buttons in DOM order.
         fireEvent.click(container.querySelectorAll('button')[0]);
         fireEvent.click(container.querySelectorAll('button')[1]);
+        fireEvent.click(container.querySelectorAll('button')[2]);
         fireEvent.click(container.querySelectorAll('button')[3]);
         fireEvent.click(container.querySelectorAll('button')[4]);
 

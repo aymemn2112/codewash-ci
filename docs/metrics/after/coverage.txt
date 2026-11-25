@@ -11,17 +11,17 @@ Not implemented: navigation to another Document
 Not implemented: HTMLMediaElement's play() method
 
  Test Files  27 passed (27)
-      Tests  144 passed (144)
-   Start at  14:28:13
-   Duration  7.94s (transform 3.68s, setup 6.44s, import 6.19s, tests 6.36s, environment 35.43s)
+      Tests  146 passed (146)
+   Start at  14:30:04
+   Duration  9.06s (transform 2.92s, setup 6.34s, import 5.90s, tests 7.66s, environment 35.44s)
 
  % Coverage report from v8
 -------------------|---------|----------|---------|---------|-------------------
 File               | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
 -------------------|---------|----------|---------|---------|-------------------
-All files          |   55.94 |    49.25 |   48.73 |   56.12 |                   
- src               |   40.25 |    38.19 |   37.03 |   40.76 |                   
-  App.jsx          |   40.25 |    38.19 |   37.03 |   40.76 | ...1581,1648-1757 
+All files          |   58.84 |    54.03 |    52.1 |   59.04 |                   
+ src               |   46.56 |    43.51 |    43.7 |   47.02 |                   
+  App.jsx          |   46.56 |    43.51 |    43.7 |   47.02 | ...1648,1652-1757 
  src/components    |   87.09 |    81.08 |      80 |   86.66 |                   
   PhantomEvent.jsx |   87.09 |    81.08 |      80 |   86.66 | ...,73-74,104-108 
  ...onents/drawers |   63.79 |    59.59 |   52.94 |   63.88 |                   
@@ -31,10 +31,10 @@ All files          |   55.94 |    49.25 |   48.73 |   56.12 |
   ...ngsDrawer.jsx |      60 |      100 |      50 |      60 | 82-99             
  ...ponents/modals |   84.37 |       75 |   71.42 |   83.33 |                   
   ResetModal.jsx   |   82.14 |    72.22 |   66.66 |   81.48 | 13-15,33,38       
- ...onents/profile |   56.89 |    62.26 |    37.5 |   58.82 |                   
-  ProfileCard.jsx  |   56.89 |    62.26 |    37.5 |   58.82 | ...-53,82-175,228 
- ...ponents/skills |   38.82 |    32.55 |   16.07 |   39.93 |                   
-  SkillCard.jsx    |   38.82 |    32.55 |   16.07 |   39.93 | ...1137,1152-1181 
+ ...onents/profile |   58.62 |    66.03 |   43.75 |   60.78 |                   
+  ProfileCard.jsx  |   58.62 |    66.03 |   43.75 |   60.78 | ...53,106-175,228 
+ ...ponents/skills |   40.58 |    44.51 |   19.64 |   41.76 |                   
+  SkillCard.jsx    |   40.58 |    44.51 |   19.64 |   41.76 | ...1137,1152-1181 
  src/components/ui |   44.44 |    36.92 |   52.63 |   44.18 |                   
   ...mentToast.jsx |    6.25 |        0 |       0 |    6.66 | 10-30             
   MobWithAura.jsx  |     100 |     62.5 |     100 |     100 | 30-58             
@@ -48,8 +48,8 @@ All files          |   55.94 |    49.25 |   48.73 |   56.12 |
 -------------------|---------|----------|---------|---------|-------------------
 
 =============================== Coverage summary ===============================
-Statements   : 55.94% ( 984/1759 )
-Branches     : 49.25% ( 629/1277 )
-Functions    : 48.73% ( 174/357 )
-Lines        : 56.12% ( 921/1641 )
+Statements   : 58.84% ( 1035/1759 )
+Branches     : 54.03% ( 690/1277 )
+Functions    : 52.1% ( 186/357 )
+Lines        : 59.04% ( 969/1641 )
 ================================================================================
