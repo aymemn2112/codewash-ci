@@ -36,6 +36,22 @@ describe('App', () => {
         fireEvent.click(screen.getAllByText(/^Writing$/)[0]);
     });
 
+    it('starts and ends a battle through the injected sfx player', () => {
+        render(<App />);
+
+        fireEvent.click(screen.getByRole('button', { name: /enchant!/i }));
+        const challengeOverlay = document.querySelector('.fixed.inset-0.z-50');
+        expect(challengeOverlay).not.toBeNull();
+        fireEvent.click(challengeOverlay);
+    });
+
+    it('switches profile through the injected sfx player', () => {
+        const { container } = render(<App />);
+
+        fireEvent.click(container.querySelectorAll('button')[0]);
+        fireEvent.click(screen.getByText(/player 2/i));
+    });
+
     it('migrates the legacy profile key and resets it through the storage service', () => {
         localStorage.setItem('heroSkills_v23', JSON.stringify({ theme: 'classic' }));
         const { container } = render(<App />);
