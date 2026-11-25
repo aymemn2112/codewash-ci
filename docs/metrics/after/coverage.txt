@@ -11,17 +11,17 @@ Not implemented: navigation to another Document
 Not implemented: HTMLMediaElement's play() method
 
  Test Files  27 passed (27)
-      Tests  146 passed (146)
-   Start at  14:30:36
-   Duration  8.88s (transform 2.94s, setup 6.80s, import 5.53s, tests 7.52s, environment 35.50s)
+      Tests  147 passed (147)
+   Start at  14:31:22
+   Duration  9.42s (transform 2.88s, setup 6.72s, import 5.57s, tests 8.03s, environment 35.41s)
 
  % Coverage report from v8
 -------------------|---------|----------|---------|---------|-------------------
 File               | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
 -------------------|---------|----------|---------|---------|-------------------
-All files          |   58.84 |    54.03 |    52.1 |   59.04 |                   
- src               |   46.56 |    43.51 |    43.7 |   47.02 |                   
-  App.jsx          |   46.56 |    43.51 |    43.7 |   47.02 | ...1648,1652-1757 
+All files          |    59.8 |    54.65 |   54.06 |    59.9 |                   
+ src               |   48.85 |    45.37 |   48.14 |   49.16 |                   
+  App.jsx          |   48.85 |    45.37 |   48.14 |   49.16 | ...1648,1652-1757 
  src/components    |   87.09 |    81.08 |      80 |   86.66 |                   
   PhantomEvent.jsx |   87.09 |    81.08 |      80 |   86.66 | ...,73-74,104-108 
  ...onents/drawers |   63.79 |    59.59 |   52.94 |   63.88 |                   
@@ -40,16 +40,16 @@ All files          |   58.84 |    54.03 |    52.1 |   59.04 |
   MobWithAura.jsx  |     100 |     62.5 |     100 |     100 | 30-58             
   ...tionModal.jsx |   19.51 |       10 |   11.11 |   17.94 | 14-106            
   PixelHeart.jsx   |   89.47 |    72.72 |     100 |   88.88 | 63,67             
- src/utils         |   94.13 |    84.93 |   83.09 |   95.43 |                   
+ src/utils         |   94.42 |    84.93 |    84.5 |   95.43 |                   
   ...ementUtils.js |   98.76 |    97.67 |     100 |     100 | 103               
   gameUtils.js     |     100 |    84.52 |     100 |     100 | ...65-266,286-295 
   ...splayUtils.js |     100 |       75 |     100 |     100 | 46                
-  soundManager.js  |   80.61 |    71.42 |   66.66 |   82.92 | ...14,129,138-157 
+  soundManager.js  |   81.63 |    71.42 |   69.44 |   82.92 | ...14,129,138-157 
 -------------------|---------|----------|---------|---------|-------------------
 
 =============================== Coverage summary ===============================
-Statements   : 58.84% ( 1035/1759 )
-Branches     : 54.03% ( 690/1277 )
-Functions    : 52.1% ( 186/357 )
-Lines        : 59.04% ( 969/1641 )
+Statements   : 59.8% ( 1052/1759 )
+Branches     : 54.65% ( 698/1277 )
+Functions    : 54.06% ( 193/357 )
+Lines        : 59.9% ( 983/1641 )
 ================================================================================
