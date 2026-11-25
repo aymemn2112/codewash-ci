@@ -230,6 +230,7 @@ export const normalizeThemeId = (id) => (id === 'minecraft' ? DEFAULT_THEME_ID :
 
 export const THEME_CONFIG = {
     classic: {
+        id: 'classic',
         name: 'Classic',
         style: {
             backgroundImage: `url('assets/themes/classic.png')`,
@@ -267,6 +268,7 @@ export const THEME_CONFIG = {
         },
     },
     kpop: {
+        id: 'kpop',
         name: 'K-Pop Demon Hunters',
         style: {
             backgroundImage: `url('assets/themes/kpop.jpg')`,
@@ -288,6 +290,7 @@ export const THEME_CONFIG = {
         },
     },
     pokemon: {
+        id: 'pokemon',
         name: 'Pokemon',
         style: {
             backgroundImage: `url('assets/themes/pokemon.jpg')`,
@@ -309,6 +312,7 @@ export const THEME_CONFIG = {
         },
     },
     spy: {
+        id: 'spy',
         name: 'Spy',
         style: {
             backgroundImage: `url('assets/themes/classic.png')`,

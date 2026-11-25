@@ -82,6 +82,7 @@ import {
     addUniqueToArray,
     isAchievementUnlocked,
 } from './utils/achievementUtils';
+import { useTranslation } from './i18n/useTranslation';
 
 // Parent verification privilege constants
 const PARENT_PRIVILEGE_LEVEL = 200;
@@ -90,12 +91,12 @@ const PARENT_PRIVILEGE_BADGES = [1, 2, 3, 4, 5, 6, 7, 8];
 
 // Voice recognition constants
 const MIN_SPOKEN_TEXT_LENGTH = 2;
-const MIC_OFF_TEXT = 'Mic Off';
 
 // Boss healing animation duration (ms)
 const BOSS_HEALING_ANIMATION_DURATION = 600;
 
 const App = () => {
+    const { t } = useTranslation();
     const [currentProfile, setCurrentProfile] = useState(() =>
         browserStorage.getItem(STORAGE_KEYS.CURRENT_PROFILE)
             ? parseInt(browserStorage.getItem(STORAGE_KEYS.CURRENT_PROFILE), 10)
@@ -104,7 +105,11 @@ const App = () => {
     const [profileNames, setProfileNames] = useState(() =>
         browserStorage.getItem(STORAGE_KEYS.PROFILE_NAMES)
             ? JSON.parse(browserStorage.getItem(STORAGE_KEYS.PROFILE_NAMES))
-            : { 1: 'Player 1', 2: 'Player 2', 3: 'Player 3' },
+            : {
+                  1: t('profile.defaultName', { id: 1 }),
+                  2: t('profile.defaultName', { id: 2 }),
+                  3: t('profile.defaultName', { id: 3 }),
+              },
     );
     const [parentStatus, setParentStatus] = useState(() =>
         browserStorage.getItem(STORAGE_KEYS.PARENT_STATUS)
@@ -548,8 +553,8 @@ const App = () => {
                                     // Show badge notification for defeating the boss
                                     setLootBox({
                                         level: lvl,
-                                        skillName: skillConfig.fantasyName,
-                                        item: 'New Rank!',
+                                        skillName: t(`skill.${skillConfig.id}.fantasyName`),
+                                        item: t('notification.newRank'),
                                         img: BASE_ASSETS.badges.Wood,
                                     });
                                     playNotification();
@@ -704,8 +709,8 @@ const App = () => {
         if (skillConfig) {
             setLootBox({
                 level: skills[skillId].level + 1,
-                skillName: skillConfig.fantasyName,
-                item: 'Phantom Bonus!',
+                skillName: t(`skill.${skillConfig.id}.fantasyName`),
+                item: t('notification.phantomBonus'),
                 img: HOSTILE_MOBS['Phantom'],
             });
             playNotification();
@@ -828,10 +833,11 @@ const App = () => {
 
     const spokenText =
         speech.error === 'not-allowed'
-            ? 'Mic permission denied'
+            ? t('speech.denied')
             : !speech.isSupported
-              ? 'Mic not available'
-              : speech.transcript || (speech.isListening ? 'Listening...' : MIC_OFF_TEXT);
+              ? t('speech.unavailable')
+              : speech.transcript ||
+                (speech.isListening ? t('speech.listening') : t('speech.micOff'));
 
     useEffect(() => {
         if (lootBox) setTimeout(() => setLootBox(null), 4000);
@@ -925,6 +931,7 @@ const App = () => {
             <SkillCarousel
                 carousel={carousel}
                 themeData={currentThemeData}
+                themeId={activeTheme}
                 battlingSkillId={battlingSkillId}
                 skills={skills}
                 challengeData={challengeData}
@@ -949,7 +956,7 @@ const App = () => {
                             </div>
                             <div className="text-left">
                                 <h2 className="text-2xl text-yellow-400 font-bold leading-none mb-1">
-                                    LEVEL {lootBox.level} REACHED!
+                                    {t('notification.levelReached', { level: lootBox.level })}
                                 </h2>
                                 <p className="text-stone-300 text-sm">{lootBox.skillName}</p>
                             </div>
@@ -957,12 +964,12 @@ const App = () => {
                         <div className="text-right pl-8 border-l-2 border-stone-600 flex items-center gap-4">
                             <SafeImage
                                 src={lootBox.img}
-                                alt="Badge"
+                                alt={t('common.badge')}
                                 className="w-12 h-12 object-contain"
                             />
                             <div>
                                 <p className="text-stone-400 text-xs uppercase tracking-wider">
-                                    Unlocked
+                                    {t('notification.unlocked')}
                                 </p>
                                 <p className="text-2xl text-green-400 font-bold">{lootBox.item}</p>
                             </div>

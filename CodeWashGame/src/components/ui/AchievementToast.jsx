@@ -1,26 +1,27 @@
 import React from 'react';
 import { Trophy } from 'lucide-react';
-import { ACHIEVEMENTS, TIER_COLORS, TIER_NAMES } from '../../constants/achievements';
+import { ACHIEVEMENTS, TIER_COLORS } from '../../constants/achievements';
+import { useTranslation } from '../../i18n/useTranslation';
 
 /**
  * AchievementToast Component
  * Displays a celebratory toast when an achievement is unlocked
  */
 const AchievementToast = ({ achievementId, tierIndex = null }) => {
+    const { t } = useTranslation();
     const achievement = ACHIEVEMENTS[achievementId];
 
     if (!achievement) return null;
 
     // Determine display values
-    let displayName = achievement.name;
+    let displayName = t(`achievement.${achievementId}.name`);
     let tierColor = null;
     let tierName = null;
 
     if (achievement.isTiered && tierIndex !== null && tierIndex >= 0) {
-        const tier = achievement.tiers[tierIndex];
-        displayName = tier.tierName;
         tierColor = TIER_COLORS[tierIndex + 1];
-        tierName = TIER_NAMES[tierIndex];
+        displayName = t(`achievement.tier.${achievementId}.${tierIndex}`);
+        tierName = t(`tier.${tierIndex}`);
     }
 
     const Icon = achievement.icon;
@@ -51,10 +52,14 @@ const AchievementToast = ({ achievementId, tierIndex = null }) => {
                     {/* Text */}
                     <div className="text-left">
                         <h2 className="text-2xl text-yellow-400 font-bold leading-none mb-1 uppercase tracking-wide">
-                            ACHIEVEMENT UNLOCKED!
+                            {t('achievement.unlocked')}
                         </h2>
                         <p className="text-white text-lg font-bold">{displayName}</p>
-                        {tierName && <p className="text-stone-400 text-sm mt-1">{tierName} Tier</p>}
+                        {tierName && (
+                            <p className="text-stone-400 text-sm mt-1">
+                                {t('common.tierLabel', { name: tierName })}
+                            </p>
+                        )}
                     </div>
                 </div>
 

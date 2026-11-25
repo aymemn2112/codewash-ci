@@ -20,11 +20,14 @@ import { calculateXPToLevel } from '../../utils/gameUtils';
 import { getTempoDelays } from '../../domain/patternTempo';
 import { buildMemoryDeck, nextSimonSequence, pickRandom } from '../../domain/skillGames';
 import { AURA_ADJECTIVES } from '../../utils/mobDisplayUtils';
+import { useTranslation } from '../../i18n/useTranslation';
 
 const PRESTIGE_LEVEL_THRESHOLD = 20;
 
 // Voice recognition constants
 const MIN_SPOKEN_TEXT_LENGTH = 2;
+// Legacy reading challenges used this prefix before storing the bare word.
+const WRITE_PREFIX = 'Write: ';
 
 // Map axolotl colors to specific note files for consistent sound feedback
 const AXOLOTL_NOTE_MAP = {
@@ -42,6 +45,7 @@ const SkillCard = ({
     config,
     data,
     themeData,
+    themeId = 'classic',
     isCenter,
     isBattling,
     mobName,
@@ -62,6 +66,7 @@ const SkillCard = ({
     bossHealing,
     sfxPlayer,
 }) => {
+    const { t } = useTranslation();
     const [fallbackSfxPlayer] = useState(() => createSfxPlayer());
     const player = sfxPlayer || fallbackSfxPlayer;
 
@@ -182,8 +187,7 @@ const SkillCard = ({
         }
     }
 
-    const skillThemeConfig = themeData.skills[config.id] || {};
-    const skillName = skillThemeConfig.name || config.name;
+    const skillName = t(`themeSkill.${themeId}.${config.id}`);
 
     // Determine valid mob source and display name based on skill type
     let mobSrc;
@@ -310,8 +314,8 @@ const SkillCard = ({
             config.challengeType === 'reading' &&
             isBattling &&
             spokenText &&
-            spokenText !== 'Listening...' &&
-            spokenText !== 'Mic Off'
+            spokenText !== t('speech.listening') &&
+            spokenText !== t('speech.micOff')
         ) {
             // Check if spoken text changed
             if (spokenText !== prevSpokenTextRef.current) {
@@ -330,7 +334,7 @@ const SkillCard = ({
                 prevSpokenTextRef.current = spokenText;
             }
         }
-    }, [spokenText, config.challengeType, isBattling, challenge?.answer]);
+    }, [spokenText, config.challengeType, isBattling, challenge?.answer, t]);
 
     // Pattern config based on difficulty
     const patternConfig = DIFFICULTY_CONTENT.patterns[difficulty] || DIFFICULTY_CONTENT.patterns[1];
@@ -500,7 +504,9 @@ const SkillCard = ({
                 {!isBattling && (
                     <div className="absolute top-2 left-2 bg-black/50 px-2 py-1 rounded text-white border border-white/20 z-20">
                         <div className="text-xs text-gray-400 uppercase">{skillName}</div>
-                        <div className="text-lg leading-none">{config.fantasyName}</div>
+                        <div className="text-lg leading-none">
+                            {t(`skill.${config.id}.fantasyName`)}
+                        </div>
                     </div>
                 )}
                 {!isBattling && (
@@ -508,7 +514,7 @@ const SkillCard = ({
                         <div
                             className={`bg-black/60 px-3 py-1 rounded border border-white/20 text-3xl font-bold ${levelTextColor}`}
                         >
-                            Lvl {data.level}
+                            {t('menu.skillLevel', { level: data.level })}
                         </div>
                     </div>
                 )}
@@ -562,7 +568,7 @@ const SkillCard = ({
             {(!isBattling || config.id !== 'memory') && (
                 <div className="bg-[#1a1a1a] p-2 border-t-4 border-b-4 border-black relative">
                     <div className="flex justify-between text-gray-400 text-xs mb-1 uppercase">
-                        <span>HP</span>
+                        <span>{t('common.hp')}</span>
                         <span>{hpPercent}%</span>
                     </div>
                     <div className="w-full h-6 bg-[#333] rounded-full overflow-hidden border-2 border-[#555] relative">
@@ -628,14 +634,16 @@ const SkillCard = ({
                                     <div className="w-full flex flex-col items-center gap-1">
                                         {/* Round counter */}
                                         <div className="text-white text-lg font-bold py-1">
-                                            Round: {completedRounds}{' '}
+                                            {t('battle.round', { round: completedRounds })}{' '}
                                             {isShowingSequence && (
                                                 <span className="text-yellow-400 animate-pulse">
-                                                    Watch!
+                                                    {t('battle.watch')}
                                                 </span>
                                             )}
                                             {!isShowingSequence && simonGameActive && (
-                                                <span className="text-green-400">Your turn!</span>
+                                                <span className="text-green-400">
+                                                    {t('battle.yourTurn')}
+                                                </span>
                                             )}
                                         </div>
                                         {/* Dynamic axolotl formation based on difficulty */}
@@ -659,11 +667,11 @@ const SkillCard = ({
                                                     >
                                                         <SafeImage
                                                             src={BASE_ASSETS.axolotls[color]}
-                                                            alt={color}
+                                                            alt={t(`color.${color}`)}
                                                             className="w-full h-full object-contain drop-shadow-lg"
                                                         />
                                                         <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 text-[10px] text-white bg-black/60 px-1 rounded">
-                                                            {color}
+                                                            {t(`color.${color}`)}
                                                         </span>
                                                     </div>
                                                 );
@@ -672,13 +680,15 @@ const SkillCard = ({
                                         {!simonGameActive && completedRounds > 0 && (
                                             <div className="flex flex-col items-center gap-3">
                                                 <div className="text-red-400 text-lg font-bold animate-pulse">
-                                                    Game Over! Rounds: {completedRounds}
+                                                    {t('battle.gameOver', {
+                                                        rounds: completedRounds,
+                                                    })}
                                                 </div>
                                                 <button
                                                     onClick={startSimonGame}
                                                     className="bg-blue-600 hover:bg-blue-500 text-white text-xl font-bold py-3 px-6 rounded shadow-[0_4px_0_#1e40af] active:shadow-none active:translate-y-[4px] transition-all"
                                                 >
-                                                    Retry
+                                                    {t('battle.retry')}
                                                 </button>
                                             </div>
                                         )}
@@ -709,7 +719,7 @@ const SkillCard = ({
                                                 (() => {
                                                     const word =
                                                         challenge?.question.replace(
-                                                            'Write: ',
+                                                            WRITE_PREFIX,
                                                             '',
                                                         ) || '';
                                                     // Use dynamic sizing that always fits the container
@@ -737,7 +747,9 @@ const SkillCard = ({
                                                     className={`absolute bottom-1 text-xs ${isReadingWrong ? 'text-red-400' : 'text-gray-400'}`}
                                                 >
                                                     {spokenText ||
-                                                        (isListening ? 'Listening...' : 'Mic Off')}
+                                                        (isListening
+                                                            ? t('speech.listening')
+                                                            : t('speech.micOff'))}
                                                 </div>
                                             )}
                                         </div>
@@ -886,7 +898,7 @@ const SkillCard = ({
                                                     <>
                                                         <Mic className="inline text-gray-500" />
                                                         <span className="text-xs uppercase font-bold text-stone-400">
-                                                            Tap to Speak
+                                                            {t('speech.tapToSpeak')}
                                                         </span>
                                                     </>
                                                 )}
@@ -897,7 +909,7 @@ const SkillCard = ({
                                                 onClick={() => setShowParentalModal(true)}
                                                 className="w-full bg-green-600 hover:bg-green-500 text-white text-3xl font-bold py-4 rounded shadow-[0_4px_0_#166534] active:shadow-none active:translate-y-[4px] transition-all"
                                             >
-                                                Complete!
+                                                {t('battle.complete')}
                                             </button>
                                         )}
                                         {config.challengeType !== 'cleaning' &&
@@ -907,7 +919,7 @@ const SkillCard = ({
                                                     onClick={() => onMathSubmit(challenge?.answer)}
                                                     className="mt-auto text-xs text-gray-500 underline hover:text-white self-center"
                                                 >
-                                                    Skip / Manual Success
+                                                    {t('battle.skip')}
                                                 </button>
                                             )}
                                     </>
@@ -921,7 +933,7 @@ const SkillCard = ({
                             return (
                                 <div className="mt-2 bg-[#1a1a1a] p-2 rounded border border-[#333]">
                                     <div className="flex justify-between text-gray-400 text-xs mb-1 uppercase">
-                                        <span>XP</span>
+                                        <span>{t('common.xp')}</span>
                                         <span>
                                             {data.xp} / {xpToLevel}
                                         </span>
@@ -939,14 +951,14 @@ const SkillCard = ({
                 ) : (
                     <div className="flex-1 flex flex-col items-center justify-center">
                         <p className="text-gray-400 text-center mb-4 px-2">
-                            {config.taskDescription}
+                            {t(`skill.${config.id}.task`)}
                         </p>
                         <button
                             onClick={onStartBattle}
                             style={buttonStyle}
                             className={`w-full text-white text-3xl font-bold py-6 rounded-lg active:shadow-none active:translate-y-[6px] transition-all border-2 uppercase tracking-wider`}
                         >
-                            {config.actionName}
+                            {t(`skill.${config.id}.action`)}
                         </button>
                     </div>
                 )}
@@ -1007,7 +1019,7 @@ const SkillCard = ({
                                                         '2px 2px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000',
                                                 }}
                                             >
-                                                ⚔ BATTLE ⚔
+                                                {t('common.battle')}
                                             </div>
                                             {/* Decorative rivets */}
                                             <div className="absolute top-1 left-2 w-2 h-2 bg-amber-900 rounded-full border border-amber-950"></div>
@@ -1019,7 +1031,7 @@ const SkillCard = ({
                                             {/* Enemy Name */}
                                             <div className="bg-amber-900/20 border-2 border-amber-900/40 rounded p-1.5">
                                                 <div className="text-[8px] text-amber-900 uppercase font-bold tracking-wide">
-                                                    Target
+                                                    {t('common.target')}
                                                 </div>
                                                 <div className="text-stone-900 font-black text-sm leading-tight">
                                                     {displayMobNameWithAura}
@@ -1030,7 +1042,7 @@ const SkillCard = ({
                                             <div className="flex gap-1.5">
                                                 <div className="flex-1 bg-amber-900/20 border-2 border-amber-900/40 rounded p-1.5">
                                                     <div className="text-[8px] text-amber-900 uppercase font-bold">
-                                                        Skill
+                                                        {t('common.skill')}
                                                     </div>
                                                     <div className="text-stone-900 font-bold text-xs leading-tight">
                                                         {skillName}
@@ -1038,7 +1050,7 @@ const SkillCard = ({
                                                 </div>
                                                 <div className="flex-1 bg-amber-900/20 border-2 border-amber-900/40 rounded p-1.5">
                                                     <div className="text-[8px] text-amber-900 uppercase font-bold">
-                                                        Level
+                                                        {t('common.level')}
                                                     </div>
                                                     <div
                                                         className={`font-black text-base leading-tight ${levelTextColor}`}
@@ -1056,10 +1068,10 @@ const SkillCard = ({
                                             {/* Quest/Task */}
                                             <div className="bg-amber-900/20 border-2 border-amber-900/40 rounded p-1.5">
                                                 <div className="text-[8px] text-amber-900 uppercase font-bold mb-0.5">
-                                                    Quest
+                                                    {t('common.quest')}
                                                 </div>
                                                 <div className="text-stone-800 text-[10px] leading-snug italic font-medium">
-                                                    {config.taskDescription}
+                                                    {t(`skill.${config.id}.task`)}
                                                 </div>
                                             </div>
                                         </div>
@@ -1067,7 +1079,7 @@ const SkillCard = ({
                                         {/* Bottom stamp/seal effect */}
                                         <div className="bg-gradient-to-t from-amber-900 to-amber-800 p-1 border-t-4 border-amber-950">
                                             <div className="text-center text-yellow-200 text-[8px] font-bold uppercase tracking-widest">
-                                                {config.fantasyName}
+                                                {t(`skill.${config.id}.fantasyName`)}
                                             </div>
                                         </div>
                                     </div>
@@ -1102,7 +1114,7 @@ const SkillCard = ({
                         <div className="relative">
                             <SafeImage
                                 src={DIFFICULTY_IMAGES[difficulty] || DIFFICULTY_IMAGES[1]}
-                                alt={`Difficulty ${difficulty}`}
+                                alt={t('difficulty.alt', { level: difficulty })}
                                 className="w-8 h-8 object-contain"
                             />
                             {/* Difficulty level number indicator in bottom-right corner */}
