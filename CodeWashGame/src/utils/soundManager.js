@@ -183,7 +183,8 @@ export const createSfxPlayer = ({ volume = 0.5, audioFactory = defaultAudioFacto
         play: (src) => {
             const audio = audioFactory(src);
             audio.volume = currentVolume;
-            return audio.play().catch(() => {});
+            // Some environments (jsdom, old browsers) return undefined from play().
+            return Promise.resolve(audio.play()).catch(() => {});
         },
     };
 };
