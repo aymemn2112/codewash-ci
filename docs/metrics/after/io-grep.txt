@@ -1,0 +1,95 @@
+src/services/rng.test.js:7:    it('delegates to Math.random at call time', () => {
+src/services/rng.js:1:// Source de hasard : renvoie un nombre dans [0, 1), comme Math.random.
+src/services/rng.js:2:// Enveloppé dans une fonction fléchée (et non `= Math.random`) pour que
+src/services/rng.js:3:// Math.random soit lu à chaque appel : les tests qui font
+src/services/rng.js:5:export const defaultRng = () => Math.random();
+src/test/setup.js:15:    localStorage.clear();
+src/components/PhantomEvent.jsx:21:        const lastSpawn = parseInt(localStorage.getItem(PHANTOM_COOLDOWN_KEY) || '0', 10);
+src/components/PhantomEvent.jsx:22:        const now = Date.now();
+src/components/PhantomEvent.jsx:29:            delay = Math.random() * (MAX_COOLDOWN_MS - MIN_COOLDOWN_MS);
+src/components/PhantomEvent.jsx:35:                Math.random() * (MAX_COOLDOWN_MS - MIN_COOLDOWN_MS);
+src/components/PhantomEvent.jsx:52:        const startFromLeft = Math.random() > 0.5;
+src/components/PhantomEvent.jsx:58:        localStorage.setItem(PHANTOM_COOLDOWN_KEY, Date.now().toString());
+src/components/PhantomEvent.test.jsx:7:const HALF_WINDOW_DELAY_MS = 150000; // Math.random() === 0.5 on a fresh cooldown
+src/components/PhantomEvent.test.jsx:11:    vi.setSystemTime(new Date('2025-01-01T00:00:00Z'));
+src/components/PhantomEvent.test.jsx:12:    localStorage.clear();
+src/components/PhantomEvent.test.jsx:18:    localStorage.clear();
+src/components/PhantomEvent.test.jsx:57:        expect(Number(localStorage.getItem(COOLDOWN_KEY))).toBeGreaterThan(0);
+src/components/PhantomEvent.test.jsx:61:        localStorage.setItem(COOLDOWN_KEY, String(Date.now()));
+src/components/skills/SkillCard.jsx:134:            const audio = new Audio(`assets/sounds/axolotl/${noteName}.wav`);
+src/components/skills/SkillCard.jsx:295:        const audio = new Audio(BASE_ASSETS.audio.mismatch);
+src/components/skills/SkillCard.jsx:314:            const shuffledMobs = [...allMobKeys].sort(() => Math.random() - 0.5);
+src/components/skills/SkillCard.jsx:317:            let deck = [...selectedMobs, ...selectedMobs].sort(() => Math.random() - 0.5);
+src/components/skills/SkillCard.jsx:411:        const firstColor = axolotlColors[Math.floor(Math.random() * axolotlColors.length)];
+src/components/skills/SkillCard.jsx:429:                const matchAudio = new Audio(BASE_ASSETS.audio.match);
+src/components/skills/SkillCard.jsx:449:                            axolotlColors[Math.floor(Math.random() * axolotlColors.length)],
+src/components/skills/SkillCard.jsx:455:                        axolotlColors[Math.floor(Math.random() * axolotlColors.length)];
+src/components/skills/SkillCard.jsx:468:            const mismatchAudio = new Audio(BASE_ASSETS.audio.mismatch);
+src/components/skills/SkillCard.jsx:508:                    const matchAudio = new Audio(BASE_ASSETS.audio.match);
+src/components/skills/SkillCard.jsx:519:                    const mismatchAudio = new Audio(BASE_ASSETS.audio.mismatch);
+src/utils/achievementUtils.test.js:168:        vi.setSystemTime(new Date('2025-01-15T10:00:00Z'));
+src/utils/achievementUtils.test.js:173:        vi.setSystemTime(new Date('2025-01-16T08:00:00Z'));
+src/utils/mobDisplayUtils.js:30: * @param {() => number} [rng] - Source of randomness in [0, 1), defaults to Math.random
+src/utils/mobDisplayUtils.js:41: * @param {() => number} [rng] - Source of randomness in [0, 1), defaults to Math.random
+src/utils/gameUtils.js:18:// `rng` defaults to Math.random so callers behave as before; tests can inject a fixed one.
+src/utils/gameUtils.js:19:const pickRandomOr = (list, fallback, rng = Math.random) =>
+src/utils/gameUtils.js:186:        return FUNNY_LONG_WORDS[Math.floor(Math.random() * FUNNY_LONG_WORDS.length)];
+src/utils/gameUtils.js:191:    return words[Math.floor(Math.random() * words.length)];
+src/utils/gameUtils.js:229:        const problem = nightmareProblems[Math.floor(Math.random() * nightmareProblems.length)];
+src/utils/gameUtils.js:254:        const problem = pemdasProblems[Math.floor(Math.random() * pemdasProblems.length)];
+src/utils/gameUtils.js:266:    const operation = operations[Math.floor(Math.random() * operations.length)];
+src/utils/gameUtils.js:272:            a = Math.floor(Math.random() * (maxVal - minVal + 1)) + minVal;
+src/utils/gameUtils.js:273:            b = Math.floor(Math.random() * (maxVal - minVal + 1)) + minVal;
+src/utils/gameUtils.js:279:            a = Math.floor(Math.random() * (maxVal - minVal + 1)) + minVal;
+src/utils/gameUtils.js:280:            b = Math.floor(Math.random() * a) + 1; // b is always less than or equal to a
+src/utils/gameUtils.js:286:            a = Math.floor(Math.random() * (multMax - multMin + 1)) + multMin;
+src/utils/gameUtils.js:287:            b = Math.floor(Math.random() * (multMax - multMin + 1)) + multMin;
+src/utils/gameUtils.js:295:            b = Math.floor(Math.random() * (divMax - divMin + 1)) + divMin;
+src/utils/gameUtils.js:296:            const quotient = Math.floor(Math.random() * 10) + 1;
+src/utils/gameUtils.js:303:            a = Math.floor(Math.random() * 9) + 1;
+src/utils/gameUtils.js:304:            b = Math.floor(Math.random() * 9) + 1;
+src/utils/gameUtils.js:324:        const item = fallbackPool[Math.floor(Math.random() * fallbackPool.length)];
+src/utils/gameUtils.js:333:    const item = pool[Math.floor(Math.random() * pool.length)];
+src/utils/gameUtils.js:348:        const item = matchingWords[Math.floor(Math.random() * matchingWords.length)];
+src/utils/soundManager.js:9:const defaultAudioFactory = (src) => new Audio(src);
+src/utils/soundManager.test.js:133:    it('getRandomTrack uses the given rng instead of Math.random', () => {
+src/utils/achievementUtils.js:190:    const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD format
+src/utils/mobDisplayUtils.test.js:44:    it('getRandomAura uses the given rng instead of Math.random', () => {
+src/App.jsx:81:        localStorage.getItem('currentProfile_v1')
+src/App.jsx:82:            ? parseInt(localStorage.getItem('currentProfile_v1'))
+src/App.jsx:86:        localStorage.getItem('heroProfileNames_v1')
+src/App.jsx:87:            ? JSON.parse(localStorage.getItem('heroProfileNames_v1'))
+src/App.jsx:91:        localStorage.getItem('heroParentStatus_v1')
+src/App.jsx:92:            ? JSON.parse(localStorage.getItem('heroParentStatus_v1'))
+src/App.jsx:130:        let saved = localStorage.getItem(getStorageKey(profileId));
+src/App.jsx:131:        if (!saved && profileId === 1) saved = localStorage.getItem('heroSkills_v23');
+src/App.jsx:215:        let saved = localStorage.getItem(getStorageKey(profileId));
+src/App.jsx:217:            saved = localStorage.getItem('heroSkills_v23');
+src/App.jsx:228:        let saved = localStorage.getItem(getStorageKey(profileId));
+src/App.jsx:230:            saved = localStorage.getItem('heroSkills_v23');
+src/App.jsx:264:        let saved = localStorage.getItem(key);
+src/App.jsx:265:        if (!saved && id === 1) saved = localStorage.getItem('heroSkills_v23');
+src/App.jsx:319:        const saved = localStorage.getItem(`borderEffect_p${currentProfile}`);
+src/App.jsx:323:        const saved = localStorage.getItem(`borderColor_p${currentProfile}`);
+src/App.jsx:329:        localStorage.setItem(getStorageKey(currentProfile), JSON.stringify(dataToSave));
+src/App.jsx:330:        localStorage.setItem('currentProfile_v1', currentProfile);
+src/App.jsx:331:        localStorage.setItem('heroProfileNames_v1', JSON.stringify(profileNames));
+src/App.jsx:332:        localStorage.setItem('heroParentStatus_v1', JSON.stringify(parentStatus));
+src/App.jsx:337:        localStorage.setItem(`borderEffect_p${currentProfile}`, selectedBorder);
+src/App.jsx:338:        localStorage.setItem(`borderColor_p${currentProfile}`, borderColor);
+src/App.jsx:431:            document.documentElement.requestFullscreen().catch((err) => {
+src/App.jsx:626:                    x: Math.random() * 100 - 50,
+src/App.jsx:627:                    y: Math.random() * 50 - 25,
+src/App.jsx:1003:        if (skill.challengeType === 'reading' && window.webkitSpeechRecognition)
+src/App.jsx:1063:        localStorage.removeItem(getStorageKey(currentProfile));
+src/App.jsx:1064:        if (currentProfile === 1) localStorage.removeItem('heroSkills_v23');
+src/App.jsx:1066:        // Update parent status in localStorage directly
+src/App.jsx:1067:        const currentParentStatus = localStorage.getItem('heroParentStatus_v1');
+src/App.jsx:1072:        localStorage.setItem('heroParentStatus_v1', JSON.stringify(parentStatusObj));
+src/App.jsx:1074:        // Update profile name in localStorage directly
+src/App.jsx:1075:        const currentProfileNames = localStorage.getItem('heroProfileNames_v1');
+src/App.jsx:1080:        localStorage.setItem('heroProfileNames_v1', JSON.stringify(profileNamesObj));
+src/App.jsx:1101:        if (!window.webkitSpeechRecognition) {
+src/App.jsx:1113:        recognitionRef.current = new window.webkitSpeechRecognition();
+src/App.jsx:1192:        if (!window.webkitSpeechRecognition) {
+src/App.jsx:1225:        const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD format

@@ -1,0 +1,551 @@
+{
+  "duplicates": [
+    {
+      "firstFile": {
+        "end": 260,
+        "endLoc": {
+          "column": 54,
+          "line": 260,
+          "position": 11614
+        },
+        "name": "App.jsx",
+        "start": 254,
+        "startLoc": {
+          "column": 36,
+          "line": 254,
+          "position": 11336
+        }
+      },
+      "format": "jsx",
+      "fragment": "            Object.values(liveSkills).forEach((s) => {\n                if (s && typeof s.level === 'number') {\n                    totalLevel += s.level;\n                    if (s.level > highestLevel) highestLevel = s.level;\n                }\n            });\n            return { totalLevel, highestLevel, skills: liveSkills, theme: activeTheme };",
+      "isNew": false,
+      "kind": "exact",
+      "lines": 7,
+      "secondFile": {
+        "end": 279,
+        "endLoc": {
+          "column": 54,
+          "line": 279,
+          "position": 12402
+        },
+        "name": "App.jsx",
+        "start": 273,
+        "startLoc": {
+          "column": 36,
+          "line": 273,
+          "position": 12124
+        }
+      },
+      "tokens": 53
+    },
+    {
+      "firstFile": {
+        "end": 49,
+        "endLoc": {
+          "column": 7,
+          "line": 49,
+          "position": 1387
+        },
+        "name": "components/PhantomEvent.test.jsx",
+        "start": 39,
+        "startLoc": {
+          "column": 56,
+          "line": 39,
+          "position": 1139
+        }
+      },
+      "format": "jsx",
+      "fragment": "            vi.advanceTimersByTime(HALF_WINDOW_DELAY_MS - 1);\n        });\n        expect(screen.queryByAltText('Phantom')).not.toBeInTheDocument();\n\n        act(() => {\n            vi.advanceTimersByTime(1);\n        });\n        expect(screen.getByAltText('Phantom')).toBeInTheDocument();\n    });\n\n    it('spawns after the random delay when the cooldown has elapsed', () => {",
+      "isNew": false,
+      "kind": "exact",
+      "lines": 11,
+      "secondFile": {
+        "end": 76,
+        "endLoc": {
+          "column": 7,
+          "line": 76,
+          "position": 2293
+        },
+        "name": "components/PhantomEvent.test.jsx",
+        "start": 66,
+        "startLoc": {
+          "column": 51,
+          "line": 66,
+          "position": 2045
+        }
+      },
+      "tokens": 58
+    },
+    {
+      "firstFile": {
+        "end": 47,
+        "endLoc": {
+          "column": 7,
+          "line": 47,
+          "position": 1378
+        },
+        "name": "components/PhantomEvent.test.jsx",
+        "start": 39,
+        "startLoc": {
+          "column": 59,
+          "line": 39,
+          "position": 1142
+        }
+      },
+      "format": "jsx",
+      "fragment": "            vi.advanceTimersByTime(HALF_WINDOW_DELAY_MS - 1);\n        });\n        expect(screen.queryByAltText('Phantom')).not.toBeInTheDocument();\n\n        act(() => {\n            vi.advanceTimersByTime(1);\n        });\n        expect(screen.getByAltText('Phantom')).toBeInTheDocument();\n    });",
+      "isNew": false,
+      "kind": "exact",
+      "lines": 9,
+      "secondFile": {
+        "end": 143,
+        "endLoc": {
+          "column": 7,
+          "line": 143,
+          "position": 4342
+        },
+        "name": "components/PhantomEvent.test.jsx",
+        "start": 135,
+        "startLoc": {
+          "column": 41,
+          "line": 135,
+          "position": 4106
+        }
+      },
+      "tokens": 54
+    },
+    {
+      "firstFile": {
+        "end": 303,
+        "endLoc": {
+          "column": 46,
+          "line": 303,
+          "position": 13515
+        },
+        "name": "components/drawers/CosmeticsDrawer.jsx",
+        "start": 275,
+        "startLoc": {
+          "column": 52,
+          "line": 275,
+          "position": 11526
+        }
+      },
+      "format": "jsx",
+      "fragment": "                                                    }\n                                                >\n                                                    <IconComponent\n                                                        size={32}\n                                                        className={`${!unlocked ? 'text-slate-600' : 'text-slate-300'}`}\n                                                    />\n                                                </div>\n                                                {!unlocked && (\n                                                    <Info size={16} className=\"text-slate-500\" />\n                                                )}\n                                            </div>\n                                            {/* Name and Description - Center Aligned */}\n                                            <div className=\"text-center\">\n                                                <div\n                                                    className={`text-sm font-bold ${!unlocked ? 'text-slate-500' : 'text-yellow-400'}`}\n                                                >\n                                                    {effect.name}\n                                                </div>\n                                                <div\n                                                    className={`text-xs ${!unlocked ? 'text-slate-600' : 'text-slate-400'}`}\n                                                >\n                                                    {effect.description}\n                                                </div>\n                                            </div>\n                                            {isSelected && (\n                                                <div className=\"absolute top-1 right-1 bg-yellow-400 text-black text-[9px] font-bold px-1.5 py-0.5 rounded\">\n                                                    ACTIVE\n                                                </div>\n                                            )}",
+      "isNew": false,
+      "kind": "exact",
+      "lines": 29,
+      "secondFile": {
+        "end": 424,
+        "endLoc": {
+          "column": 46,
+          "line": 424,
+          "position": 22399
+        },
+        "name": "components/drawers/CosmeticsDrawer.jsx",
+        "start": 396,
+        "startLoc": {
+          "column": 151,
+          "line": 396,
+          "position": 20410
+        }
+      },
+      "tokens": 141
+    },
+    {
+      "firstFile": {
+        "end": 30,
+        "endLoc": {
+          "column": 10,
+          "line": 30,
+          "position": 1163
+        },
+        "name": "components/drawers/MenuDrawer.jsx",
+        "start": 20,
+        "startLoc": {
+          "column": 4,
+          "line": 20,
+          "position": 698
+        }
+      },
+      "format": "jsx",
+      "fragment": "    const totalLevels = Object.values(skills).reduce((acc, s) => acc + s.level, 0);\n\n    // Calculate total badges earned\n    const totalBadges = Object.values(skills).reduce((acc, skill) => {\n        let count = BADGE_TIERS.filter((tier) => skill.level >= tier.level).length;\n        if (skill.level >= 180) {\n            const legendaryCount = Math.floor((skill.level - 160) / 20);\n            count += legendaryCount;\n        }\n        return acc + count;\n    }, 0);",
+      "isNew": false,
+      "kind": "exact",
+      "lines": 11,
+      "secondFile": {
+        "end": 50,
+        "endLoc": {
+          "column": 10,
+          "line": 50,
+          "position": 1554
+        },
+        "name": "components/drawers/MenuDrawer_old.jsx",
+        "start": 40,
+        "startLoc": {
+          "column": 4,
+          "line": 40,
+          "position": 1089
+        }
+      },
+      "tokens": 110
+    },
+    {
+      "firstFile": {
+        "end": 55,
+        "endLoc": {
+          "column": 28,
+          "line": 55,
+          "position": 2446
+        },
+        "name": "components/drawers/MenuDrawer.jsx",
+        "start": 36,
+        "startLoc": {
+          "column": 62,
+          "line": 36,
+          "position": 1400
+        }
+      },
+      "format": "jsx",
+      "fragment": "    const totalAchievements = Object.keys(ACHIEVEMENTS).length;\n\n    return (\n        <div\n            className={`fixed h-full w-[75%] md:w-[60%] bg-[#1a1a1a]/95 backdrop-blur-md z-50 border-l-4 border-stone-600 shadow-2xl transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}\n            style={{ top: 0, right: 0 }}\n        >\n            <div className=\"p-6 h-full flex flex-col\">\n                {/* Header */}\n                <div className=\"shrink-0 border-b-4 border-stone-600 pb-4 mb-4\">\n                    <h2 className=\"text-5xl text-yellow-400 font-bold uppercase tracking-widest mb-2 drop-shadow-md\">\n                        Achievements\n                    </h2>\n                    <div className=\"flex gap-6 text-stone-400 text-2xl\">\n                        <p>\n                            Total Level: <span className=\"text-white font-bold\">{totalLevels}</span>\n                        </p>\n                        <p>\n                            Badges: <span className=\"text-yellow-400 font-bold\">{totalBadges}</span>\n                        </p>",
+      "isNew": false,
+      "kind": "exact",
+      "lines": 20,
+      "secondFile": {
+        "end": 69,
+        "endLoc": {
+          "column": 28,
+          "line": 69,
+          "position": 2599
+        },
+        "name": "components/drawers/MenuDrawer_old.jsx",
+        "start": 50,
+        "startLoc": {
+          "column": 9,
+          "line": 50,
+          "position": 1553
+        }
+      },
+      "tokens": 112
+    },
+    {
+      "firstFile": {
+        "end": 84,
+        "endLoc": {
+          "column": 33,
+          "line": 84,
+          "position": 3994
+        },
+        "name": "components/drawers/MenuDrawer.jsx",
+        "start": 72,
+        "startLoc": {
+          "column": 97,
+          "line": 72,
+          "position": 3329
+        }
+      },
+      "format": "jsx",
+      "fragment": "                            const xpToLevel = calculateXPToLevel(skillDifficulty, userSkill.level);\n                            const xpPercent = Math.min(100, (userSkill.xp / xpToLevel) * 100);\n                            const skillConfig = SKILL_DATA.find((s) => s.id === key);\n                            const legendaryCount =\n                                userSkill.level >= 180\n                                    ? Math.floor((userSkill.level - 160) / 20)\n                                    : 0;\n\n                            return (\n                                <div\n                                    key={key}\n                                    className=\"bg-black/40 p-4 rounded-xl border-2 border-stone-700\"\n                                >",
+      "isNew": false,
+      "kind": "exact",
+      "lines": 13,
+      "secondFile": {
+        "end": 120,
+        "endLoc": {
+          "column": 37,
+          "line": 120,
+          "position": 5296
+        },
+        "name": "components/drawers/MenuDrawer_old.jsx",
+        "start": 108,
+        "startLoc": {
+          "column": 32,
+          "line": 108,
+          "position": 4587
+        }
+      },
+      "tokens": 79
+    },
+    {
+      "firstFile": {
+        "end": 237,
+        "endLoc": {
+          "column": 5,
+          "line": 237,
+          "position": 8733
+        },
+        "name": "components/skills/SkillCard.jsx",
+        "start": 225,
+        "startLoc": {
+          "column": 41,
+          "line": 225,
+          "position": 8220
+        }
+      },
+      "format": "jsx",
+      "fragment": "    } else if (config.id === 'patterns') {\n        // Patterns skill uses hostile mobs like other combat skills\n        mobSrc =\n            HOSTILE_MOBS[mobName] ||\n            BOSS_MOBS[mobName] ||\n            MINIBOSS_MOBS[mobName] ||\n            themeData.assets.mobs[mobName];\n        if (!mobSrc) {\n            // Fallback to Zombie if the provided name is invalid (should not happen with proper state management)\n            displayMobName = 'Zombie';\n            mobSrc = HOSTILE_MOBS[displayMobName] || BASE_ASSETS.axolotls.Pink;\n        }\n    } else {",
+      "isNew": false,
+      "kind": "exact",
+      "lines": 13,
+      "secondFile": {
+        "end": 250,
+        "endLoc": {
+          "column": 5,
+          "line": 250,
+          "position": 9315
+        },
+        "name": "components/skills/SkillCard.jsx",
+        "start": 237,
+        "startLoc": {
+          "column": 11,
+          "line": 237,
+          "position": 8739
+        }
+      },
+      "tokens": 52
+    },
+    {
+      "firstFile": {
+        "end": 837,
+        "endLoc": {
+          "column": 63,
+          "line": 837,
+          "position": 42255
+        },
+        "name": "components/skills/SkillCard.jsx",
+        "start": 824,
+        "startLoc": {
+          "column": 80,
+          "line": 824,
+          "position": 41279
+        }
+      },
+      "format": "jsx",
+      "fragment": "                                                            onMathSubmit('WRONG');\n                                                            setTimeout(() => {\n                                                                setIsWrong(false);\n                                                                setMathInput('');\n                                                                setTimeout(\n                                                                    () => inputRef.current?.focus(),\n                                                                    10,\n                                                                );\n                                                            }, 500);\n                                                        }\n                                                    }}\n                                                    className=\"absolute inset-0 opacity-0 cursor-pointer\"\n                                                    autoFocus\n                                                    maxLength={String(challenge?.answer).length}",
+      "isNew": false,
+      "kind": "exact",
+      "lines": 14,
+      "secondFile": {
+        "end": 889,
+        "endLoc": {
+          "column": 63,
+          "line": 889,
+          "position": 46301
+        },
+        "name": "components/skills/SkillCard.jsx",
+        "start": 876,
+        "startLoc": {
+          "column": 73,
+          "line": 876,
+          "position": 45325
+        }
+      },
+      "tokens": 50
+    },
+    {
+      "firstFile": {
+        "end": 26,
+        "endLoc": {
+          "column": 3,
+          "line": 26,
+          "position": 628
+        },
+        "name": "utils/achievementUtils.js",
+        "start": 11,
+        "startLoc": {
+          "column": 37,
+          "line": 11,
+          "position": 254
+        }
+      },
+      "format": "javascript",
+      "fragment": "export const getDefaultStats = () => ({\n    phantomsCaught: 0,\n    totalMobsDefeated: 0,\n    totalBossesDefeated: 0,\n    totalMinibossesDefeated: 0,\n    totalDeaths: 0,\n    uniqueMobsDefeated: [],\n    uniqueBossesDefeated: [],\n    uniqueMinibossesDefeated: [],\n    themeChanges: 0,\n    borderChanges: 0,\n    battlesThisSession: 0,\n    loginDates: [],\n    perfectMemoryGames: 0,\n    achievementsUnlocked: [],\n});",
+      "isNew": false,
+      "kind": "exact",
+      "lines": 16,
+      "secondFile": {
+        "end": 46,
+        "endLoc": {
+          "column": 11,
+          "line": 46,
+          "position": 1232
+        },
+        "name": "utils/achievementUtils.test.js",
+        "start": 31,
+        "startLoc": {
+          "column": 41,
+          "line": 31,
+          "position": 738
+        }
+      },
+      "tokens": 66
+    },
+    {
+      "firstFile": {
+        "end": 13,
+        "endLoc": {
+          "column": 9,
+          "line": 13,
+          "position": 345
+        },
+        "name": "utils/soundManager.audioIo.test.js",
+        "start": 2,
+        "startLoc": {
+          "column": 63,
+          "line": 2,
+          "position": 125
+        }
+      },
+      "format": "javascript",
+      "fragment": "import { getBGMManager, setSfxVolume, playUISound, playMobHurt } from './soundManager';\n\nconst createAudioMock = () => ({\n    volume: 0,\n    src: '',\n    play: vi.fn(() => Promise.resolve()),\n    pause: vi.fn(),\n    addEventListener: vi.fn(),\n});\n\nconst stubAudio = () => {\n    const instances = [];",
+      "isNew": false,
+      "kind": "exact",
+      "lines": 12,
+      "secondFile": {
+        "end": 19,
+        "endLoc": {
+          "column": 9,
+          "line": 19,
+          "position": 381
+        },
+        "name": "utils/soundManager.injectedAudio.test.js",
+        "start": 8,
+        "startLoc": {
+          "column": 0,
+          "line": 8,
+          "position": 161
+        }
+      },
+      "tokens": 63
+    },
+    {
+      "firstFile": {
+        "end": 29,
+        "endLoc": {
+          "column": 9,
+          "line": 29,
+          "position": 703
+        },
+        "name": "utils/soundManager.audioIo.test.js",
+        "start": 5,
+        "startLoc": {
+          "column": 12,
+          "line": 5,
+          "position": 196
+        }
+      },
+      "format": "javascript",
+      "fragment": "    volume: 0,\n    src: '',\n    play: vi.fn(() => Promise.resolve()),\n    pause: vi.fn(),\n    addEventListener: vi.fn(),\n});\n\nconst stubAudio = () => {\n    const instances = [];\n    const AudioCtor = vi.fn(function AudioMock() {\n        const audio = createAudioMock();\n        instances.push(audio);\n        return audio;\n    });\n    vi.stubGlobal('Audio', AudioCtor);\n    return { AudioCtor, instances };\n};\n\nafterEach(() => {\n    vi.unstubAllGlobals();\n    vi.restoreAllMocks();\n    setSfxVolume(0.5);\n});\n\ndescribe('audio output before injection', () => {",
+      "isNew": false,
+      "kind": "exact",
+      "lines": 25,
+      "secondFile": {
+        "end": 38,
+        "endLoc": {
+          "column": 9,
+          "line": 38,
+          "position": 787
+        },
+        "name": "utils/soundManager.test.js",
+        "start": 14,
+        "startLoc": {
+          "column": 12,
+          "line": 14,
+          "position": 280
+        }
+      },
+      "tokens": 132
+    },
+    {
+      "firstFile": {
+        "end": 19,
+        "endLoc": {
+          "column": 9,
+          "line": 19,
+          "position": 381
+        },
+        "name": "utils/soundManager.injectedAudio.test.js",
+        "start": 7,
+        "startLoc": {
+          "column": 16,
+          "line": 7,
+          "position": 159
+        }
+      },
+      "format": "javascript",
+      "fragment": "    playMobDeath,\n} from './soundManager';\n\nconst createAudioMock = () => ({\n    volume: 0,\n    src: '',\n    play: vi.fn(() => Promise.resolve()),\n    pause: vi.fn(),\n    addEventListener: vi.fn(),\n});\n\nconst stubAudio = () => {\n    const AudioCtor = vi.fn(function AudioMock() {",
+      "isNew": false,
+      "kind": "exact",
+      "lines": 13,
+      "secondFile": {
+        "end": 22,
+        "endLoc": {
+          "column": 9,
+          "line": 22,
+          "position": 429
+        },
+        "name": "utils/soundManager.test.js",
+        "start": 10,
+        "startLoc": {
+          "column": 14,
+          "line": 10,
+          "position": 207
+        }
+      },
+      "tokens": 64
+    }
+  ],
+  "statistics": {
+    "detectionDate": "2026-11-25T10:33:19.940Z",
+    "formats": {
+      "css": {
+        "clones": 0,
+        "duplicatedLines": 0,
+        "duplicatedTokens": 0,
+        "lines": 54,
+        "newClones": 0,
+        "newDuplicatedLines": 0,
+        "percentage": 0.0,
+        "percentageTokens": 0.0,
+        "sources": 1,
+        "tokens": 300
+      },
+      "javascript": {
+        "clones": 4,
+        "duplicatedLines": 66,
+        "duplicatedTokens": 325,
+        "lines": 2254,
+        "newClones": 0,
+        "newDuplicatedLines": 0,
+        "percentage": 2.9281277728482697,
+        "percentageTokens": 2.578955721314077,
+        "sources": 17,
+        "tokens": 12602
+      },
+      "jsx": {
+        "clones": 9,
+        "duplicatedLines": 127,
+        "duplicatedTokens": 709,
+        "lines": 6264,
+        "newClones": 0,
+        "newDuplicatedLines": 0,
+        "percentage": 2.027458492975734,
+        "percentageTokens": 2.2648139274876216,
+        "sources": 21,
+        "tokens": 31305
+      }
+    },
+    "total": {
+      "clones": 13,
+      "duplicatedLines": 193,
+      "duplicatedTokens": 1034,
+      "lines": 8572,
+      "newClones": 0,
+      "newDuplicatedLines": 0,
+      "percentage": 2.2515165655622957,
+      "percentageTokens": 2.338996086592621,
+      "sources": 39,
+      "tokens": 44207
+    }
+  }
+}

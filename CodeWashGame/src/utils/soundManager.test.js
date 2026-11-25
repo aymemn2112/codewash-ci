@@ -1,8 +1,7 @@
 import { describe, it, expect, vi, afterEach } from 'vitest';
 import {
+    createSfxPlayer,
     getBGMManager,
-    setSfxVolume,
-    getSfxVolume,
     playUISound,
     playClick,
     playMobHurt,
@@ -32,25 +31,43 @@ const stubAudio = () => {
 afterEach(() => {
     vi.unstubAllGlobals();
     vi.restoreAllMocks();
-    setSfxVolume(0.5);
 });
 
 describe('SFX volume', () => {
-    it('starts at 0.5 and can be changed', () => {
-        expect(getSfxVolume()).toBe(0.5);
-        setSfxVolume(0.8);
-        expect(getSfxVolume()).toBe(0.8);
+    it('starts at 0.5 and can be changed on the player instance', () => {
+        const player = createSfxPlayer();
+        expect(player.getVolume()).toBe(0.5);
+        player.setVolume(0.8);
+        expect(player.getVolume()).toBe(0.8);
+    });
+
+    it('creates audio elements with the player volume', () => {
+        const { instances } = stubAudio();
+        const player = createSfxPlayer();
+        player.setVolume(0.4);
+
+        expect(player.create('assets/sounds/ui/click.wav')).toBe(instances[0]);
+        expect(instances[0].volume).toBe(0.4);
     });
 
     it('applies the current volume to UI sounds', () => {
         const { AudioCtor, instances } = stubAudio();
-        setSfxVolume(0.3);
+        const player = createSfxPlayer();
+        player.setVolume(0.3);
 
-        playUISound('click');
+        playUISound('click', player);
 
         expect(AudioCtor).toHaveBeenCalledWith('assets/sounds/ui/click.wav');
         expect(instances[0].volume).toBe(0.3);
         expect(instances[0].play).toHaveBeenCalled();
+    });
+
+    it('keeps player volumes independent', () => {
+        const first = createSfxPlayer({ volume: 0.2 });
+        const second = createSfxPlayer({ volume: 0.9 });
+
+        expect(first.getVolume()).toBe(0.2);
+        expect(second.getVolume()).toBe(0.9);
     });
 
     it('does nothing for an unknown UI sound', () => {
@@ -90,8 +107,8 @@ describe('mob sounds', () => {
 });
 
 describe('BGM manager', () => {
-    it('is a singleton', () => {
-        expect(getBGMManager()).toBe(getBGMManager());
+    it('creates a fresh manager on each call', () => {
+        expect(getBGMManager()).not.toBe(getBGMManager());
     });
 
     it('stores and applies volume', () => {
