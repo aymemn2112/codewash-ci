@@ -1,0 +1,55 @@
+
+> eliott-rpg-game@0.0.0 coverage
+> vitest run --coverage
+
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+
+ RUN  v4.1.12 /home/lucas/Documents/epitech/projet/codeWash/B-ING-300-PAR-3-1-codewash-16/CodeWashGame
+      Coverage enabled with v8
+
+Not implemented: navigation to another Document
+Not implemented: HTMLMediaElement's play() method
+
+ Test Files  27 passed (27)
+      Tests  147 passed (147)
+   Start at  14:50:22
+   Duration  9.02s (transform 3.04s, setup 6.52s, import 5.70s, tests 7.35s, environment 34.40s)
+
+ % Coverage report from v8
+-------------------|---------|----------|---------|---------|-------------------
+File               | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+-------------------|---------|----------|---------|---------|-------------------
+All files          |   59.78 |    54.65 |   54.06 |   59.87 |                   
+ src               |   48.85 |    45.37 |   48.14 |   49.16 |                   
+  App.jsx          |   48.85 |    45.37 |   48.14 |   49.16 | ...1648,1652-1757 
+ src/components    |   86.88 |    81.08 |      80 |   86.44 |                   
+  PhantomEvent.jsx |   86.88 |    81.08 |      80 |   86.44 | ...,73-74,104-108 
+ ...onents/drawers |   63.79 |    59.59 |   52.94 |   63.88 |                   
+  ...icsDrawer.jsx |   74.35 |    73.56 |   63.63 |   73.68 | 237-316,378-380   
+  MenuDrawer.jsx   |   93.33 |    69.56 |     100 |   92.68 | 26-27,214         
+  ...rawer_old.jsx |       0 |        0 |       0 |       0 | 8-220             
+  ...ngsDrawer.jsx |      60 |      100 |      50 |      60 | 82-99             
+ ...ponents/modals |   84.37 |       75 |   71.42 |   83.33 |                   
+  ResetModal.jsx   |   82.14 |    72.22 |   66.66 |   81.48 | 13-15,33,38       
+ ...onents/profile |   58.62 |    66.03 |   43.75 |   60.78 |                   
+  ProfileCard.jsx  |   58.62 |    66.03 |   43.75 |   60.78 | ...53,106-175,228 
+ ...ponents/skills |   40.58 |    44.51 |   19.64 |   41.76 |                   
+  SkillCard.jsx    |   40.58 |    44.51 |   19.64 |   41.76 | ...1137,1152-1181 
+ src/components/ui |   44.44 |    36.92 |   52.63 |   44.18 |                   
+  ...mentToast.jsx |    6.25 |        0 |       0 |    6.66 | 10-30             
+  MobWithAura.jsx  |     100 |     62.5 |     100 |     100 | 30-58             
+  ...tionModal.jsx |   19.51 |       10 |   11.11 |   17.94 | 14-106            
+  PixelHeart.jsx   |   89.47 |    72.72 |     100 |   88.88 | 63,67             
+ src/utils         |   94.42 |    84.93 |    84.5 |   95.43 |                   
+  ...ementUtils.js |   98.76 |    97.67 |     100 |     100 | 103               
+  gameUtils.js     |     100 |    84.52 |     100 |     100 | ...65-266,286-295 
+  ...splayUtils.js |     100 |       75 |     100 |     100 | 46                
+  soundManager.js  |   81.63 |    71.42 |   69.44 |   82.92 | ...14,129,138-157 
+-------------------|---------|----------|---------|---------|-------------------
+
+=============================== Coverage summary ===============================
+Statements   : 59.78% ( 1051/1758 )
+Branches     : 54.65% ( 698/1277 )
+Functions    : 54.06% ( 193/357 )
+Lines        : 59.87% ( 982/1640 )
+================================================================================

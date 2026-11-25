@@ -1,0 +1,136 @@
+{
+  "App.jsx": [
+    "components/PhantomEvent.jsx",
+    "components/drawers/CosmeticsDrawer.jsx",
+    "components/drawers/MenuDrawer.jsx",
+    "components/drawers/SettingsDrawer.jsx",
+    "components/modals/BugReportModal.jsx",
+    "components/modals/ResetModal.jsx",
+    "components/skills/SkillCard.jsx",
+    "components/ui/AchievementToast.jsx",
+    "components/ui/GlobalStyles.jsx",
+    "components/ui/PixelHeart.jsx",
+    "components/ui/SafeImage.jsx",
+    "constants/gameData.jsx",
+    "utils/achievementUtils.js",
+    "utils/gameUtils.js",
+    "utils/mobDisplayUtils.js",
+    "utils/soundManager.js"
+  ],
+  "App.test.jsx": [
+    "App.jsx"
+  ],
+  "components/PhantomEvent.jsx": [
+    "constants/gameData.jsx",
+    "utils/soundManager.js"
+  ],
+  "components/PhantomEvent.test.jsx": [
+    "components/PhantomEvent.jsx"
+  ],
+  "components/drawers/CosmeticsDrawer.jsx": [
+    "components/ui/SafeImage.jsx",
+    "constants/achievements.js",
+    "constants/gameData.jsx"
+  ],
+  "components/drawers/MenuDrawer.jsx": [
+    "components/ui/SafeImage.jsx",
+    "constants/achievements.js",
+    "constants/gameData.jsx",
+    "utils/achievementUtils.js",
+    "utils/gameUtils.js"
+  ],
+  "components/drawers/MenuDrawer_old.jsx": [
+    "components/ui/SafeImage.jsx",
+    "constants/gameData.jsx",
+    "utils/gameUtils.js"
+  ],
+  "components/drawers/SettingsDrawer.jsx": [
+    "components/profile/ProfileCard.jsx"
+  ],
+  "components/modals/BugReportModal.jsx": [],
+  "components/modals/BugReportModal.test.jsx": [
+    "components/modals/BugReportModal.jsx"
+  ],
+  "components/modals/ResetModal.jsx": [],
+  "components/profile/ProfileCard.jsx": [
+    "components/ui/ParentalVerificationModal.jsx",
+    "components/ui/SafeImage.jsx",
+    "constants/gameData.jsx"
+  ],
+  "components/skills/SkillCard.jsx": [
+    "components/ui/MobWithAura.jsx",
+    "components/ui/ParentalVerificationModal.jsx",
+    "components/ui/SafeImage.jsx",
+    "constants/gameData.jsx",
+    "utils/gameUtils.js",
+    "utils/mobDisplayUtils.js",
+    "utils/soundManager.js"
+  ],
+  "components/ui/AchievementToast.jsx": [
+    "constants/achievements.js"
+  ],
+  "components/ui/GlobalStyles.jsx": [],
+  "components/ui/MobWithAura.jsx": [
+    "components/ui/SafeImage.jsx"
+  ],
+  "components/ui/ParentalVerificationModal.jsx": [],
+  "components/ui/PixelHeart.jsx": [],
+  "components/ui/SafeImage.jsx": [],
+  "components/ui/SafeImage.test.jsx": [
+    "components/ui/SafeImage.jsx"
+  ],
+  "constants/achievements.js": [],
+  "constants/assets.js": [],
+  "constants/gameData.jsx": [],
+  "index.css": [],
+  "main.jsx": [
+    "App.jsx",
+    "index.css"
+  ],
+  "services/rng.js": [],
+  "services/rng.test.js": [
+    "services/rng.js"
+  ],
+  "test/setup.js": [],
+  "test/smoke.test.js": [
+    "utils/achievementUtils.js"
+  ],
+  "utils/achievementUtils.js": [
+    "constants/achievements.js"
+  ],
+  "utils/achievementUtils.test.js": [
+    "utils/achievementUtils.js"
+  ],
+  "utils/gameUtils.fallback.test.js": [
+    "utils/gameUtils.js"
+  ],
+  "utils/gameUtils.js": [
+    "constants/gameData.jsx"
+  ],
+  "utils/gameUtils.random.test.js": [
+    "constants/gameData.jsx",
+    "utils/gameUtils.js"
+  ],
+  "utils/gameUtils.test.js": [
+    "constants/gameData.jsx",
+    "utils/gameUtils.js"
+  ],
+  "utils/mobDisplayUtils.js": [
+    "services/rng.js"
+  ],
+  "utils/mobDisplayUtils.test.js": [
+    "utils/mobDisplayUtils.js"
+  ],
+  "utils/soundManager.audioIo.test.js": [
+    "utils/soundManager.js"
+  ],
+  "utils/soundManager.injectedAudio.test.js": [
+    "utils/soundManager.js"
+  ],
+  "utils/soundManager.js": [
+    "services/rng.js"
+  ],
+  "utils/soundManager.test.js": [
+    "utils/soundManager.js"
+  ]
+}

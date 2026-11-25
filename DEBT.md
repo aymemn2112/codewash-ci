@@ -161,11 +161,11 @@ npm run build
 
 | ID | Localisation | Smell / problème | Impact | Risque | Effort | Priorité | Statut | Issue |
 |---|---|---|---|---|---|---|---|---|
-| D-04 | `App.jsx › useEffect` login (1117), `achievementUtils.js:190`, `PhantomEvent.jsx:22,55` | `Date.now()` / `new Date()` en dur | 🔴 | 🟠 | M | P1 | todo | P4-4 |
-| D-05 | `gameUtils.js`, `mobDisplayUtils.js`, `SkillCard.jsx`, `soundManager.js:111` | `Math.random()` en dur, tests non déterministes | 🔴 | 🟠 | M | P1 | todo | P4-5 |
-| D-06 | `App.jsx` : `loadSkills`, `loadTheme`, `loadStats`, `getProfileStats`, sauvegarde (284), `handleReset` | `localStorage` appelé directement, partout | 🔴 | 🟠 | M | P1 | todo | P4-6 |
-| D-07 | `SkillCard.jsx` (102, 228, 338, 374, 409), `soundManager.js` (183, 253, 267, 281) | `new Audio(...)` contourne `soundManager` | 🟠 | 🟢 | S | P2 | todo | P4-7 |
-| D-08 | `soundManager.js › getBGMManager()` (157, 166) | Singleton global mutable (`bgmManagerInstance`, `sfxVolume`) | 🟠 | 🟠 | M | P2 | todo | P4-8 |
+| D-04 | `services/clock.js`, `App.jsx`, `achievementUtils.js`, `PhantomEvent.jsx` | `Date.now()` / `new Date()` en dur | 🔴 | 🟠 | M | P1 | done | P4-4 |
+| D-05 | `services/rng.js`, `gameUtils.js`, `mobDisplayUtils.js`, `SkillCard.jsx`, `soundManager.js`, `PhantomEvent.jsx` | `Math.random()` en dur, tests non déterministes | 🔴 | 🟠 | M | P1 | done | P4-5 |
+| D-06 | `services/storage.js`, `App.jsx`, `PhantomEvent.jsx` | `localStorage` appelé directement, partout | 🔴 | 🟠 | M | P1 | done | P4-6 |
+| D-07 | `soundManager.js` (fabriques), `SkillCard.jsx` (`SfxPlayer`) | `new Audio(...)` contourne `soundManager` | 🟠 | 🟢 | S | P2 | done | P4-7 |
+| D-08 | `soundManager.js` (`createBGMManager`, `createSfxPlayer`) | Singleton global mutable (`bgmManagerInstance`, `sfxVolume`) | 🟠 | 🟠 | M | P2 | done | P4-8 |
 | D-09 | `App.jsx › startVoiceListener` (999), `stopVoiceRecognition` (985), `toggleMicListener` (1083) | Web Speech API utilisée directement, impossible à simuler | 🔴 | 🟠 | M | P1 | todo | P4-9 |
 | D-26 | `App.jsx › toggleFullscreen` (370–380), `handleFullscreenChange` (351) | Fullscreen API appelée directement, non isolée derrière une interface | 🟠 | 🟢 | S | P2 | todo | à créer |
 
@@ -174,11 +174,11 @@ npm run build
 | ID | Localisation | Smell / problème | Impact | Risque | Effort | Priorité | Statut | Issue |
 |---|---|---|---|---|---|---|---|---|
 | D-10 | `App.jsx` (1492 l., `const App`) | God component : état, combat, voix, layout ; complexité max 31 | 🔴 | 🔴 | L | P1 | todo | P4-1 |
-| D-11 | `App.jsx` : `getStorageKey` (55), `loadSkills` (56), `loadTheme` (172), `loadStats` (185), `getProfileStats` (202) | Clés `heroSkills_v23`, `_v1` et fallback legacy dupliqués, pas de migrations | 🟠 | 🔴 | M | P2 | todo | P4-15 |
+| D-11 | `services/storageKeys.js`, `App.jsx › readProfileRaw()` | Clés `heroSkills_v23`, `_v1` et fallback legacy dupliqués, pas de migrations | 🟠 | 🔴 | M | P2 | done | P4-15 |
 | D-12 | `SkillCard.jsx` (778 l.) | Règles de jeu dans le rendu ; JSX sur une ligne l. 581–582 ; complexité 107 | 🟠 | 🟠 | M | P2 | todo | P4-3 |
 | D-13 | `App.jsx › startVoiceListener`, handler `onend` (~1030) | `onend` relance `setTimeout` sans backoff ni annulation : boucle potentielle | 🔴 | 🟠 | S | P1 | todo | P4-13 |
 | D-14 | `GlobalStyles.jsx` (1302 l.) | Styles en JS monolithique, fuite dans le code | 🟠 | 🟢 | L | P3 | todo | P4-2 |
-| D-15 | `gameUtils.js` (`getRandomMob`, `getRandomFriendlyMob`, `getRandomMiniboss`, `getRandomBoss`, `getMobForSkill`) ; `MenuDrawer.jsx` ↔ `MenuDrawer_old.jsx` | Duplication : 2,53 % de lignes, 6 clones, 144 lignes dupliquées | 🟠 | 🟢 | S | P2 | todo | P4-16 |
+| D-15 | `gameUtils.js › pickRandomOr()` ; `MenuDrawer.jsx` ↔ `MenuDrawer_old.jsx` | Duplication : 2,53 % de lignes, 6 clones, 144 lignes dupliquées | 🟠 | 🟢 | S | P2 | partial | P4-16 |
 | D-16 | `gameData.jsx` (`THEME_CONFIG`, `SKILL_DATA`), `App.jsx` (`THEME_CONFIG.minecraft`, 1140), `PixelHeart.jsx` | Branding Minecraft en dur ; bloque Thèmes et Traduction | 🟠 | 🟢 | M | P2 | todo | P4-17 |
 
 ### 3.4 Fiabilité et propreté
@@ -195,7 +195,7 @@ npm run build
 | D-28 | `gameData.jsx` (`THEME_CONFIG`), `App.jsx › loadTheme`/`handleThemeChange` (172, 824), assets par thème | Système de thèmes incomplet : toutes les images ne changent pas, tailles incohérentes, jeux et audio non thémés, pas de barre de défilement | 🟠 | 🟠 | L | P4 | todo | P5-4 |
 | D-29 | `App.jsx` rendu initial ; `dist/assets` | Démarrage/menu lents ; aucun découpage de code ; `dist` = 244 Mo dont 4 WAV de 34–48 Mo ; aucune mesure de démarrage | 🔴 | 🟠 | L | P4 | todo | P5-1 |
 | D-30 | `App.jsx` : `handleSuccessHit`, `checkAchievements`, effets de toasts/level-up | Nombreux `setTimeout` non nettoyés au démontage (mises à jour d'état après unmount) | 🟠 | 🟠 | M | P2 | todo | à créer |
-| D-31 | `PhantomEvent.jsx:5,21,55` | Clé `localStorage` propre (`phantomEvent_lastSpawn_v1`) hors schéma central | 🟢 | 🟢 | S | P2 | todo | P4-6 |
+| D-31 | `services/storageKeys.js` (`STORAGE_KEYS.PHANTOM_LAST_SPAWN`) | Clé `localStorage` propre (`phantomEvent_lastSpawn_v1`) hors schéma central | 🟢 | 🟢 | S | P2 | done | P4-6 |
 | D-32 | `SafeImage.jsx:6–17` | Erreur de chargement d'image avalée silencieusement (fallback sans log) | 🟢 | 🟢 | S | P3 | todo | P4-11 |
 
 ### 3.5 Dette process
