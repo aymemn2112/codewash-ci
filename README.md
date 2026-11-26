@@ -164,6 +164,11 @@ Rules used by this project:
 - [`DEBT.md`](./DEBT.md) — debt register, codebase map, I/O map, metrics, risk matrix.
 - [`docs/TESTING.md`](./docs/TESTING.md) — test strategy (clock, randomness, audio, speech).
 - [`docs/CI.md`](./docs/CI.md) — pipeline, quality gates and branch protection.
+- [`docs/ONBOARDING.md`](./docs/ONBOARDING.md) — install, launch, test in ~10 minutes.
+- [`docs/ARCHITECTURE.md`](./docs/ARCHITECTURE.md) — layers, state and I/O boundaries.
+- [`docs/RUNBOOK.md`](./docs/RUNBOOK.md) — what to do when it breaks.
+- [`docs/FEATURES.md`](./docs/FEATURES.md) — how users find and use each feature.
+- [`docs/CHANGELOG.md`](./docs/CHANGELOG.md) — received vs delivered.
 - [`docs/themes/AUTHORING.md`](./docs/themes/AUTHORING.md) — how to add or edit a theme without React changes.
 - [`docs/i18n/TRANSLATING.md`](./docs/i18n/TRANSLATING.md) — locale layer and translation guide.
 - [`CodeWashGame/docs/MICROPHONE_FEATURE.md`](./CodeWashGame/docs/MICROPHONE_FEATURE.md) —
