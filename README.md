@@ -165,6 +165,7 @@ Rules used by this project:
 - [`DEBT.md`](./DEBT.md) — debt register, codebase map, I/O map, metrics, risk matrix.
 - [`docs/TESTING.md`](./docs/TESTING.md) — test strategy (clock, randomness, audio, speech).
 - [`docs/CI.md`](./docs/CI.md) — pipeline, quality gates and branch protection.
+- [`docs/themes/AUTHORING.md`](./docs/themes/AUTHORING.md) — how to add or edit a theme without React changes.
 - [`CodeWashGame/docs/MICROPHONE_FEATURE.md`](./CodeWashGame/docs/MICROPHONE_FEATURE.md) —
   how the voice-controlled Reading skill works.
 - Architecture Decision Records and the runbook are added in later milestones.

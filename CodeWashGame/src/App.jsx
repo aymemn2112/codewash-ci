@@ -115,6 +115,7 @@ const App = () => {
 
     const [skills, setSkills] = useState(() => loadSkills(currentProfile));
     const [activeTheme, setActiveTheme] = useState(() => loadTheme(currentProfile));
+    const activeThemeConfig = THEME_CONFIG[activeTheme] || THEME_CONFIG[DEFAULT_THEME_ID];
     const [stats, setStats] = useState(() => loadStats(currentProfile));
     const [loadWarning, setLoadWarning] = useState(() => consumeLoadErrors().length > 0);
     const [achievementToast, setAchievementToast] = useState(null);
@@ -137,7 +138,7 @@ const App = () => {
     const challengeDataRef = useRef(null);
     const damageIdRef = useRef(0); // Counter for generating unique damage number IDs
     const loginTrackedRef = useRef(false); // Track if we've already recorded today's login
-    const audio = useAudioSettings();
+    const audio = useAudioSettings({ tracks: activeThemeConfig.bgm });
 
     const borders = useBorders(currentProfile);
     const bugReport = useBugReportSettings();
@@ -868,8 +869,13 @@ const App = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []); // Run once on mount, guarded by loginTrackedRef
 
-    const currentThemeData = THEME_CONFIG[activeTheme] || THEME_CONFIG[DEFAULT_THEME_ID];
-    const containerStyle = { ...currentThemeData.style, fontFamily: '"VT323", monospace' };
+    const currentThemeData = activeThemeConfig;
+    const containerStyle = {
+        ...currentThemeData.style,
+        fontFamily: '"VT323", monospace',
+        '--scrollbar-track': currentThemeData.scrollbar.track,
+        '--scrollbar-thumb': currentThemeData.scrollbar.thumb,
+    };
 
     return (
         <div

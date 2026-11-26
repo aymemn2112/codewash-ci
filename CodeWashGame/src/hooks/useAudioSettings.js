@@ -5,11 +5,20 @@ import { createBGMManager, createSfxPlayer } from '../utils/soundManager';
  * BGM/SFX volume state plus the side effects that push them to the sound
  * manager, and `startBGM` for the first user interaction.
  */
-export function useAudioSettings({ initialBgm = 0.3, initialSfx = 0.5 } = {}) {
+export function useAudioSettings({ initialBgm = 0.3, initialSfx = 0.5, tracks = [] } = {}) {
     const [bgmVol, setBgmVol] = useState(initialBgm);
     const [sfxVol, setSfxVol] = useState(initialSfx);
-    const bgmManager = useRef(createBGMManager());
+    const bgmManager = useRef(null);
     const sfxPlayer = useRef(createSfxPlayer({ volume: initialSfx }));
+    const playlistKey = tracks.join('|');
+
+    if (bgmManager.current === null) {
+        bgmManager.current = createBGMManager({ tracks });
+    }
+
+    useEffect(() => {
+        bgmManager.current.setTracks(playlistKey ? playlistKey.split('|') : []);
+    }, [playlistKey]);
 
     useEffect(() => {
         bgmManager.current.setVolume(bgmVol);

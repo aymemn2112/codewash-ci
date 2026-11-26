@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="600" viewBox="0 0 400 600">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#312e81"/>
+      <stop offset="1" stop-color="#7e22ce"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="600" rx="28" fill="url(#bg)"/>
+  <rect x="22" y="22" width="356" height="556" rx="20" fill="none" stroke="#fde68a" stroke-width="8"/>
+  <path d="M200 90 L320 300 L200 510 L80 300 Z" fill="none" stroke="#fde68a" stroke-width="10"/>
+  <path d="M200 150 L270 300 L200 450 L130 300 Z" fill="#fef3c7" opacity="0.35"/>
+  <text x="200" y="310" fill="#fef3c7" font-family="monospace" font-size="38" font-weight="bold" text-anchor="middle">RUNE</text>
+  <text x="200" y="520" fill="#fde68a" font-family="monospace" font-size="24" letter-spacing="4" text-anchor="middle">FANTASY</text>
+</svg>

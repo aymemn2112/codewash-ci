@@ -78,4 +78,72 @@ describe('injected audio factory', () => {
         expect(factory).toHaveBeenCalledWith('assets/sounds/mob/zombie/death.wav');
         expect(AudioCtor).not.toHaveBeenCalled();
     });
+
+    it('plays a track from the configured playlist', () => {
+        const factory = audioFactory();
+        const manager = createBGMManager({
+            audioFactory: factory,
+            tracks: ['assets/sounds/bgm/piano1.wav'],
+        });
+
+        manager.play();
+
+        expect(factory).toHaveBeenCalledWith('assets/sounds/bgm/piano1.wav');
+    });
+
+    it('switches to the new playlist while already playing', () => {
+        const factory = audioFactory();
+        const manager = createBGMManager({
+            audioFactory: factory,
+            tracks: ['assets/sounds/bgm/calm1.wav'],
+        });
+        manager.play();
+        const audio = factory.mock.results[0].value;
+
+        manager.setTracks(['assets/sounds/bgm/calm3.wav']);
+
+        expect(audio.src).toBe('assets/sounds/bgm/calm3.wav');
+        expect(audio.play).toHaveBeenCalledTimes(2);
+    });
+
+    it('updates the pending track when the playlist changes before playback', () => {
+        const factory = audioFactory();
+        const manager = createBGMManager({
+            audioFactory: factory,
+            tracks: ['assets/sounds/bgm/calm1.wav'],
+        });
+
+        manager.setTracks(['assets/sounds/bgm/scifi.wav']);
+        manager.play();
+
+        expect(factory).toHaveBeenCalledWith('assets/sounds/bgm/scifi.wav');
+    });
+
+    it('falls back to the default playlist when given an empty one', () => {
+        const factory = audioFactory();
+        const manager = createBGMManager({
+            audioFactory: factory,
+            tracks: ['assets/sounds/bgm/calm1.wav'],
+        });
+
+        manager.setTracks([]);
+        manager.play();
+
+        expect(factory).toHaveBeenCalledWith(expect.stringMatching(/^assets\/sounds\/bgm\//));
+    });
+
+    it('keeps the current audio untouched when the playlist is unchanged', () => {
+        const factory = audioFactory();
+        const manager = createBGMManager({
+            audioFactory: factory,
+            tracks: ['assets/sounds/bgm/calm1.wav'],
+        });
+        manager.play();
+        const audio = factory.mock.results[0].value;
+
+        manager.setTracks(['assets/sounds/bgm/calm1.wav']);
+
+        expect(audio.play).toHaveBeenCalledTimes(1);
+        expect(audio.src).toBe('assets/sounds/bgm/calm1.wav');
+    });
 });

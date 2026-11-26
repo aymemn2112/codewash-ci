@@ -184,40 +184,43 @@ const SkillCard = ({
 
     const skillThemeConfig = themeData.skills[config.id] || {};
     const skillName = skillThemeConfig.name || config.name;
+    const themeMobName = skillThemeConfig.boss;
+    const themedMobSrc =
+        themeData.assets.mobs[mobName] ||
+        (themeMobName ? themeData.assets.mobs[themeMobName] : null);
 
     // Determine valid mob source and display name based on skill type
     let mobSrc;
-    let displayMobName = mobName;
+    let displayMobName = themeMobName || mobName;
 
     if (config.id === 'memory') {
-        mobSrc = 'assets/skills/farm_icon.png';
+        mobSrc = themedMobSrc || 'assets/skills/farm_icon.png';
     } else if (config.id === 'cleaning') {
-        mobSrc =
-            CHEST_BLOCKS[mobName] || themeData.assets.mobs[mobName] || BASE_ASSETS.axolotls.Pink;
+        mobSrc = CHEST_BLOCKS[mobName] || themedMobSrc || BASE_ASSETS.axolotls.Pink;
     } else if (config.id === 'patterns') {
         // Patterns skill uses hostile mobs like other combat skills
         mobSrc =
-            HOSTILE_MOBS[mobName] ||
-            BOSS_MOBS[mobName] ||
-            MINIBOSS_MOBS[mobName] ||
-            themeData.assets.mobs[mobName];
+            themedMobSrc || HOSTILE_MOBS[mobName] || BOSS_MOBS[mobName] || MINIBOSS_MOBS[mobName];
         if (!mobSrc) {
             // Fallback to Zombie if the provided name is invalid (should not happen with proper state management)
-            displayMobName = 'Zombie';
-            mobSrc = HOSTILE_MOBS[displayMobName] || BASE_ASSETS.axolotls.Pink;
+            displayMobName = themeMobName || 'Zombie';
+            mobSrc =
+                themeData.assets.mobs[displayMobName] ||
+                HOSTILE_MOBS.Zombie ||
+                BASE_ASSETS.axolotls.Pink;
         }
     } else {
         // Combat skills (reading, writing, math) - validate mob exists
         // Check hostile mobs, boss mobs, and miniboss mobs
         mobSrc =
-            HOSTILE_MOBS[mobName] ||
-            BOSS_MOBS[mobName] ||
-            MINIBOSS_MOBS[mobName] ||
-            themeData.assets.mobs[mobName];
+            themedMobSrc || HOSTILE_MOBS[mobName] || BOSS_MOBS[mobName] || MINIBOSS_MOBS[mobName];
         if (!mobSrc) {
             // Fallback to Zombie if the provided name is invalid (should not happen with proper state management)
-            displayMobName = 'Zombie';
-            mobSrc = HOSTILE_MOBS[displayMobName] || BASE_ASSETS.axolotls.Pink;
+            displayMobName = themeMobName || 'Zombie';
+            mobSrc =
+                themeData.assets.mobs[displayMobName] ||
+                HOSTILE_MOBS.Zombie ||
+                BASE_ASSETS.axolotls.Pink;
         }
     }
 

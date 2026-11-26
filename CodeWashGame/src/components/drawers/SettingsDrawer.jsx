@@ -36,7 +36,7 @@ const SettingsDrawer = ({
             </div>
 
             {/* Scrollable content area */}
-            <div className="flex-1 overflow-y-auto scrollbar-hide py-6">
+            <div className="flex-1 overflow-y-auto themed-scroll py-6">
                 <div className="flex flex-col gap-6">
                     <div>
                         <h3 className="text-xl text-blue-300 mb-5 font-bold flex items-center gap-3 uppercase tracking-wider">

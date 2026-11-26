@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="300" viewBox="0 0 800 300">
+  <rect width="800" height="300" rx="24" fill="#082f49"/>
+  <g stroke="#22d3ee" stroke-width="8" fill="none" opacity="0.9">
+    <circle cx="150" cy="150" r="80"/>
+    <circle cx="150" cy="150" r="34"/>
+    <path d="M150 40v220M40 150h220"/>
+  </g>
+  <text x="280" y="134" fill="#e0f2fe" font-family="monospace" font-size="74" font-weight="bold" letter-spacing="6">SCI-FI</text>
+  <text x="282" y="216" fill="#22d3ee" font-family="monospace" font-size="52" letter-spacing="12">ORBIT LAB</text>
+</svg>
