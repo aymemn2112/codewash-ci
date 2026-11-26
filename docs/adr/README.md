@@ -14,3 +14,13 @@ Format : contexte → décision → conséquences. Statut : `Accepted` sauf ment
 | [ADR-006](./ADR-006-metrics-evidence.md) | Preuve avant/après par métriques reproductibles | P4-19 |
 
 Les mesures avant/après sont dans [`docs/metrics/AFTER.md`](../metrics/AFTER.md).
+
+## Index et portée
+
+- ADR-001 à ADR-006 couvrent les décisions structurelles de M4 (outillage, tests de
+  caractérisation, injection des I/O, fabrique audio, clés de stockage, preuve par métriques).
+- Aucune nouvelle décision structurelle n'a été requise en M5 : les missions (performance,
+  bug reporting, traduction, thèmes) s'appuient sur ces décisions. Toute décision future doit
+  ajouter une entrée ici en suivant le format contexte → décision → conséquences.
+
+Voir aussi [`docs/ARCHITECTURE.md`](../ARCHITECTURE.md) pour le panorama global.
