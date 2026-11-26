@@ -272,22 +272,36 @@ Mesures prises sur l'état reçu (`25b3629` / tag `v0.0-as-received`), **avant t
 
 - Chaque ligne du registre devient une issue avec les labels `debt`, `type:<refactor|bug|docs|chore|test|ci>`, `prio:P0..P4`, `effort:S|M|L`.
 - Chaque PR contient `Refs D-xx` / `Closes #n` et met à jour le statut ici.
-- La colonne **Issue** du §3 contient les identifiants du backlog interne (`P*-*`, plan de travail). Elle sera remplacée par les numéros GitHub `#n` à la création des issues.
-- **État au 2026-11-19 :** la CLI `gh` n'est pas disponible dans l'environnement de travail courant ; création des issues à faire depuis un poste authentifié (voir le plan de travail). Les identifiants `P*-*` restent la référence tant que ce n'est pas fait.
+- La colonne **Issue** du §3 liste le backlog interne (`P*-*`) ; les dettes ont aussi été publiées en issues GitHub (#61–#95).
+- **État au 2026-11-26 :** M4 et les 4 missions M5 sont livrés ; le registre est gelé (aucune nouvelle entrée). Bilan et dette résiduelle : §8.
 
 ---
 
 ## 7. Historique des mesures (avant / après)
 
-| Métrique | Avant (reçu) | Après M3 | Après M4 | Final |
+| Métrique | Avant (reçu) | Après M3 | Après M4 | Final (M5) |
 |---|---|---|---|---|
-| Couverture (lignes) | 0 % | 47,98 % (61 tests) | | |
-| App.jsx (lignes) | 1492 | 1753 (Prettier) | | |
-| GlobalStyles.jsx (lignes) | 1302 | 1302 | | |
-| SkillCard.jsx (lignes) | 778 | 1190 (Prettier) | | |
-| Duplication (%) | 2,53 % | à remesurer | | |
-| Complexité max | 107 | 107 | | |
-| Erreurs lint (sources réelles) | 0 | 0 (14 warnings complexité) | | |
-| Vulnérabilités npm | 31 | 31 | | |
-| Bundle JS (gzip) | 102,62 kB | à remesurer | | |
-| Taille `dist` | 244 Mo | | | |
+| Couverture (lignes) | 0 % | 47,98 % (61 tests) | ~64 % | **67,06 % (268 tests)** |
+| App.jsx (lignes) | 1492 | 1753 (Prettier) | ~1013 | 1013 |
+| GlobalStyles.jsx (lignes) | 1302 | 1302 | 6 (+ `styles/global.css`) | 6 |
+| SkillCard.jsx (lignes) | 778 | 1190 (Prettier) | ~1133 | 1133 |
+| Duplication (%) | 2,53 % | à remesurer | à remesurer | à remesurer |
+| Complexité max | 107 | 107 | 107 | 107 (SkillCard) |
+| Erreurs lint (sources réelles) | 0 | 0 (14 warnings) | 0 (15 warnings) | 0 |
+| Vulnérabilités npm | 31 | 31 | 31 | 31 |
+| Bundle JS (gzip) | 102,62 kB | à remesurer | 97,52 kB | 108,05 kB (M5 ajoute i18n + thèmes) |
+| Taille `dist` | 244 Mo | 244 Mo | 63 Mo | **63 Mo** |
+
+---
+
+## 8. Bilan final (handover)
+
+Livré : M1–M4 et les 4 missions M5 (performance, bug reporting, traduction, thèmes).
+Suivi : roadmap #5–#60, dettes #61–#95 ; les issues M4/M5 sont fermées.
+
+Dette résiduelle assumée :
+- **D-36** — protection de branche impossible sur le dépôt d'origine (droits admin absents). Contournement : dépôt miroir public `aymemn2112/codewash-ci` (`main` protégé par le check CI) + hook local `pre-push`.
+- **D-34** — seuils globaux de couverture bas (45/37/38/45) ; la règle stricte est de 80 % sur les lignes modifiées.
+- **#23** (P3-4) — « gates qui bloquent le merge » : impossible sur le dépôt d'origine, effectif sur le miroir.
+- Sujets clos avec suite documentée : #27 (split `App.jsx`), #29 (domaine `SkillCard`) — la décomposition peut continuer (hooks de combat/achievements, composants de jeux).
+- Opportunités : compression des gros GIF (`book.gif` 11,6 Mo), lazy-loading des drawers/modales, mesure TTI sur poste graphique.
