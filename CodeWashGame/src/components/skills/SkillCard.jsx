@@ -21,6 +21,7 @@ import { getTempoDelays } from '../../domain/patternTempo';
 import { buildMemoryDeck, nextSimonSequence, pickRandom } from '../../domain/skillGames';
 import { AURA_ADJECTIVES } from '../../utils/mobDisplayUtils';
 import { useTranslation } from '../../i18n/useTranslation';
+import { useTimeouts } from '../../hooks/useTimeouts';
 
 const PRESTIGE_LEVEL_THRESHOLD = 20;
 
@@ -69,6 +70,7 @@ const SkillCard = ({
     const { t } = useTranslation();
     const [fallbackSfxPlayer] = useState(() => createSfxPlayer());
     const player = sfxPlayer || fallbackSfxPlayer;
+    const { schedule } = useTimeouts();
 
     const [mathInput, setMathInput] = useState('');
     const [isHit, setIsHit] = useState(false);
@@ -312,7 +314,7 @@ const SkillCard = ({
     useEffect(() => {
         if (damageNumbers.length > prevDamageCount.current) {
             setIsHit(true);
-            setTimeout(() => setIsHit(false), 400);
+            schedule(() => setIsHit(false), 400);
         }
         prevDamageCount.current = damageNumbers.length;
     }, [damageNumbers]);
@@ -337,7 +339,7 @@ const SkillCard = ({
                     if (!isCorrect && spokenText.length >= MIN_SPOKEN_TEXT_LENGTH) {
                         // Trigger wrong animation
                         setIsReadingWrong(true);
-                        setTimeout(() => setIsReadingWrong(false), 500);
+                        schedule(() => setIsReadingWrong(false), 500);
                     }
                 }
                 prevSpokenTextRef.current = spokenText;
@@ -369,16 +371,16 @@ const SkillCard = ({
                 if (i < sequence.length) {
                     setLitAxolotl(sequence[i]);
                     playAxolotlNote(sequence[i]);
-                    setTimeout(() => {
+                    schedule(() => {
                         setLitAxolotl(null);
                         i++;
-                        setTimeout(playNext, offDelay);
+                        schedule(playNext, offDelay);
                     }, onDelay);
                 } else {
                     setIsShowingSequence(false);
                 }
             };
-            setTimeout(playNext, 500);
+            schedule(playNext, 500);
         },
         [completedRounds, difficulty, playAxolotlNote],
     );
@@ -409,7 +411,7 @@ const SkillCard = ({
                 // Apply progressive damage based on round number (increases with each round)
                 // Using a gentle exponential formula: damage = round * 1.5 (rounded)
                 const damage = Math.round(newRounds * 1.5);
-                setTimeout(() => {
+                schedule(() => {
                     onMathSubmit('WIN', damage);
                 }, 300);
 
@@ -420,7 +422,7 @@ const SkillCard = ({
 
                 setSimonSequence(newSequence);
                 setPlayerIndex(0);
-                setTimeout(() => playSequence(newSequence), 800);
+                schedule(() => playSequence(newSequence), 800);
             } else {
                 // Move to next in sequence
                 setPlayerIndex(playerIndex + 1);
@@ -463,7 +465,7 @@ const SkillCard = ({
 
         if (newFlipped.length === 2) {
             setIsProcessingMatch(true);
-            setTimeout(() => {
+            schedule(() => {
                 if (memoryCards[newFlipped[0]].color === memoryCards[newFlipped[1]].color) {
                     player.play(BASE_ASSETS.audio.match);
                     const newMatched = [...matchedPairs, memoryCards[newFlipped[0]].color];
@@ -471,12 +473,11 @@ const SkillCard = ({
                     setFlippedIndices([]);
                     setIsProcessingMatch(false);
                     // Win when all pairs are matched (use memoryPairs from difficulty config)
-                    if (newMatched.length === memoryPairs)
-                        setTimeout(() => onMathSubmit('WIN'), 500);
+                    if (newMatched.length === memoryPairs) schedule(() => onMathSubmit('WIN'), 500);
                 } else {
                     player.play(BASE_ASSETS.audio.mismatch);
                     setMismatchShake(true);
-                    setTimeout(() => {
+                    schedule(() => {
                         setMismatchShake(false);
                         setFlippedIndices([]);
                         setIsProcessingMatch(false);
@@ -786,10 +787,10 @@ const SkillCard = ({
                                                             setIsWrong(true);
                                                             playMismatch();
                                                             onMathSubmit('WRONG');
-                                                            setTimeout(() => {
+                                                            schedule(() => {
                                                                 setIsWrong(false);
                                                                 setMathInput('');
-                                                                setTimeout(
+                                                                schedule(
                                                                     () => inputRef.current?.focus(),
                                                                     10,
                                                                 );
@@ -838,10 +839,10 @@ const SkillCard = ({
                                                         ) {
                                                             setIsWrong(true);
                                                             playMismatch();
-                                                            setTimeout(() => {
+                                                            schedule(() => {
                                                                 setIsWrong(false);
                                                                 setMathInput('');
-                                                                setTimeout(
+                                                                schedule(
                                                                     () => inputRef.current?.focus(),
                                                                     10,
                                                                 );

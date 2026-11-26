@@ -29,6 +29,7 @@ import { useDrawers } from './hooks/useDrawers';
 import { useAudioSettings } from './hooks/useAudioSettings';
 import { useBorders } from './hooks/useBorders';
 import { useBugReportSettings } from './hooks/useBugReportSettings';
+import { useTimeouts } from './hooks/useTimeouts';
 import {
     getStorageKey,
     loadSkills,
@@ -147,6 +148,7 @@ const App = () => {
 
     const borders = useBorders(currentProfile);
     const bugReport = useBugReportSettings();
+    const { schedule } = useTimeouts();
 
     useEffect(() => {
         const dataToSave = { skills: skills, theme: activeTheme, stats: stats };
@@ -274,7 +276,7 @@ const App = () => {
 
                     // Trigger boss healing animation
                     setBossHealing(battlingSkillId);
-                    setTimeout(() => setBossHealing(null), BOSS_HEALING_ANIMATION_DURATION);
+                    schedule(() => setBossHealing(null), BOSS_HEALING_ANIMATION_DURATION);
 
                     // Play fail sound to indicate mistake
                     playFail();
@@ -298,7 +300,7 @@ const App = () => {
                         };
 
                         // Check achievements after death
-                        setTimeout(() => {
+                        schedule(() => {
                             checkAchievements(prevStats, newStats, skills, skills);
                         }, 100);
 
@@ -324,7 +326,7 @@ const App = () => {
                     }
 
                     // End battle after short delay
-                    setTimeout(() => {
+                    schedule(() => {
                         setBattlingSkillId(null);
                         setShowDeathOverlay(false);
                     }, 2000);
@@ -373,7 +375,7 @@ const App = () => {
                     y: defaultRng() * 50 - 25,
                 },
             ]);
-            setTimeout(() => setDamageNumbers((prev) => prev.filter((n) => n.id !== id)), 800);
+            schedule(() => setDamageNumbers((prev) => prev.filter((n) => n.id !== id)), 800);
 
             // Play mob hurt or death sound based on if mob is defeated
             if (willDefeatMob) {
@@ -472,7 +474,7 @@ const App = () => {
                     }
 
                     // Check achievements after stats update
-                    setTimeout(() => {
+                    schedule(() => {
                         checkAchievements(prevStats, newStats, prev, {
                             ...prev,
                             [skillId]: { ...current, level: newLevel },
@@ -529,7 +531,7 @@ const App = () => {
                     newLostLevel = false;
                     newRecoveryDifficulty = null;
                     setShowLevelRestored(true);
-                    setTimeout(() => setShowLevelRestored(false), 2000);
+                    schedule(() => setShowLevelRestored(false), 2000);
                     playNotification();
                 }
 
@@ -659,7 +661,7 @@ const App = () => {
                     };
 
                     // Check achievements
-                    setTimeout(() => {
+                    schedule(() => {
                         checkAchievements(prevStats, newStats, skills, skills);
                     }, 100);
 
@@ -683,7 +685,7 @@ const App = () => {
                     };
 
                     // Check achievements
-                    setTimeout(() => {
+                    schedule(() => {
                         checkAchievements(prevStats, newStats, skills, skills);
                     }, 100);
 
@@ -795,7 +797,7 @@ const App = () => {
             });
 
             // Force a re-render to ensure UI immediately reflects the new levels
-            setTimeout(() => {
+            schedule(() => {
                 setSkills((current) => ({ ...current }));
             }, 0);
         }
@@ -848,13 +850,13 @@ const App = () => {
                 (speech.isListening ? t('speech.listening') : t('speech.micOff'));
 
     useEffect(() => {
-        if (lootBox) setTimeout(() => setLootBox(null), 4000);
+        if (lootBox) schedule(() => setLootBox(null), 4000);
     }, [lootBox]);
 
     // Achievement toast auto-dismiss
     useEffect(() => {
         if (achievementToast) {
-            setTimeout(() => setAchievementToast(null), 6000);
+            schedule(() => setAchievementToast(null), 6000);
         }
     }, [achievementToast]);
 
@@ -1016,7 +1018,7 @@ const App = () => {
                         };
 
                         // Check achievements
-                        setTimeout(() => {
+                        schedule(() => {
                             checkAchievements(prevStats, newStats, skills, skills);
                         }, 100);
 
