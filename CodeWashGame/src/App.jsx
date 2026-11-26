@@ -665,10 +665,11 @@ const App = () => {
     );
 
     // Wrapper for borders.setSelectedBorder to track border changes
+    const { selectedBorder: currentBorder, setSelectedBorder: updateBorder } = borders;
     const handleBorderChange = useCallback(
         (newBorder) => {
-            if (newBorder !== borders.selectedBorder) {
-                borders.setSelectedBorder(newBorder);
+            if (newBorder !== currentBorder) {
+                updateBorder(newBorder);
                 setStats((prevStats) => {
                     const newStats = {
                         ...prevStats,
@@ -684,7 +685,7 @@ const App = () => {
                 });
             }
         },
-        [borders.selectedBorder, borders.setSelectedBorder, skills, checkAchievements],
+        [currentBorder, updateBorder, skills, checkAchievements],
     );
 
     // Award a free level from phantom click
