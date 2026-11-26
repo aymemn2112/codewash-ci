@@ -1,6 +1,11 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi, afterEach } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import SafeImage from './SafeImage';
+import { logger } from '../../lib/logger';
+
+afterEach(() => {
+    vi.restoreAllMocks();
+});
 
 describe('SafeImage', () => {
     it('renders the fallback when no source is provided', () => {
@@ -16,9 +21,11 @@ describe('SafeImage', () => {
     });
 
     it('falls back when the image fails to load', () => {
+        const warn = vi.spyOn(logger, 'warn').mockImplementation(() => {});
         render(<SafeImage src="broken.png" alt="Broken art" className="w-4" />);
         fireEvent.error(screen.getByRole('img', { name: 'Broken art' }));
         expect(screen.queryByRole('img')).not.toBeInTheDocument();
         expect(screen.getByText('Broken art')).toBeInTheDocument();
+        expect(warn).toHaveBeenCalledWith(expect.stringContaining('[SafeImage]'), 'broken.png');
     });
 });

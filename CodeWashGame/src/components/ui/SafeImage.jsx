@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { logger } from '../../lib/logger';
 
 const SafeImage = ({ src, alt, className, onClick }) => {
     const [error, setError] = useState(false);
@@ -6,6 +7,11 @@ const SafeImage = ({ src, alt, className, onClick }) => {
         // eslint-disable-next-line react-hooks/set-state-in-effect
         setError(false);
     }, [src]);
+
+    const handleError = () => {
+        logger.warn('[SafeImage] Failed to load asset:', src);
+        setError(true);
+    };
 
     if (error || !src) {
         return (
@@ -22,13 +28,7 @@ const SafeImage = ({ src, alt, className, onClick }) => {
     }
 
     return (
-        <img
-            src={src}
-            alt={alt}
-            className={className}
-            onError={() => setError(true)}
-            onClick={onClick}
-        />
+        <img src={src} alt={alt} className={className} onError={handleError} onClick={onClick} />
     );
 };
 
