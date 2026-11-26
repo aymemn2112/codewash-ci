@@ -5,6 +5,7 @@ import { defaultRng } from '../services/rng';
 import { defaultClock } from '../services/clock';
 import { browserStorage } from '../services/storage';
 import { STORAGE_KEYS } from '../services/storageKeys';
+import { useTranslation } from '../i18n/useTranslation';
 
 const MIN_COOLDOWN_MS = 5 * 60 * 1000; // 5 minutes
 const MAX_COOLDOWN_MS = 10 * 60 * 1000; // 10 minutes
@@ -19,6 +20,7 @@ const PhantomEvent = ({
     clock = defaultClock,
     storage = browserStorage,
 }) => {
+    const { t } = useTranslation();
     const [isActive, setIsActive] = useState(false);
     const [fromLeft, setFromLeft] = useState(true);
     const [clicked, setClicked] = useState(false);
@@ -142,7 +144,7 @@ const PhantomEvent = ({
                 <img
                     key={`phantom-${fromLeft}`}
                     src={phantomSrc}
-                    alt="Phantom"
+                    alt={t('common.phantom')}
                     className="w-24 h-24 object-contain drop-shadow-[0_0_10px_rgba(100,200,255,0.8)]"
                     draggable={false}
                 />
@@ -150,7 +152,7 @@ const PhantomEvent = ({
             {clicked && (
                 <div className="absolute inset-0 flex items-center justify-center">
                     <span className="text-yellow-400 text-2xl font-bold animate-bounce drop-shadow-[0_0_5px_rgba(255,215,0,0.8)]">
-                        +1 Level!
+                        {t('phantom.levelBonus')}
                     </span>
                 </div>
             )}

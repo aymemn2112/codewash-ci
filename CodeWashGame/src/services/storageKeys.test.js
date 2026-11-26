@@ -22,6 +22,7 @@ describe('storage keys', () => {
         expect(STORAGE_KEYS.PARENT_STATUS).toBe('heroParentStatus_v1');
         expect(STORAGE_KEYS.LEGACY_SKILLS).toBe('heroSkills_v23');
         expect(STORAGE_KEYS.PHANTOM_LAST_SPAWN).toBe('phantomEvent_lastSpawn_v1');
+        expect(STORAGE_KEYS.LOCALE).toBe('heroLocale_v1');
     });
 
     it('builds the per-profile keys', () => {

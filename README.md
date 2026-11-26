@@ -141,7 +141,6 @@ Captured during the initial launch and tracked in [`DEBT.md`](./DEBT.md):
 - The main menu/startup feels slow; no baseline metric captured yet (D-29).
 - The bug-report button opens a placeholder modal only (D-22).
 - Themes are partially implemented: not all images/sizes/games/audio change (D-28).
-- UI strings are hardcoded in English; there is no i18n layer (D-27).
 - Silent error handling in several load paths (`catch { console.warn(...) }`) (D-18).
 
 ## Branching and contribution
@@ -166,6 +165,7 @@ Rules used by this project:
 - [`docs/TESTING.md`](./docs/TESTING.md) — test strategy (clock, randomness, audio, speech).
 - [`docs/CI.md`](./docs/CI.md) — pipeline, quality gates and branch protection.
 - [`docs/themes/AUTHORING.md`](./docs/themes/AUTHORING.md) — how to add or edit a theme without React changes.
+- [`docs/i18n/TRANSLATING.md`](./docs/i18n/TRANSLATING.md) — locale layer and translation guide.
 - [`CodeWashGame/docs/MICROPHONE_FEATURE.md`](./CodeWashGame/docs/MICROPHONE_FEATURE.md) —
   how the voice-controlled Reading skill works.
 - Architecture Decision Records and the runbook are added in later milestones.

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { buildBugReport, fileToDataUrl, sendBugReport } from '../../lib/bugReport';
 import { browserStorage } from '../../services/storage';
+import { useTranslation } from '../../i18n/useTranslation';
 
 const BugReportModal = ({
     isOpen,
@@ -16,6 +17,7 @@ const BugReportModal = ({
     const [includeLogs, setIncludeLogs] = useState(true);
     const [status, setStatus] = useState('idle');
     const [error, setError] = useState(null);
+    const { t } = useTranslation();
 
     if (!isOpen) return null;
 
@@ -55,18 +57,18 @@ const BugReportModal = ({
             <form
                 role="dialog"
                 aria-modal="true"
-                aria-label="Report a bug"
+                aria-label={t('bugReport.title')}
                 onSubmit={handleSubmit}
                 className="relative bg-stone-900 border-4 border-stone-600 rounded-2xl p-6 max-w-xl w-[92%] max-h-[90vh] overflow-y-auto shadow-2xl flex flex-col gap-4"
             >
                 <div className="flex items-center justify-between">
                     <h2 className="text-3xl font-bold text-slate-200 uppercase tracking-wider">
-                        Report a bug
+                        {t('bugReport.title')}
                     </h2>
                     <button
                         type="button"
                         onClick={onClose}
-                        aria-label="Close bug report"
+                        aria-label={t('common.close')}
                         className="text-slate-400 hover:text-white text-2xl font-bold"
                     >
                         ×
@@ -78,12 +80,12 @@ const BugReportModal = ({
                         role="status"
                         className="text-amber-300 bg-amber-950/40 border border-amber-700 rounded p-3"
                     >
-                        No report endpoint configured. Add one in Settings to enable bug reports.
+                        {t('bugReport.noEndpoint')}
                     </p>
                 )}
 
                 <label className="flex flex-col gap-1 text-slate-300 font-bold uppercase text-sm">
-                    What happened?
+                    {t('bugReport.whatHappened')}
                     <textarea
                         aria-label="Bug description"
                         value={description}
@@ -95,9 +97,9 @@ const BugReportModal = ({
                 </label>
 
                 <label className="flex flex-col gap-1 text-slate-300 font-bold uppercase text-sm">
-                    Steps to reproduce (optional)
+                    {t('bugReport.steps')}
                     <textarea
-                        aria-label="Steps to reproduce"
+                        aria-label={t('bugReport.steps')}
                         value={steps}
                         onChange={(e) => setSteps(e.target.value)}
                         rows={3}
@@ -107,9 +109,9 @@ const BugReportModal = ({
                 </label>
 
                 <label className="flex flex-col gap-1 text-slate-300 font-bold uppercase text-sm">
-                    Screenshots (optional)
+                    {t('bugReport.screenshots')}
                     <input
-                        aria-label="Screenshots"
+                        aria-label={t('bugReport.screenshots')}
                         type="file"
                         accept="image/*"
                         multiple
@@ -124,12 +126,12 @@ const BugReportModal = ({
                         checked={includeLogs}
                         onChange={(e) => setIncludeLogs(e.target.checked)}
                     />
-                    Include recent logs and saved game files
+                    {t('bugReport.includeLogs')}
                 </label>
 
                 {status === 'success' && (
                     <p role="status" className="text-green-400 font-bold">
-                        Report sent. Thank you!
+                        {t('bugReport.success')}
                     </p>
                 )}
                 {status === 'error' && (
@@ -144,14 +146,14 @@ const BugReportModal = ({
                         onClick={onClose}
                         className="px-4 py-2 rounded-lg border-2 border-stone-600 text-slate-300 hover:bg-stone-800"
                     >
-                        Close
+                        {t('common.close')}
                     </button>
                     <button
                         type="submit"
                         disabled={!canSubmit}
                         className="px-4 py-2 rounded-lg border-2 border-red-700 bg-red-900/60 text-red-100 font-bold hover:bg-red-800 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                        {status === 'sending' ? 'Sending...' : 'Send report'}
+                        {status === 'sending' ? t('bugReport.sending') : t('bugReport.send')}
                     </button>
                 </div>
             </form>
